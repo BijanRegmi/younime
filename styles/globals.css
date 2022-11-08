@@ -15,7 +15,8 @@ body,
 #__next {
 	height: 100vh;
 	width: 100vw;
-	/* background-color: lightyellow; */
+	background-color: var(--bg-color);
+	color: var(--fg-color-1);
 }
 
 p,
@@ -37,4 +38,10 @@ select {
 
 #__next {
 	isolation: isolate;
+}
+
+:root {
+	--bg-color: #0f0f0f;
+	--fg-color-1: #f0f0f0;
+	--fg-color-2: #a0a0a0;
 }
