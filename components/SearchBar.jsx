@@ -45,15 +45,21 @@ const SearchBar = () => {
 		inputRef.current.focus()
 	}
 
+	const style = {
+		"--bottom-radius":
+			showSuggestion && filteredList.length ? "0rem" : "1rem",
+		"--input-border-left": showSuggestion
+			? "none"
+			: "1px solid var(--border-color)",
+		"--input-border-radius": showSuggestion ? "0rem" : "1rem",
+	}
+
 	return (
-		<div ref={formRef} className={styles.searchContainer}>
+		<div ref={formRef} className={styles.searchContainer} style={style}>
 			<form className={styles.inputRow}>
 				<SearchBtn
 					style={{
 						opacity: showSuggestion ? 1 : 0,
-						borderBottomLeftRadius: filteredList.length
-							? "0rem"
-							: "1rem",
 					}}
 					className={styles.textSearchBtn}
 				/>
@@ -63,10 +69,6 @@ const SearchBar = () => {
 					id="search"
 					name="Search"
 					placeholder="Search"
-					style={{
-						borderLeft: showSuggestion ? "none" : "",
-						borderRadius: showSuggestion ? "0rem" : "",
-					}}
 					onChange={filterList}
 					onFocus={() => setShowSuggestion(true)}
 				/>
@@ -76,14 +78,7 @@ const SearchBar = () => {
 						className={styles.textCrossBtn}
 					/>
 				)}
-				<SearchBtn
-					className={styles.searchBtn}
-					style={{
-						borderBottomRightRadius: filteredList.length
-							? "0rem"
-							: "1rem",
-					}}
-				/>
+				<SearchBtn className={styles.searchBtn} />
 			</form>
 
 			{showSuggestion && filteredList.length > 0 && (
