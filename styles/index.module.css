@@ -12,6 +12,29 @@
 	flex-direction: row;
 }
 
+.ham {
+	fill: var(--fg-color);
+}
+
+.logo {
+	text-decoration: none;
+	width: 10%;
+	border-radius: 10px;
+	background-color: red;
+	color: var(--fg-color);
+	font-weight: 600;
+	margin: 0px 30px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	cursor: pointer;
+}
+
+.profile {
+	width: 10%;
+	background-color: blue;
+}
+
 .content {
 	flex-grow: 1;
 	overflow: scroll;

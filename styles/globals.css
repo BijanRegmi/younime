@@ -16,7 +16,7 @@ body,
 	height: 100vh;
 	width: 100vw;
 	background-color: var(--bg-color);
-	color: var(--fg-color-1);
+	color: var(--fg-color);
 }
 
 p,
@@ -42,6 +42,9 @@ select {
 
 :root {
 	--bg-color: #0f0f0f;
-	--fg-color-1: #f0f0f0;
+	--bg-color-2: #121212;
+	--bg-color-3: #222222;
+	--fg-color: #f0f0f0;
 	--fg-color-2: #a0a0a0;
+	--border-color: var(--bg-color-3);
 }
