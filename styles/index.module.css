@@ -1,0 +1,26 @@
+.main {
+	width: 100%;
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+}
+
+.header {
+	height: 60px;
+	padding: 10px 0;
+	display: flex;
+	flex-direction: row;
+}
+
+.content {
+	flex-grow: 1;
+	overflow: scroll;
+}
+
+.homeAnimeContainer {
+	display: grid;
+	grid-template-columns: 1fr 1fr 1fr 1fr;
+	grid-auto-rows: 300px;
+	row-gap: 40px;
+	column-gap: 20px;
+}
