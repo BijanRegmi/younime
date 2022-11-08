@@ -1,4 +1,5 @@
 import AnimeDetailsCard from "../../components/AnimeDetailsCard"
+import EpisodeList from "../../components/EpisodeList"
 import prisma from "../../prisma"
 import styles from "../../styles/index.module.css"
 
@@ -6,6 +7,7 @@ const AnimePage = ({ anime }) => {
 	return (
 		<div className={styles.animePage}>
 			<AnimeDetailsCard anime={anime} />
+			<EpisodeList episodes={anime.episodes} />
 		</div>
 	)
 }
