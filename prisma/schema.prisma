@@ -1,0 +1,72 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+    provider = "prisma-client-js"
+}
+
+datasource db {
+    provider = "postgresql"
+    url      = env("DATABASE_URL")
+}
+
+model user {
+    id       String    @id @default(uuid())
+    email    String    @unique
+    password String
+    userTag  String    @unique @db.VarChar(20)
+    bio      String?   @db.VarChar(512)
+    level    Int       @default(0)
+    verified Boolean   @default(false)
+    comments comment[]
+}
+
+model anime {
+    id         Int       @id
+    title      String
+    alttitle   String?
+    score      Float     @default(0.0)
+    age_rating String?
+    studio     String?
+    season     String?
+    type       String?
+    thumbnail  String?
+    synopsis   String?
+    genres     genre[]
+    episodes   episode[]
+    mapping    mapping[]
+}
+
+model comment {
+    id        Int      @id @default(autoincrement())
+    content   String
+    spoiler   Boolean? @default(false)
+    likes     Int      @default(0)
+    dislikes  Int      @default(0)
+    user      user?    @relation(fields: [user_id], references: [id])
+    user_id   String?
+    episode   episode? @relation(fields: [episodeId], references: [id])
+    episodeId Int?
+}
+
+model episode {
+    id       Int       @id @default(autoincrement())
+    file_url String?   @unique
+    name     String?
+    anime    anime     @relation(fields: [animeId], references: [id])
+    animeId  Int
+    comments comment[]
+}
+
+model genre {
+    name  String  @id
+    anime anime[]
+}
+
+model mapping {
+    id      Int   @id
+    mal     anime @relation(fields: [animeId], references: [id])
+    animeId Int
+
+    @@unique([id, animeId])
+}
