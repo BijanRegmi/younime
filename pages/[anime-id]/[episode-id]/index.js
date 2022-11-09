@@ -1,4 +1,4 @@
-import VideoPlayer from "../../../components/VideoPlayer"
+import VideoPlayer from "../../../components/VideoPlayer/"
 import prisma from "../../../prisma"
 
 const ep = ({ episode }) => {

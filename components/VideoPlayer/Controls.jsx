@@ -12,7 +12,7 @@ import FullScreenClose from "../../assets/fullscreen-close.svg"
 
 import styles from "../../styles/videoplayer.module.css"
 import durationFormatter from "../../utils/durationFormatter"
-import { MODES } from "./VideoPlayer"
+import { MODES } from "./"
 
 const Controls = ({ state, setState, playerRef }) => {
 	// TOGGLE PLAY/PAUSE
