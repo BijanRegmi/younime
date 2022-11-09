@@ -6,6 +6,10 @@ const useShowOnMouseMove = () => {
 
 	return {
 		show,
+		setShow,
+		cleartimeout: () => {
+			clearTimeout(timeout)
+		},
 		onMouseMove: e => {
 			e.preventDefault()
 			if (timeout) {
