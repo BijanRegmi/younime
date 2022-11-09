@@ -44,12 +44,21 @@ const Controls = ({ state, setState, playerRef }) => {
 
 	// MINI PLAYER
 	const onMiniPlayer = () => {
-		if (state.mode == MODES.MINI) document.exitPictureInPicture()
-		else
+		if (state.mode == MODES.MINI) {
 			try {
-				videoRef.current?.requestPictureInPicture()
+				setState(old => ({ ...old, mode: MODES.NORMAL }))
+				document.exitPictureInPicture()
 			} catch (err) {
-				console.log("Picture in picture not supported")
+				console.log(err)
+			}
+		} else
+			try {
+				playerRef.current
+					?.getInternalPlayer()
+					?.requestPictureInPicture()
+				setState(old => ({ ...old, mode: MODES.MINI }))
+			} catch (err) {
+				console.log(err)
 			}
 	}
 
@@ -140,7 +149,10 @@ const Controls = ({ state, setState, playerRef }) => {
 				>
 					{state.playbackRate}x
 				</span>
-				<MiniPlayer className={styles.controlBtn} />
+				<MiniPlayer
+					className={styles.controlBtn}
+					onClick={onMiniPlayer}
+				/>
 				{state.mode == MODES.THEATRE ? (
 					<TheaterWide
 						onClick={onTheatre}
