@@ -1,3 +1,4 @@
+"use client"
 // SVGs
 import Play from "../../assets/play.svg"
 import Pause from "../../assets/pause.svg"

@@ -1,5 +1,5 @@
 .epList {
-	width: 70%;
+	flex-grow: 1;
 	height: 100%;
 	overflow-y: scroll;
 	padding: 8px;

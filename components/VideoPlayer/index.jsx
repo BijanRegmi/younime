@@ -1,3 +1,5 @@
+"use client"
+
 import { useRef, useState } from "react"
 import ReactPlayer from "react-player"
 import useHasWindow from "../../customHooks/useHasWindow"
@@ -12,7 +14,7 @@ export const MODES = {
 	NORMAL: "",
 }
 
-const VideoPlayer = ({ episode }) => {
+const VideoPlayer = ({ url }) => {
 	const hasWindow = useHasWindow()
 	const { show, setShow, cleartimeout, onMouseMove } = useShowOnMouseMove()
 
@@ -55,7 +57,7 @@ const VideoPlayer = ({ episode }) => {
 		>
 			{hasWindow && (
 				<ReactPlayer
-					url={episode.file_url}
+					url={url}
 					playing={state.playing}
 					loop={false}
 					controls={false}

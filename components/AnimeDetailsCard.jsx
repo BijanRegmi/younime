@@ -1,7 +1,28 @@
 import Image from "next/image"
 import styles from "../styles/animedetailscard.module.css"
+import prisma from "../prisma"
 
-const AnimeDetailsCard = ({ anime }) => {
+const AnimeDetailsCard = async ({ animeId }) => {
+	const anime = await prisma.anime.findUnique({
+		where: { id: Number(animeId) },
+		select: {
+			title: true,
+			alttitle: true,
+			score: true,
+			age_rating: true,
+			studio: true,
+			season: true,
+			type: true,
+			thumbnail: true,
+			synopsis: true,
+			genres: {
+				select: {
+					name: true,
+				},
+			},
+		},
+	})
+
 	return (
 		<div className={styles.details}>
 			<div className={styles.preview}>

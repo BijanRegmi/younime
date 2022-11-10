@@ -40,6 +40,10 @@ select {
 	isolation: isolate;
 }
 
+[data-nextjs-scroll-focus-boundary] {
+  display: contents;
+}
+
 :root {
 	--bg-color: #0f0f0f;
 	--bg-color-2: #121212;

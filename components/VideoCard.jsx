@@ -5,7 +5,7 @@ import styles from "../styles/videocard.module.css"
 const VideoCard = ({ video }) => {
 	return (
 		<div className={styles.videoCard}>
-			<Link href={`/${video.id}`} style={{height: "70%"}}>
+			<Link href={`/${video.id}`} style={{ height: "70%" }}>
 				<div className={styles.preview}>
 					<Image
 						src={video.thumbnail}

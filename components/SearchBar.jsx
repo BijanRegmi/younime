@@ -1,6 +1,7 @@
+"use client"
+
 import { useRef, useState } from "react"
-import { useRouter } from "next/router"
-import { useQuery } from "react-query"
+import { useRouter } from "next/navigation"
 import useOnClickOutside from "../customHooks/useOnClickOutside"
 
 import fuzzysort from "fuzzysort"
@@ -9,18 +10,12 @@ import SearchBtn from "../assets/search.svg"
 import Cross from "../assets/cross.svg"
 import styles from "../styles/searchbar.module.css"
 
-const fetchAnimeList = async () => {
-	return fetch("/api/allAnime").then(res => res.json())
-}
-
-const SearchBar = () => {
+const SearchBar = ({ animeList }) => {
 	const [showSuggestion, setShowSuggestion] = useState(false)
 	const [filteredList, setFilteredList] = useState([])
 	const inputRef = useRef()
 	const formRef = useOnClickOutside(() => setShowSuggestion(false))
 	const router = useRouter()
-
-	const { data: animeList } = useQuery("getAnimeList", fetchAnimeList)
 
 	const filterList = e => {
 		const { value } = e.target
