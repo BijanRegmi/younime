@@ -3,9 +3,12 @@ import prisma from "../../prisma"
 import styles from "../../styles/index.module.css"
 
 const animeLayout = async ({ params, children }) => {
-	const { episodes } = await prisma.anime.findUnique({
+	const anime = await prisma.anime.findUnique({
 		where: { id: Number(params["anime-id"]) },
 		select: {
+			id: true,
+			title: true,
+			studio: true,
 			episodes: {
 				select: {
 					id: true,
@@ -20,7 +23,7 @@ const animeLayout = async ({ params, children }) => {
 	return (
 		<div className={styles.animePage}>
 			{children}
-			<EpisodeList episodes={episodes} animeId={params["anime-id"]} />
+			<EpisodeList anime={anime} />
 		</div>
 	)
 }

@@ -1,47 +1,47 @@
 .epList {
 	flex-grow: 1;
 	height: 100%;
-	overflow-y: scroll;
-	padding: 8px;
-
 	display: flex;
-	flex-wrap: wrap;
-	--item-per-row: 8;
+	flex-direction: column;
+	gap: 0.5rem;
+	overflow: scroll;
 }
 
-.epcard {
+.epcardNew {
+	padding: 1rem;
+	background-color: var(--bg-color-2);
+	display: flex;
+	border-radius: 1.5rem;
+	border: 1px solid var(--border-color);
+}
+
+.epcardNew:hover {
+	background-color: var(--bg-color-3);
+}
+
+.details {
 	text-decoration: none;
-	flex: 0 0 calc(100% / var(--item-per-row) - 2 * 5px);
-	aspect-ratio: 1 / 1;
-	margin: 5px;
+	flex-grow: 1;
+}
+
+.ep {
+	color: var(--fg-color);
+}
+.title {
+	color: var(--fg-color-2);
+}
+.studio {
+	color: var(--fg-color-3);
+}
+
+.actions {
+	height: 100%;
 	display: flex;
 	justify-content: center;
-	align-items: center;
 	cursor: pointer;
-	border-radius: 4px;
-	background-color: #eee;
-	border: 2px solid #999;
-	max-height: calc(100% / var(--item-per-row));
 }
 
-.epcard:hover {
-	background-color: #f5f5f5;
-}
-
-.epcard:hover > span {
-	transform: scale(1.2);
-	border: 2px solid black;
-	box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px,
-		rgba(0, 0, 0, 0.22) 0px 15px 12px;
-	background-color: #d5d5d5;
-}
-
-.epcard > span {
-	width: 40%;
-	aspect-ratio: 1/1;
-
-	border-radius: 4px;
-	display: flex;
-	justify-content: center;
-	align-items: center;
+.actions > svg {
+	color: var(--fg-color-2);
+	width: 2rem;
 }
