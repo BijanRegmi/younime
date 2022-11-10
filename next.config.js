@@ -13,6 +13,10 @@ const nextConfig = {
 	images: {
 		domains: ["portswigger.net", "cdn.myanimelist.net"],
 	},
+	experimental: {
+		appDir: true,
+	},
+	reactStrictMode: false,
 }
 
 module.exports = nextConfig
