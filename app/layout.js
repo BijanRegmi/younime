@@ -10,7 +10,7 @@ import SearchBar from "../components/SearchBar"
 import { unstable_getServerSession } from "next-auth"
 import { authOptions } from "../pages/api/auth/[...nextauth]"
 import SessionContext from "../components/Context/SessionContext"
-import ProfileHead from "../components/ProfileHead"
+import ProfileHead from "../components/Account/ProfileHead"
 
 export default async function RootLayout({ children }) {
 	const animeList = await prisma.anime.findMany({
