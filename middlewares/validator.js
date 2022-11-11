@@ -12,7 +12,6 @@ const _validators = {
 		(value.length >= 8 && value) || undefined,
 		"Password length must be greater or equal to 8.",
 	],
-	userTag: value => [(true && value) || undefined, "UserTag invalid"],
 }
 
 const validator = next => {

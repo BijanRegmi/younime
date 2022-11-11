@@ -10,14 +10,38 @@ datasource db {
     url      = env("DATABASE_URL")
 }
 
-model user {
-    id       String    @id @default(uuid())
-    email    String    @unique
-    password String
-    userTag  String    @unique @db.VarChar(20)
+model Account {
+    // Next Auth
+    id                String  @id @default(cuid())
+    userId            String
+    type              String
+    provider          String
+    providerAccountId String
+    refresh_token     String? @db.Text
+    access_token      String? @db.Text
+    expires_at        Int?
+    token_type        String?
+    scope             String?
+    id_token          String? @db.Text
+    session_state     String?
+
+    user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+    @@unique([provider, providerAccountId])
+}
+
+model User {
+    // Next Auth
+    id            String    @id @default(cuid())
+    name          String?
+    email         String?   @unique
+    emailVerified DateTime?
+    image         String?
+    accounts      Account[]
+
+    // Own
+    password String?
     bio      String?   @db.VarChar(512)
-    level    Int       @default(0)
-    verified Boolean   @default(false)
     comments comment[]
 }
 
@@ -43,8 +67,8 @@ model comment {
     spoiler   Boolean? @default(false)
     likes     Int      @default(0)
     dislikes  Int      @default(0)
-    user      user?    @relation(fields: [user_id], references: [id])
-    user_id   String?
+    User      User?    @relation(fields: [User_id], references: [id])
+    User_id   String?
     episode   episode? @relation(fields: [episodeId], references: [id])
     episodeId Int?
 }

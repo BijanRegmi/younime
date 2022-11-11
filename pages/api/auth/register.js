@@ -5,20 +5,37 @@ import validator from "../../../middlewares/validator"
 const handler = async (req, res) => {
 	if (req.method != "POST") return res.status(405).send()
 
-	const { email, password, userTag } = req.validBody
+	const { email, password } = req.validBody
 
-	if (!email || !password || !userTag) {
+	if (!email || !password) {
 		return res.status(400).json({
 			message: "One or more required field is missing.",
 		})
 	}
 
 	try {
+		const user = await prisma.user.findUnique({
+			where: { email },
+			select: {
+				password: true,
+				accounts: { select: { provider: true } },
+			},
+		})
+
+		// If a user exists that has logged in any providers.
+		if (user && user.password)
+			return res.status(400).json({ message: "User already registered." })
+		else if (user)
+			return res.status(400).json({
+				message: `User already registered with (${user.accounts
+					.map(account => account.provider)
+					.join(", ")}) providers.`,
+			})
+
 		await prisma.user.create({
 			data: {
 				email,
 				password: hashPassword(password),
-				userTag,
 			},
 		})
 
