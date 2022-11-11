@@ -11,7 +11,7 @@ const nextConfig = {
 		return config
 	},
 	images: {
-		domains: ["portswigger.net", "cdn.myanimelist.net"],
+		domains: ["avatars.githubusercontent.com", "cdn.myanimelist.net", "i.pravatar.cc"],
 	},
 	experimental: {
 		appDir: true,
