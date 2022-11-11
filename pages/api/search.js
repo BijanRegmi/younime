@@ -31,7 +31,7 @@ const handler = async (req, res) => {
 		})
 		return res.json(response)
 	} catch (err) {
-		console.log(err.message)
+		console.error(err.message)
 		return res.status(400).json({
 			message: "Something went wrong.",
 		})

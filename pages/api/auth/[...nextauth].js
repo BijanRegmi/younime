@@ -59,28 +59,6 @@ export const authOptions = {
 		logo: "https://avatars.githubusercontent.com/u/55084653?v=4",
 	},
 	debug: true,
-	callbacks: {
-		async signIn({ user, account, profile, email, credentials }) {
-			console.log("SignIn callback")
-			console.log(user, account, profile, email, credentials)
-			return true
-		},
-		async redirect({ url, baseUrl }) {
-			console.log("Redirect callback")
-			console.log(url, baseUrl)
-			return baseUrl
-		},
-		async session({ session, user, token }) {
-			console.log("Session callback")
-			console.log(session, user, token)
-			return session
-		},
-		async jwt({ token, user, account, profile, isNewUser }) {
-			console.log("JWT callback")
-			console.log(token, user, account, profile, isNewUser)
-			return token
-		},
-	},
 }
 
 export default NextAuth(authOptions)

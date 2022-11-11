@@ -49,7 +49,7 @@ const handler = async (req, res) => {
 				message: `An account already exists with this ${err.meta.target}.`,
 			})
 		}
-		console.log(err)
+		console.error(err)
 		return res.status(500).json({ message: "Something went wrong." })
 	}
 }

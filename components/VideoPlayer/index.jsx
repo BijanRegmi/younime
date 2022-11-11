@@ -36,7 +36,7 @@ const VideoPlayer = ({ url }) => {
 	}
 
 	const setDuration = duration => {
-		console.log("Video loaded.", { duration })
+		console.info("Video loaded.", { duration })
 		setState({ ...state, duration })
 	}
 

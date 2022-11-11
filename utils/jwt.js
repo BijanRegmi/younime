@@ -9,7 +9,7 @@ export const verifyToken = token => {
 		const data = verify(token, process.env.TOKEN_SECRET)
 		return { success: true, payload: data }
 	} catch (err) {
-		console.log(err)
+		console.error(err)
 		return { success: false, message: err.message }
 	}
 }

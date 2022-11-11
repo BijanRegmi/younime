@@ -28,7 +28,6 @@ const Controls = ({ state, setState, playerRef }) => {
 
 	// CHANGE VOLUME
 	const slideVolume = e => {
-		console.log(e.target.value)
 		setState(old => ({
 			...old,
 			volume: e.target.value,
@@ -50,7 +49,7 @@ const Controls = ({ state, setState, playerRef }) => {
 				setState(old => ({ ...old, mode: MODES.NORMAL }))
 				document.exitPictureInPicture()
 			} catch (err) {
-				console.log(err)
+				console.error(err)
 			}
 		} else
 			try {
@@ -59,7 +58,7 @@ const Controls = ({ state, setState, playerRef }) => {
 					?.requestPictureInPicture()
 				setState(old => ({ ...old, mode: MODES.MINI }))
 			} catch (err) {
-				console.log(err)
+				console.error(err)
 			}
 	}
 
