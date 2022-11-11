@@ -14,7 +14,7 @@
     "bcryptjs": "^2.4.3",
     "fuzzysort": "^2.0.3",
     "jsonwebtoken": "^8.5.1",
-    "next": "13.0.2",
+    "next": "^13.0.3",
     "next-auth": "^4.16.4",
     "nookies": "^2.5.2",
     "react": "18.2.0",
