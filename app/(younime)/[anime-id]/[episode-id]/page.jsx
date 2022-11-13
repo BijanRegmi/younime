@@ -1,5 +1,5 @@
-import VideoPlayer from "../../../components/VideoPlayer"
-import prisma from "../../../prisma"
+import VideoPlayer from "../../../../components/VideoPlayer"
+import prisma from "../../../../prisma"
 
 const EpPage = async ({ params }) => {
 	const res = await prisma.anime.findUnique({
