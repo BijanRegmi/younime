@@ -40,12 +40,7 @@ model User {
     accounts      Account[]
 
     // User data
-    password String?
-    history  history[]
-}
-
-model history {
-    userId               String @id
+    password             String?
     lastWatchedEpisodeId Int
 
     // Playlist stuffs
@@ -61,7 +56,6 @@ model history {
     likedComments    comment[] @relation("likedComments")
     dislikedComments comment[] @relation("dislikedComments")
 
-    user          User    @relation(fields: [userId], references: [id])
     lastWatchedEp episode @relation("lastWatched", fields: [lastWatchedEpisodeId], references: [id])
 }
 
@@ -79,14 +73,14 @@ model anime {
 
     genres   genre[]
     episodes episode[]
-    mapping  mapping[]
+    mapping  mapping?
 
-    watching_history    history[] @relation("watching")
-    completed_history   history[] @relation("completed")
-    hold_history        history[] @relation("hold")
-    considering_history history[] @relation("considering")
-    dropped_history     history[] @relation("dropped")
-    recommended_history history[] @relation("recommended")
+    watchers     User[] @relation("watching")
+    completers   User[] @relation("completed")
+    holders      User[] @relation("hold")
+    considerers  User[] @relation("considering")
+    dropers      User[] @relation("dropped")
+    recommenders User[] @relation("recommended")
 }
 
 model comment {
@@ -96,10 +90,10 @@ model comment {
     episodeId   Int
     commenterId String
 
-    likers    history[] @relation("likedComments")
-    dislikers history[] @relation("dislikedComments")
+    likers    User[] @relation("likedComments")
+    dislikers User[] @relation("dislikedComments")
 
-    commenter history @relation("commented", fields: [commenterId], references: [userId])
+    commenter User    @relation("commented", fields: [commenterId], references: [id])
     episode   episode @relation(fields: [episodeId], references: [id])
 }
 
@@ -109,8 +103,8 @@ model episode {
     name     String?
     animeId  Int
 
-    comments comment[]
-    history  history[] @relation("lastWatched")
+    comments     comment[]
+    lastWatchers User[]    @relation("lastWatched")
 
     anime anime @relation(fields: [animeId], references: [id])
 }
@@ -121,9 +115,8 @@ model genre {
 }
 
 model mapping {
-    id      Int   @id
-    mal     anime @relation(fields: [animeId], references: [id])
-    animeId Int
+    animeId Int @id
+    otherId Int
 
-    @@unique([id, animeId])
+    anime anime @relation(fields: [animeId], references: [id])
 }
