@@ -1,24 +1,19 @@
 import prisma from "../../../prisma"
 
 const handler = async (req, res) => {
-	if (req.method != "POST")
+	if (req.method != "GET")
 		return res.status(405).json({ message: "Method not allowed." })
 
-	const { content, spoiler = false, episodeId } = req.body
+	const { id } = req.body
 
 	try {
 		await prisma.user.update({
 			where: { email: req.user.email },
 			data: {
-				comments: {
-					create: {
-						content,
-						spoiler,
-						episodeId,
-					},
+				likedComments: {
+					connect: { id },
 				},
 			},
-			select: { id: true },
 		})
 		return res.sendStatus(200)
 	} catch (err) {
