@@ -1,0 +1,25 @@
+.wrapper {
+	position: absolute;
+	inset: 0;
+	background-color: blue;
+
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.container {
+	height: 75%;
+	max-width: 800px;
+	aspect-ratio: 16 / 9;
+
+	display: flex;
+}
+
+.banner {
+	background: var(--bg-color)
+		url("/banner.jpg")
+		no-repeat cover;
+	width: 40%;
+	height: 100%;
+}

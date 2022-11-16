@@ -19,6 +19,10 @@ body,
 	color: var(--fg-color);
 }
 
+body {
+	position: relative;
+}
+
 p,
 h1,
 h2,
@@ -41,7 +45,7 @@ select {
 }
 
 [data-nextjs-scroll-focus-boundary] {
-  display: contents;
+	display: contents;
 }
 
 :root {

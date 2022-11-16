@@ -57,3 +57,22 @@
 	color: var(--fg-color-1);
 	overflow-wrap: break-word;
 }
+
+.actions {
+	grid-column-start: 1;
+	grid-column-end: 3;
+	margin-top: 1rem;
+	padding-top: 1rem;
+	border-top: 1px solid var(--bg-color-2);
+	display: flex;
+	justify-content: center;
+	align-self: center;
+}
+
+.button {
+	text-decoration: none;
+	padding: .4rem;
+	border-radius: .2rem;
+	background-color: var(--fg-color);
+	color: var(--bg-color);
+}
