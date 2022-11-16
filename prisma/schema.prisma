@@ -39,47 +39,80 @@ model User {
     image         String?
     accounts      Account[]
 
-    // Own
+    // User data
     password String?
-    bio      String?   @db.VarChar(512)
-    comments comment[]
+    history  history[]
+}
+
+model history {
+    userId               String @id
+    lastWatchedEpisodeId Int
+
+    // Playlist stuffs
+    watching    anime[] @relation("watching")
+    completed   anime[] @relation("completed")
+    hold        anime[] @relation("hold")
+    considering anime[] @relation("considering")
+    dropped     anime[] @relation("dropped")
+    recommended anime[] @relation("recommended")
+
+    // Comments stuffs
+    comments         comment[] @relation("commented")
+    likedComments    comment[] @relation("likedComments")
+    dislikedComments comment[] @relation("dislikedComments")
+
+    user          User    @relation(fields: [userId], references: [id])
+    lastWatchedEp episode @relation("lastWatched", fields: [lastWatchedEpisodeId], references: [id])
 }
 
 model anime {
-    id         Int       @id
+    id         Int     @id
     title      String
     alttitle   String?
-    score      Float     @default(0.0)
+    score      Float   @default(0.0)
     age_rating String?
     studio     String?
     season     String?
     type       String?
     thumbnail  String?
     synopsis   String?
-    genres     genre[]
-    episodes   episode[]
-    mapping    mapping[]
+
+    genres   genre[]
+    episodes episode[]
+    mapping  mapping[]
+
+    watching_history    history[] @relation("watching")
+    completed_history   history[] @relation("completed")
+    hold_history        history[] @relation("hold")
+    considering_history history[] @relation("considering")
+    dropped_history     history[] @relation("dropped")
+    recommended_history history[] @relation("recommended")
 }
 
 model comment {
-    id        Int      @id @default(autoincrement())
-    content   String
-    spoiler   Boolean? @default(false)
-    likes     Int      @default(0)
-    dislikes  Int      @default(0)
-    User      User?    @relation(fields: [User_id], references: [id])
-    User_id   String?
-    episode   episode? @relation(fields: [episodeId], references: [id])
-    episodeId Int?
+    id          Int      @id @default(autoincrement())
+    content     String
+    spoiler     Boolean? @default(false)
+    episodeId   Int
+    commenterId String
+
+    likers    history[] @relation("likedComments")
+    dislikers history[] @relation("dislikedComments")
+
+    commenter history @relation("commented", fields: [commenterId], references: [userId])
+    episode   episode @relation(fields: [episodeId], references: [id])
 }
 
 model episode {
-    id       Int       @id @default(autoincrement())
-    file_url String?   @unique
+    id       Int     @id @default(autoincrement())
+    file_url String? @unique
     name     String?
-    anime    anime     @relation(fields: [animeId], references: [id])
     animeId  Int
+
     comments comment[]
+    history  history[] @relation("lastWatched")
+
+    anime anime @relation(fields: [animeId], references: [id])
 }
 
 model genre {
