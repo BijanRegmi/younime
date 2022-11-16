@@ -51,6 +51,16 @@ export const authOptions = {
 			},
 		}),
 	],
+	callbacks: {
+		jwt: async ({ token, user, account, profile, isNewUser }) => {
+			token.provider = account?.provider
+			return token
+		},
+		session: async ({ session, user, token }) => {
+			session.user.provider = token.provider
+			return session
+		},
+	},
 	session: {
 		strategy: "jwt",
 	},
@@ -58,7 +68,6 @@ export const authOptions = {
 		colorScheme: "dark",
 		logo: "https://avatars.githubusercontent.com/u/55084653?v=4",
 	},
-	debug: true,
 }
 
 export default NextAuth(authOptions)
