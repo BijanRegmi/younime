@@ -1,19 +1,17 @@
 import Link from "next/link"
-import prisma from "../prisma"
+import prisma from "../../prisma"
 
-import styles from "../styles/index.module.css"
-import "../styles/globals.css"
+import styles from "../../styles/index.module.css"
+import "../../styles/globals.css"
 
-import HamburgerSvg from "../assets/hamburger.svg"
-import SearchBar from "../components/SearchBar"
+import HamburgerSvg from "../../assets/hamburger.svg"
+import SearchBar from "../../components/Navbar/SearchBar"
 
 import { unstable_getServerSession } from "next-auth"
-import { authOptions } from "../pages/api/auth/[...nextauth]"
-import SessionContext from "../components/Context/SessionContext"
-import ProfileHead from "../components/Account/ProfileHead"
 import { authOptions } from "../../pages/api/auth/[...nextauth]"
 import SessionContext from "../../components/Context/SessionContext"
-import ProfileHead from "../../components/Account/ProfileHead"
+import ProfileHead from "../../components/Navbar/ProfileHead"
+import SignIn from "../../components/Navbar/SignIn"
 
 export default async function RootLayout({ children }) {
 	const animeList = await prisma.anime.findMany({
@@ -23,10 +21,8 @@ export default async function RootLayout({ children }) {
 			alttitle: true,
 		},
 	})
-	console.log("Fetching animelist from db")
 
 	const session = await unstable_getServerSession(authOptions)
-	console.log(session)
 
 	return (
 		<html>
@@ -40,7 +36,11 @@ export default async function RootLayout({ children }) {
 								yoUnime
 							</Link>
 							<SearchBar animeList={animeList} />
-							<ProfileHead />
+							{session?.user ? (
+								<ProfileHead user={session.user} />
+							) : (
+								<SignIn />
+							)}
 						</div>
 						<div className={styles.content}>{children}</div>
 					</main>
