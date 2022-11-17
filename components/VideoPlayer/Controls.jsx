@@ -12,7 +12,7 @@ import FullScreenOpen from "@/assets/fullscreen-open.svg"
 import FullScreenClose from "@/assets/fullscreen-close.svg"
 
 import styles from "@/styles/videoplayer.module.css"
-import durationFormatter from "@/utils/durationFormatter"
+import { durationFormatter } from "@/lib/helpers"
 import { MODES } from "./"
 
 const Controls = ({ state, setState, playerRef }) => {

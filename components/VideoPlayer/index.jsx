@@ -2,8 +2,8 @@
 
 import { useRef, useState } from "react"
 import ReactPlayer from "react-player"
-import useHasWindow from "@/hooks/useHasWindow"
-import useShowOnMouseMove from "@/hooks/useShowOnMouseMove"
+import useHasWindow from "@/lib/hooks/useHasWindow"
+import useShowOnMouseMove from "@/lib/hooks/useShowOnMouseMove"
 import Controls from "./Controls"
 import styles from "@/styles/videoplayer.module.css"
 

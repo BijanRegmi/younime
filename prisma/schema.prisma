@@ -30,6 +30,14 @@ model Account {
     @@unique([provider, providerAccountId])
 }
 
+enum AnimeStatus {
+    WATCHING
+    COMPLETED
+    HOLD
+    CONSIDERING
+    DROPPED
+}
+
 model User {
     // Next Auth
     id            String    @id @default(cuid())
@@ -42,14 +50,7 @@ model User {
     // User data
     password             String?
     lastWatchedEpisodeId Int?
-
-    // Playlist stuffs
-    watching    anime[] @relation("watching")
-    completed   anime[] @relation("completed")
-    hold        anime[] @relation("hold")
-    considering anime[] @relation("considering")
-    dropped     anime[] @relation("dropped")
-    recommended anime[] @relation("recommended")
+    history              history_entry[]
 
     // Comments stuffs
     comments         comment[] @relation("commented")
@@ -57,6 +58,17 @@ model User {
     dislikedComments comment[] @relation("dislikedComments")
 
     lastWatchedEp episode? @relation("lastWatched", fields: [lastWatchedEpisodeId], references: [id])
+}
+
+model history_entry {
+    userId  String
+    animeId Int
+    status  AnimeStatus
+
+    user  User  @relation(fields: [userId], references: [id])
+    anime anime @relation(fields: [animeId], references: [id])
+
+    @@unique([userId, animeId])
 }
 
 model anime {
@@ -74,13 +86,7 @@ model anime {
     genres   genre[]
     episodes episode[]
     mapping  mapping?
-
-    watchers     User[] @relation("watching")
-    completers   User[] @relation("completed")
-    holders      User[] @relation("hold")
-    considerers  User[] @relation("considering")
-    dropers      User[] @relation("dropped")
-    recommenders User[] @relation("recommended")
+    history  history_entry[]
 }
 
 model comment {

@@ -18,7 +18,7 @@
 # misc
 .DS_Store
 *.pem
-/utils/BuildDB
+BuildDB
 
 # debug
 npm-debug.log*

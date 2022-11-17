@@ -2,7 +2,7 @@
 
 import { useRef, useState } from "react"
 import { useRouter } from "next/navigation"
-import useOnClickOutside from "@/hooks/useOnClickOutside"
+import useOnClickOutside from "@/lib/hooks/useOnClickOutside"
 
 import fuzzysort from "fuzzysort"
 

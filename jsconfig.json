@@ -8,9 +8,6 @@
 			"@/assets/*": [
 				"public/assets/*"
 			],
-			"@/hooks/*": [
-				"customHooks/*"
-			],
 			"@/prisma": [
 				"prisma/index.js"
 			],
@@ -20,8 +17,8 @@
 			"@/api/*": [
 				"pages/api/*"
 			],
-			"@/utils/*": [
-				"utils/*"
+			"@/lib/*": [
+				"lib/*"
 			]
 		}
 	}
