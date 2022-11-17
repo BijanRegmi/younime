@@ -6,7 +6,7 @@
 				"components/*"
 			],
 			"@/assets/*": [
-				"assets/*"
+				"public/assets/*"
 			],
 			"@/hooks/*": [
 				"customHooks/*"
