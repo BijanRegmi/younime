@@ -1,32 +1,31 @@
 import prisma from "@/prisma"
+import { withAuth } from "@/lib/apiMiddlewares/withAuth"
+import { withMethods } from "@/lib/apiMiddlewares/withMethods"
+import { withValidation } from "@/lib/apiMiddlewares/withValidation"
+import { commentSchema } from "@/lib/validations/comment"
 
 const handler = async (req, res) => {
-	if (req.method != "PATCH")
-		return res.status(405).json({ message: "Method not allowed." })
-
 	const { id, content, spoiler } = req.body
-
-	var data
-	if (content) data.content = content
-	if (spoiler) data.spoiler = spoiler
-
 	try {
 		await prisma.user.update({
-			where: { email: req.user.email },
+			where: { id: req.user.id },
 			data: {
 				comments: {
 					update: {
 						where: { id },
-						data,
+						data: { content, spoiler },
 					},
 				},
 			},
 		})
-		return res.sendStatus(200)
+		return res.status(200).json({ message: "Success" })
 	} catch (err) {
 		console.error(err)
 		return res.status(500).json({ message: "Something went wrong." })
 	}
 }
 
-export default handler
+export default withMethods(
+	["PATCH"],
+	withAuth(withValidation(commentSchema, handler))
+)

@@ -3,8 +3,8 @@ import GithubProvider from "next-auth/providers/github"
 import GoogleProvider from "next-auth/providers/google"
 import CredentialsProvider from "next-auth/providers/credentials"
 import { PrismaAdapter } from "@next-auth/prisma-adapter"
+import { compareSync } from "bcryptjs"
 import prisma from "@/prisma"
-import { comparePassword } from "@/utils/crypto"
 
 export const authOptions = {
 	adapter: PrismaAdapter(prisma),
@@ -44,7 +44,7 @@ export const authOptions = {
 				if (user === null || !user.password)
 					throw new Error("User not registered.")
 
-				if (!comparePassword(creds.password, user.password))
+				if (!compareSync(creds.password, user.password))
 					throw new Error("Invalid password.")
 
 				return user
@@ -53,11 +53,13 @@ export const authOptions = {
 	],
 	callbacks: {
 		jwt: async ({ token, user, account, profile, isNewUser }) => {
-			token.provider = account?.provider
+			if (account) token.provider = account.provider
+			if (user) token.id = user.id
 			return token
 		},
 		session: async ({ session, user, token }) => {
 			session.user.provider = token.provider
+			session.user.id = token.id
 			return session
 		},
 	},
