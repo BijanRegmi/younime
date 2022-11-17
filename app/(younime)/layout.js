@@ -1,17 +1,17 @@
 import Link from "next/link"
-import prisma from "../../prisma"
+import prisma from "@/prisma"
 
-import styles from "../../styles/index.module.css"
-import "../../styles/globals.css"
+import styles from "@/styles/index.module.css"
+import "@/styles/globals.css"
 
-import HamburgerSvg from "../../assets/hamburger.svg"
-import SearchBar from "../../components/Navbar/SearchBar"
+import HamburgerSvg from "@/assets/hamburger.svg"
+import SearchBar from "@/components/Navbar/SearchBar"
 
 import { unstable_getServerSession } from "next-auth"
-import { authOptions } from "../../pages/api/auth/[...nextauth]"
-import SessionContext from "../../components/Context/SessionContext"
-import ProfileHead from "../../components/Navbar/ProfileHead"
-import SignIn from "../../components/Navbar/SignIn"
+import { authOptions } from "@/api/auth/[...nextauth]"
+import SessionContext from "@/components/Context/SessionContext"
+import ProfileHead from "@/components/Navbar/ProfileHead"
+import SignIn from "@/components/Navbar/SignIn"
 
 export default async function RootLayout({ children }) {
 	const animeList = await prisma.anime.findMany({

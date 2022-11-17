@@ -1,6 +1,6 @@
-import VideoCard from "../../components/VideoCard"
-import styles from "../../styles/index.module.css"
-import prisma from "../../prisma"
+import VideoCard from "@/components/VideoCard"
+import styles from "@/styles/index.module.css"
+import prisma from "@/prisma"
 
 export default async function Home() {
 	const homeAnimes =

@@ -1,6 +1,6 @@
 import Image from "next/image"
-import styles from "../styles/animedetailscard.module.css"
-import prisma from "../prisma"
+import styles from "@/styles/animedetailscard.module.css"
+import prisma from "@/prisma"
 
 const AnimeDetailsCard = async ({ animeId }) => {
 	const anime = await prisma.anime.findUnique({

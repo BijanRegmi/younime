@@ -1,4 +1,4 @@
-import prisma from "../../../prisma"
+import prisma from "@/prisma"
 
 const handler = async (req, res) => {
 	if (req.method != "PATCH")

@@ -41,7 +41,7 @@ model User {
 
     // User data
     password             String?
-    lastWatchedEpisodeId Int
+    lastWatchedEpisodeId Int?
 
     // Playlist stuffs
     watching    anime[] @relation("watching")
@@ -56,7 +56,7 @@ model User {
     likedComments    comment[] @relation("likedComments")
     dislikedComments comment[] @relation("dislikedComments")
 
-    lastWatchedEp episode @relation("lastWatched", fields: [lastWatchedEpisodeId], references: [id])
+    lastWatchedEp episode? @relation("lastWatched", fields: [lastWatchedEpisodeId], references: [id])
 }
 
 model anime {

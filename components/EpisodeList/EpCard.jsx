@@ -1,7 +1,7 @@
 "use client"
 
 import Link from "next/link"
-import styles from "../../styles/episodelist.module.css"
+import styles from "@/styles/episodelist.module.css"
 
 const EpCard = ({ ep, animeId, studio, title }) => {
 	return (

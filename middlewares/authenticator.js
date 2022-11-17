@@ -1,5 +1,5 @@
 import { unstable_getServerSession } from "next-auth"
-import { authOptions } from "../pages/api/auth/[...nextauth]"
+import { authOptions } from "@/api/auth/[...nextauth]"
 
 const authenticator = next => {
 	return async (req, res) => {

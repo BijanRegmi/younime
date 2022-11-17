@@ -1,6 +1,6 @@
-import EpisodeList from "../../../components/EpisodeList"
-import prisma from "../../../prisma"
-import styles from "../../../styles/index.module.css"
+import EpisodeList from "@/components/EpisodeList"
+import prisma from "@/prisma"
+import styles from "@/styles/index.module.css"
 
 const animeLayout = async ({ params, children }) => {
 	const anime = await prisma.anime.findUnique({

@@ -2,10 +2,10 @@
 
 import { useRef, useState } from "react"
 import ReactPlayer from "react-player"
-import useHasWindow from "../../customHooks/useHasWindow"
-import useShowOnMouseMove from "../../customHooks/useShowOnMouseMove"
+import useHasWindow from "@/hooks/useHasWindow"
+import useShowOnMouseMove from "@/hooks/useShowOnMouseMove"
 import Controls from "./Controls"
-import styles from "../../styles/videoplayer.module.css"
+import styles from "@/styles/videoplayer.module.css"
 
 export const MODES = {
 	FULLSCREEN: "fullscreen",

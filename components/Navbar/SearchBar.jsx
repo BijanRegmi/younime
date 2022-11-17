@@ -2,13 +2,13 @@
 
 import { useRef, useState } from "react"
 import { useRouter } from "next/navigation"
-import useOnClickOutside from "../../customHooks/useOnClickOutside"
+import useOnClickOutside from "@/hooks/useOnClickOutside"
 
 import fuzzysort from "fuzzysort"
 
-import SearchBtn from "../../assets/search.svg"
-import Cross from "../../assets/cross.svg"
-import styles from "../../styles/searchbar.module.css"
+import SearchBtn from "@/assets/search.svg"
+import Cross from "@/assets/cross.svg"
+import styles from "@/styles/searchbar.module.css"
 
 const SearchBar = ({ animeList }) => {
 	const [showSuggestion, setShowSuggestion] = useState(false)

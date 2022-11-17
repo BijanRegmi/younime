@@ -1,7 +1,7 @@
 "use client"
 import { useState } from "react"
 import Image from "next/image"
-import styles from "../../../styles/account.module.css"
+import styles from "@/styles/account.module.css"
 import Link from "next/link"
 
 const ProfileHead = ({ user }) => {

@@ -3,8 +3,8 @@ import GithubProvider from "next-auth/providers/github"
 import GoogleProvider from "next-auth/providers/google"
 import CredentialsProvider from "next-auth/providers/credentials"
 import { PrismaAdapter } from "@next-auth/prisma-adapter"
-import prisma from "../../../prisma"
-import { comparePassword } from "../../../utils/crypto"
+import prisma from "@/prisma"
+import { comparePassword } from "@/utils/crypto"
 
 export const authOptions = {
 	adapter: PrismaAdapter(prisma),

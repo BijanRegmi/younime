@@ -1,4 +1,4 @@
-import styles from "../../styles/episodelist.module.css"
+import styles from "@/styles/episodelist.module.css"
 import EpCard from "./EpCard"
 
 const EpisodeList = ({ anime }) => {

@@ -1,4 +1,4 @@
-import prisma from "../../prisma"
+import prisma from "@/prisma"
 
 const handler = async (req, res) => {
 	const str = req.query.q

@@ -1,6 +1,6 @@
-import prisma from "../../../prisma"
-import { hashPassword } from "../../../utils/crypto"
-import validator from "../../../middlewares/validator"
+import prisma from "@/prisma"
+import { hashPassword } from "@/utils/crypto"
+import validator from "@/middlewares/validator"
 
 const handler = async (req, res) => {
 	if (req.method != "POST") return res.status(405).send()
