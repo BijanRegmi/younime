@@ -2,7 +2,7 @@ import prisma from "@/prisma"
 import { withAuth } from "@/lib/apiMiddlewares/withAuth"
 import { withMethods } from "@/lib/apiMiddlewares/withMethods"
 import { withValidation } from "@/lib/apiMiddlewares/withValidation"
-import { commentSchema } from "@/lib/validations/comment"
+import { addCommentSchema } from "@/lib/validations/comment"
 
 const handler = async (req, res) => {
 	const { content, spoiler, episodeId } = req.body
@@ -29,5 +29,5 @@ const handler = async (req, res) => {
 
 export default withMethods(
 	["POST"],
-	withAuth(withValidation(commentSchema, handler))
+	withAuth(withValidation(addCommentSchema, handler))
 )
