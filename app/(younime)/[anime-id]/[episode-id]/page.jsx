@@ -1,5 +1,6 @@
 import VideoPlayer from "@/components/VideoPlayer"
 import prisma from "@/prisma"
+import Comments from "@/components/Comments"
 
 const EpPage = async ({ params }) => {
 	const res = await prisma.anime.findUnique({
@@ -13,6 +14,11 @@ const EpPage = async ({ params }) => {
 	})
 
 	const { file_url } = res.episodes[0]
-	return <VideoPlayer url={file_url} />
+	return (
+		<div>
+			<VideoPlayer url={file_url} />
+			<Comments />
+		</div>
+	)
 }
 export default EpPage

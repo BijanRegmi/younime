@@ -16,7 +16,10 @@ const handler = async (req, res) => {
 			skip: page * 10,
 			take: 10,
 		})
-		return res.status(200).json(comments)
+		return res.status(200).json({
+			comments,
+			next: comments.length == 10 ? page + 1 : undefined,
+		})
 	} catch (err) {
 		console.error(err)
 		return res.status(500).json({ message: "Something went wrong." })
