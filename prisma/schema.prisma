@@ -2,7 +2,8 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
-    provider = "prisma-client-js"
+    provider        = "prisma-client-js"
+    previewFeatures = ["filteredRelationCount"]
 }
 
 datasource db {
@@ -38,6 +39,11 @@ enum AnimeStatus {
     DROPPED
 }
 
+enum CommentInteraction {
+    LIKED
+    DISLIKED
+}
+
 model User {
     // Next Auth
     id            String    @id @default(cuid())
@@ -53,9 +59,8 @@ model User {
     history              history_entry[]
 
     // Comments stuffs
-    comments         comment[] @relation("commented")
-    likedComments    comment[] @relation("likedComments")
-    dislikedComments comment[] @relation("dislikedComments")
+    comments             comment[]             @relation("commented")
+    comment_interactions comment_interaction[]
 
     lastWatchedEp episode? @relation("lastWatched", fields: [lastWatchedEpisodeId], references: [id])
 }
@@ -69,6 +74,16 @@ model history_entry {
     anime anime @relation(fields: [animeId], references: [id])
 
     @@unique([userId, animeId])
+}
+
+model comment_interaction {
+    userId    String
+    commentId Int
+    state     CommentInteraction
+    user      User               @relation(fields: [userId], references: [id])
+    comment   comment            @relation(fields: [commentId], references: [id])
+
+    @@unique([userId, commentId])
 }
 
 model anime {
@@ -96,11 +111,9 @@ model comment {
     episodeId   Int
     commenterId String
 
-    likers    User[] @relation("likedComments")
-    dislikers User[] @relation("dislikedComments")
-
-    commenter User    @relation("commented", fields: [commenterId], references: [id])
-    episode   episode @relation(fields: [episodeId], references: [id])
+    commenter            User                  @relation("commented", fields: [commenterId], references: [id])
+    episode              episode               @relation(fields: [episodeId], references: [id])
+    comment_interactions comment_interaction[]
 }
 
 model episode {

@@ -2,7 +2,7 @@ import prisma from "@/prisma"
 import { withAuth } from "@/lib/apiMiddlewares/withAuth"
 import { withMethods } from "@/lib/apiMiddlewares/withMethods"
 import { withValidation } from "@/lib/apiMiddlewares/withValidation"
-import { interactCommentSchema } from "@/lib/validations/comment"
+import { deleteCommentSchema } from "@/lib/validations/comment"
 
 const handler = async (req, res) => {
 	const { id } = req.body
@@ -20,5 +20,5 @@ const handler = async (req, res) => {
 
 export default withMethods(
 	["DELETE"],
-	withAuth(withValidation(interactCommentSchema, handler))
+	withAuth(withValidation(deleteCommentSchema, handler))
 )

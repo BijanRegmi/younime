@@ -1,0 +1,47 @@
+.wrapper {
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+	background-color: var(--bg-color);
+	gap: 2px;
+}
+
+.cmtItem {
+	display: flex;
+	flex-direction: row;
+	gap: 20px;
+	padding: 0.3rem;
+}
+
+.pfp {
+	background-color: red;
+	width: 5%;
+	aspect-ratio: 1 / 1;
+}
+
+.actions {
+	background-color: green;
+	width: 5%;
+}
+
+.comment {
+	flex-grow: 1;
+}
+
+.btns {
+	display: none;
+}
+
+.input {
+	outline: none;
+	background-color: transparent;
+	border-bottom: 2px solid var(--fg-color);
+	color: var(--fg-color);
+}
+
+.interactBtn {
+	width: 20px;
+	aspect-ratio: 1 / 1;
+	fill: var(--fg-color);
+	cursor: pointer;
+}

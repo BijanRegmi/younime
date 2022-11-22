@@ -7,20 +7,23 @@ import { addCommentSchema } from "@/lib/validations/comment"
 const handler = async (req, res) => {
 	const { content, spoiler, episodeId } = req.body
 	try {
-		await prisma.user.update({
-			where: { id: req.user.id },
+		const comment = await prisma.comment.create({
 			data: {
-				comments: {
-					create: {
-						content,
-						spoiler,
-						episodeId,
-					},
-				},
+				content,
+				spoiler,
+				episodeId,
+				commenterId: req.user.id,
 			},
-			select: { id: true },
+			select: {
+				id: true,
+				content: true,
+				spoiler: true,
+				commenter: { select: { name: true, image: true } },
+			},
 		})
-		return res.status(200).json({ message: "Success" })
+		comment.likes = 0
+		comment.dislikes = 0
+		return res.status(200).json(comment)
 	} catch (err) {
 		console.error(err)
 		return res.status(500).json({ message: "Something went wrong." })
