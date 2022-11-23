@@ -34,10 +34,15 @@ export default function Comments() {
 						/>
 					))
 				)}
-			<div ref={observeRef}>
-				{isFetchingNextPage && hasNextPage
-					? "Loading..."
-					: "Nothing left"}
+			<div
+				ref={observeRef}
+				style={{
+					width: "10px",
+					height: "10px",
+					backgroundColor: "transparent",
+				}}
+			>
+				{isFetchingNextPage && hasNextPage ? "Loading..." : ""}
 			</div>
 		</div>
 	)

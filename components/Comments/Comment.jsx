@@ -1,5 +1,6 @@
 import { useInteractComment } from "@/lib/hooks/comments"
 import styles from "@/styles/comments.module.css"
+import Image from "next/image"
 
 import LikeSvg from "@/assets/like.svg"
 import DislikeSvg from "@/assets/dislike.svg"
@@ -31,28 +32,47 @@ const Comment = ({ comment, pageIdx }) => {
 
 	return (
 		<div className={styles.cmtItem}>
-			<div className={styles.pfp} />
+			<div className={styles.pfp}>
+				<Image
+					src={comment.commenter.image}
+					fill={true}
+					alt={comment.commenter.name}
+					style={{
+						objectFit: "cover",
+						borderRadius: "50%",
+						aspectRatio: "1 / 1"
+					}}
+				/>
+			</div>
 			<div className={styles.comment}>
-				{comment.commenter.name}: {comment.content}
-				{comment.spoiler ? "**" : ""}
-				{comment.status == "LIKED" ? (
-					<LikedSvg onClick={like} className={styles.interactBtn} />
-				) : (
-					<LikeSvg onClick={like} className={styles.interactBtn} />
-				)}
-				<span>{comment.likes}</span>
-				{comment.status == "DISLIKED" ? (
-					<DislikedSvg
-						onClick={dislike}
-						className={styles.interactBtn}
-					/>
-				) : (
-					<DislikeSvg
-						onClick={dislike}
-						className={styles.interactBtn}
-					/>
-				)}
-				<span>{comment.dislikes}</span>
+				<div className={styles.info}>{comment.commenter.name}</div>
+				<div className={styles.content}>{comment.content}</div>
+				<div className={styles.stats}>
+					{comment.status == "LIKED" ? (
+						<LikedSvg
+							onClick={like}
+							className={styles.interactBtn}
+						/>
+					) : (
+						<LikeSvg
+							onClick={like}
+							className={styles.interactBtn}
+						/>
+					)}
+					<span>{comment.likes}</span>
+					{comment.status == "DISLIKED" ? (
+						<DislikedSvg
+							onClick={dislike}
+							className={styles.interactBtn}
+						/>
+					) : (
+						<DislikeSvg
+							onClick={dislike}
+							className={styles.interactBtn}
+						/>
+					)}
+					<span>{comment.dislikes}</span>
+				</div>
 			</div>
 			<div className={styles.actions} />
 		</div>
