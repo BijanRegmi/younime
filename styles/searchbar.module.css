@@ -1,14 +1,13 @@
 .searchContainer {
-	width: 80%;
 	height: 100%;
+	flex-grow: 1;
 	display: flex;
 	justify-content: center;
-
-	position: relative;
 }
 
 .inputRow {
-	width: 75%;
+	position: relative;
+	min-width: 75%;
 	height: 100%;
 
 	display: flex;
@@ -19,38 +18,44 @@
 
 .inputRow > input {
 	height: 100%;
+	padding: 4px;
+
 	flex-grow: 1;
+
 	border: 1px solid var(--border-color);
 	border-right: none;
 	border-left: var(--input-border-left);
-	background-color: var(--bg-color-2);
-	color: var(--fg-color);
-	padding: 4px;
-	outline: none;
-	transition: border 120ms ease-in-out;
-
 	border-top-left-radius: var(--input-border-radius);
 	border-bottom-left-radius: var(--input-border-radius);
+	outline: none;
+
+	background-color: var(--bg-color-2);
+	color: var(--fg-color);
 }
 
 .textSearchBtn {
 	height: 100%;
-	width: 30px;
-	padding: 3px 3px 3px 7px;
+	width: 40px;
+	padding: 0.5rem;
+
+	flex-shrink: 0;
+
 	border: 1px solid var(--border-color);
 	border-right: none;
-	transition: opacity 120ms ease-in-out;
-	fill: var(--fg-color-2);
-	background-color: var(--bg-color-2);
-
 	border-top-left-radius: 1rem;
 	border-bottom-left-radius: var(--bottom-radius);
+
+	fill: var(--fg-color-2);
+	background-color: var(--bg-color-2);
 }
 
 .textCrossBtn {
 	height: 100%;
 	width: 30px;
+
+	flex-shrink: 0;
 	cursor: pointer;
+
 	fill: var(--fg-color-2);
 	background-color: var(--bg-color-2);
 
@@ -59,17 +64,21 @@
 }
 
 .searchBtn {
-	flex-shrink: 0;
-	width: 7%;
+	width: 55px;
 	height: 100%;
-	padding: 3px 5px;
-	border: 1px solid var(--border-color);
-	cursor: pointer;
-	fill: var(--fg-color-2);
-	background-color: var(--bg-color-2);
+	padding: 0.5rem;
+	padding-left: 1rem;
 
+	flex-shrink: 0;
+
+	border: 1px solid var(--border-color);
 	border-top-right-radius: 1rem;
 	border-bottom-right-radius: var(--bottom-radius);
+
+	cursor: pointer;
+
+	fill: var(--fg-color-2);
+	background-color: var(--bg-color-2);
 }
 
 .suggestionBox {
@@ -77,11 +86,13 @@
 	z-index: 1;
 	background-color: var(--bg-color);
 	top: 100%;
-	width: 75%;
+	width: 100%;
 	max-height: 70vh;
 	overflow-y: scroll;
 	overflow-x: hidden;
 	border: 1px solid var(--border-color);
+
+	flex-shrink: 0;
 
 	border-bottom-left-radius: 1rem;
 	border-bottom-right-radius: 1rem;
@@ -95,6 +106,8 @@
 
 	width: 100%;
 	height: 100%;
+
+	flex-grow: 1;
 
 	padding: 3px 0px;
 }
@@ -113,4 +126,6 @@
 	color: var(--fg-color-2);
 	width: 80%;
 	white-space: nowrap;
+	flex-grow: 1;
 }
+

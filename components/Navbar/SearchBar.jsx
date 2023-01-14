@@ -74,27 +74,27 @@ const SearchBar = ({ animeList }) => {
 					/>
 				)}
 				<SearchBtn className={styles.searchBtn} />
-			</form>
 
-			{showSuggestion && filteredList.length > 0 && (
-				<div className={styles.suggestionBox}>
-					{filteredList.map(item => (
-						<div key={item.id} className={styles.animeBox}>
-							<SearchBtn className={styles.textSearchBtn} />
-							<span
-								className={styles.animeTitle}
-								onClick={() => {
-									inputRef.current.value = item.title
-									setShowSuggestion(false)
-									router.push(`/${item.id}`)
-								}}
-							>
-								{item.title}
-							</span>
-						</div>
-					))}
-				</div>
-			)}
+				{showSuggestion && filteredList.length > 0 && (
+					<div className={styles.suggestionBox}>
+						{filteredList.map(item => (
+							<div key={item.id} className={styles.animeBox}>
+								<SearchBtn className={styles.textSearchBtn} />
+								<span
+									className={styles.animeTitle}
+									onClick={() => {
+										inputRef.current.value = item.title
+										setShowSuggestion(false)
+										router.push(`/${item.id}`)
+									}}
+								>
+									{item.title}
+								</span>
+							</div>
+						))}
+					</div>
+				)}
+			</form>
 		</div>
 	)
 }

@@ -6,8 +6,11 @@ const nextConfig = {
 	webpack(config) {
 		config.module.rules.push({
 			test: /\.svg$/,
-			use: [{ loader: '@svgr/webpack', options: { runtimeConfig: false } }],
+			use: [
+				{ loader: "@svgr/webpack", options: { runtimeConfig: false } },
+			],
 		})
+		config.resolve.extensions = [".mjs", ".js", ".jsx", ".json"]
 		return config
 	},
 	images: {
