@@ -56,4 +56,7 @@ select {
 	--fg-color-2: #a0a0a0;
 	--fg-color-3: #909090;
 	--border-color: var(--bg-color-3);
+
+	--sidebar-smol-size: 3rem;
+	--sidebar-big-size: 12rem;
 }

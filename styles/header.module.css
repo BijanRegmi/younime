@@ -10,17 +10,20 @@
 .ham {
 	fill: var(--fg-color);
 	flex-shrink: 0;
-	height: 100%;
+	width: var(--sidebar-smol-size);
+	aspect-ratio: 1 / 1;
 	padding: 0.5rem;
 	cursor: pointer;
+	border-radius: 50%;
 }
 
 .ham:hover {
 	background: #333a;
-	border-radius: 50%;
 }
 
 .logo {
+	text-align: center;
+	width: calc(var(--sidebar-big-size) - var(--sidebar-smol-size));
 	padding: 0 0.5rem;
 	text-decoration: none;
 	color: var(--fg-color);

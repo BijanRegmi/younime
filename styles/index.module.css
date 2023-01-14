@@ -1,14 +1,15 @@
-.main {
-	display: grid;
-	grid-template-columns: repeat(12, 1fr);
-}
-
 .content {
-	flex-grow: 1;
-	overflow: scroll;
+	height: calc(100% - 4rem);
+	margin: 0.5rem;
+
+	display: flex;
+	flex-direction: row;
+	gap: 0.5rem;
 }
 
 .homeAnimeContainer {
+	flex-grow: 1;
+	flex-shrink: 1;
 	display: grid;
 	grid-template-columns: 1fr 1fr 1fr 1fr;
 	grid-auto-rows: 300px;

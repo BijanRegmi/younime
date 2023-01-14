@@ -6,8 +6,8 @@ import useOnClickOutside from "@/lib/hooks/useOnClickOutside"
 
 import fuzzysort from "fuzzysort"
 
-import SearchBtn from "@/assets/search.svg"
-import Cross from "@/assets/cross.svg"
+import SearchBtn from "@/assets/misc/search.svg"
+import Cross from "@/assets/misc/cross.svg"
 import styles from "@/styles/searchbar.module.css"
 
 const SearchBar = ({ animeList }) => {

@@ -2,10 +2,10 @@ import { useInteractComment } from "@/lib/hooks/comments"
 import styles from "@/styles/comments.module.css"
 import Image from "next/image"
 
-import LikeSvg from "@/assets/like.svg"
-import DislikeSvg from "@/assets/dislike.svg"
-import LikedSvg from "@/assets/liked.svg"
-import DislikedSvg from "@/assets/disliked.svg"
+import LikeSvg from "@/assets/reactions/like.svg"
+import DislikeSvg from "@/assets/reactions/dislike.svg"
+import LikedSvg from "@/assets/reactions/liked.svg"
+import DislikedSvg from "@/assets/reactions/disliked.svg"
 
 const Comment = ({ comment, pageIdx }) => {
 	const { mutate } = useInteractComment()

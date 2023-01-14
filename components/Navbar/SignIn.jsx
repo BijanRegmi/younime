@@ -1,5 +1,5 @@
 import Link from "next/link"
-import AccountSvg from "@/assets/account.svg"
+import AccountSvg from "@/assets/misc/account.svg"
 import styles from "@/styles/header.module.css"
 
 const SignIn = () => {

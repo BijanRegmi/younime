@@ -8,6 +8,8 @@ import SessionContext from "@/components/Context/SessionContext"
 import QueryContext from "@/components/Context/QueryContext"
 
 import Header from "@/components/Navbar"
+import Sidebar from "@/components/Navbar/Sidebar"
+import ReactContext from "@/components/Context/ReactContext"
 
 export default async function RootLayout({ children }) {
 	const session = await unstable_getServerSession(authOptions)
@@ -18,10 +20,13 @@ export default async function RootLayout({ children }) {
 			<body>
 				<SessionContext session={session}>
 					<QueryContext>
-						<main>
+						<ReactContext>
 							<Header session={session} />
-							<div className={styles.content}>{children}</div>
-						</main>
+							<div className={styles.content}>
+								<Sidebar />
+								{children}
+							</div>
+						</ReactContext>
 					</QueryContext>
 				</SessionContext>
 			</body>
