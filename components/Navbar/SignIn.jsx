@@ -1,6 +1,6 @@
 import Link from "next/link"
 import AccountSvg from "@/assets/misc/account.svg"
-import styles from "@/styles/header.module.css"
+import styles from "@/styles/Navbar/header.module.css"
 
 const SignIn = () => {
 	return (

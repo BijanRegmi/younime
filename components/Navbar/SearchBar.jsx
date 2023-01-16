@@ -8,7 +8,7 @@ import fuzzysort from "fuzzysort"
 
 import SearchBtn from "@/assets/misc/search.svg"
 import Cross from "@/assets/misc/cross.svg"
-import styles from "@/styles/searchbar.module.css"
+import styles from "@/styles/Navbar/searchbar.module.css"
 
 const SearchBar = ({ animeList }) => {
 	const [showSuggestion, setShowSuggestion] = useState(false)

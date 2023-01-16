@@ -10,7 +10,7 @@ import Subs from "@/assets/sidebar/subs.svg"
 import Explore from "@/assets/sidebar/library.svg"
 import SignIn from "@/components/Navbar/SignIn"
 
-import styles from "@/styles/sidebar.module.css"
+import styles from "@/styles/Navbar/sidebar.module.css"
 
 const Sidebar = () => {
 	const context = useContext(GlobalContext)

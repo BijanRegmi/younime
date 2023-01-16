@@ -4,7 +4,7 @@ import { useContext } from "react"
 import { GlobalContext } from "@/components/Context/ReactContext"
 
 import Ham from "@/assets/misc/hamburger.svg"
-import styles from "@/styles/header.module.css"
+import styles from "@/styles/Navbar/header.module.css"
 
 const Hamburger = () => {
 	const context = useContext(GlobalContext)

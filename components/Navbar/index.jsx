@@ -5,7 +5,7 @@ import SignIn from "@/components/Navbar/SignIn"
 import ProfileHead from "@/components/Navbar/ProfileHead"
 import HamBurger from "@/components/Navbar/Hamburger"
 
-import styles from "@/styles/header.module.css"
+import styles from "@/styles/Navbar/header.module.css"
 
 const Header = async ({ session }) => {
 	const animeList = await prisma.anime.findMany({
