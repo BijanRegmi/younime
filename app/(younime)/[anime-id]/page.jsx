@@ -1,7 +1,17 @@
-import AnimeDetailsCard from "@/components/AnimeDetailsCard"
+import prisma from "@/prisma"
+import { notFound, redirect } from "next/navigation"
 
-const AnimePage = async ({ params }) => {
-	return <AnimeDetailsCard animeId={params["anime-id"]} />
+const Page = async ({ params }) => {
+	const animeId = Number(params["anime-id"])
+
+	const epid = await prisma.episode.findFirst({
+		where: { animeId },
+		orderBy: { id: "asc" },
+		select: { id: true },
+	})
+
+	if (epid?.id != undefined) redirect(`/${animeId}/${epid.id}`)
+	else notFound()
 }
 
-export default AnimePage
+export default Page

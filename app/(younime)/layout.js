@@ -1,5 +1,5 @@
 import "@/styles/globals.css"
-import styles from "@/styles/index.module.css"
+import layout from "@/styles/index.module.css"
 
 import { unstable_getServerSession } from "next-auth"
 import { authOptions } from "@/api/auth/[...nextauth]"
@@ -22,7 +22,7 @@ export default async function RootLayout({ children }) {
 					<QueryContext>
 						<ReactContext>
 							<Header session={session} />
-							<div className={styles.content}>
+							<div className={layout.content}>
 								<Sidebar />
 								{children}
 							</div>

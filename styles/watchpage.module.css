@@ -1,0 +1,126 @@
+.meta {
+	padding: 0.5rem 0.25rem;
+	display: flex;
+	flex-direction: row;
+	gap: 0.5rem;
+}
+
+.thumbnail {
+	position: relative;
+	height: 100%;
+	aspect-ratio: 3 / 4;
+	border-radius: 0.5rem;
+	background: blue;
+	overflow: hidden;
+}
+
+.thumbnail > img {
+	object-fit: cover;
+}
+
+.info {
+	display: flex;
+	flex-direction: column;
+	gap: 0.1rem;
+}
+
+.info > div {
+	color: var(--fg-color-2);
+	margin: 0 -0.4rem;
+}
+
+.topic {
+	color: var(--fg-color);
+	font-weight: bold;
+	margin: 0 0.4rem;
+}
+.topic::after {
+	content: ":";
+}
+
+.genres {
+	padding: 0.25rem;
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	gap: 0.3rem;
+}
+
+.genre {
+	border: 1px solid var(--fg-color-2);
+	background-color: var(--bg-color-3);
+	padding: 2px 10px;
+	border-radius: 0.8rem;
+	cursor: default;
+}
+
+.genre:hover {
+	background-color: var(--bg-color-2);
+}
+
+.synopsis {
+	padding: 0.45rem;
+	background: var(--bg-color-3);
+	color: var(--fg-color);
+	border-radius: 1rem;
+}
+
+.synopsis > span {
+	margin-right: 4px;
+}
+
+.synopsis > button {
+	text-decoration: none;
+	background: none;
+	color: inherit;
+	cursor: pointer;
+}
+
+.synopsis > button:hover {
+	color: var(--fg-color-2);
+}
+
+.list {
+	overflow: scroll;
+	flex-grow: 1;
+}
+
+.stat {
+	justify-self: center;
+	padding: 1rem;
+}
+
+.ep {
+	height: 2rem;
+	background: var(--bg-color-3);
+	margin: 0.25rem;
+	padding: 0.25rem;
+
+	display: flex;
+	align-items: center;
+	gap: 0.3rem;
+
+	cursor: pointer;
+	box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px,
+		rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+}
+
+.ep:hover {
+	background: var(--bg-color);
+}
+
+.ep > svg {
+	height: 100%;
+	aspect-ratio: 1 / 1;
+	color: white;
+	opacity: 0;
+}
+
+.ep > a {
+	text-decoration: none;
+	color: inherit;
+}
+
+.epPlaying > svg {
+	opacity: 1;
+}
