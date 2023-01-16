@@ -1,7 +1,7 @@
 "use client"
 import { useAddComment } from "@/lib/hooks/comments"
+import useRequireAuth from "@/lib/hooks/useRequireAuth"
 import styles from "@/styles/comments.module.css"
-import { useSession } from "next-auth/react"
 import Image from "next/image"
 import { usePathname } from "next/navigation"
 import { useState } from "react"
@@ -11,8 +11,6 @@ const CommentInput = () => {
 	const { mutate } = useAddComment()
 	const episodeId = usePathname().split("/")[2]
 
-	const session = useSession()
-
 	const onsubmit = e => {
 		e.preventDefault()
 		if (value.length == 0) return
@@ -20,13 +18,15 @@ const CommentInput = () => {
 		setValue("")
 	}
 
+	const { ref, session } = useRequireAuth()
+
 	return (
-		<div className={styles.cmtItem}>
+		<div className={styles.cmtItem} ref={ref}>
 			<div className={styles.pfp}>
 				<Image
-					src={session.data.user.image}
+					src={session.data?.user?.image}
 					fill={true}
-					alt={session.data.user.name}
+					alt={session.data?.user?.name}
 					style={{
 						objectFit: "cover",
 						borderRadius: "50%",
