@@ -14,7 +14,6 @@ import { usePathname } from "next/navigation"
 const Actions = ({ history }) => {
 	const [open, setOpen] = useState(false)
 
-	console.log(history)
 	const { status, updatedAt } = JSON.parse(history)
 
 	const ref = useRef()

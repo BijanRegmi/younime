@@ -32,8 +32,6 @@ const Page = async ({ params }) => {
 		})
 	}
 
-	console.log(result)
-
 	if (result?.id != undefined) redirect(`/${animeId}/${result.id}`)
 	else notFound()
 }

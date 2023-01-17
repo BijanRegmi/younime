@@ -5,6 +5,7 @@ import { unstable_getServerSession } from "next-auth"
 import Comments from "../Comments"
 import VideoPlayer from "../VideoPlayer"
 import { AnimeStatus } from "@prisma/client"
+import crypto from "crypto"
 
 const WatchPage = async ({ params }) => {
 	const id = Number(params["ep-id"])
@@ -14,6 +15,15 @@ const WatchPage = async ({ params }) => {
 		where: { id },
 		select: { file_url: true },
 	})
+
+	// Encrypting thevar tobeEncrypted = 'some secret string';
+	const secret = Buffer.from(process.env.YOUNIME_SECRET, "base64")
+	const cipher = crypto.createCipheriv("aes-256-ecb", secret, null)
+	const encrypted = Buffer.concat([
+		cipher.update(result.file_url),
+		cipher.final(),
+	])
+	result.file_url = "/api/video?key=" + encrypted.toString("base64")
 
 	// If the status of anime is WATCHING for that user
 	// then update the last watching episode id

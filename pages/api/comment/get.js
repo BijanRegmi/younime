@@ -25,7 +25,6 @@ const handler = async (req, res) => {
 			take: 10,
 			orderBy: { id: "desc" },
 		})
-		console.log("=======GET COMMENT", comments)
 		comments.forEach(comment => {
 			const { likes, dislikes } = comment.comment_interactions.reduce(
 				(accum, value) => {
