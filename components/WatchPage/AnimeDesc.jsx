@@ -1,8 +1,8 @@
-"use client"
 import layout from "@/styles/index.module.css"
 import styles from "@/styles/watchpage.module.css"
 import Image from "next/image"
-import Synopsis from "./synopsis"
+import Synopsis from "@/components/WatchPage/synopsis"
+import Actions from "@/components/WatchPage/Actions"
 
 const AnimeDesc = ({ anime }) => {
 	return (
@@ -37,6 +37,7 @@ const AnimeDesc = ({ anime }) => {
 						{anime._count.episodes}
 					</div>
 				</div>
+				<Actions history={JSON.stringify(anime.history[0])} />
 			</div>
 			<div className={styles.genres}>
 				{anime.genres.map((g, idx) => (

@@ -1,3 +1,4 @@
+"use client"
 import styles from "@/styles/watchpage.module.css"
 import { useState } from "react"
 

@@ -5,7 +5,7 @@ import { withValidation } from "@/lib/apiMiddlewares/withValidation"
 import { playlistSchema } from "@/lib/validations/playlist"
 
 const handler = async (req, res) => {
-	const { animeId, status } = req.body
+	const { animeId, epId, status } = req.body
 	try {
 		await prisma.history_entry.upsert({
 			where: {
@@ -17,10 +17,12 @@ const handler = async (req, res) => {
 			create: {
 				userId: req.user.id,
 				animeId,
+				epId,
 				status,
 			},
 			update: {
 				status,
+				epId,
 			},
 		})
 

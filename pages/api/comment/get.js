@@ -1,5 +1,6 @@
 import { withMethods } from "@/lib/apiMiddlewares/withMethods"
 import { withValidation } from "@/lib/apiMiddlewares/withValidation"
+import { withAuth } from "@/lib/apiMiddlewares/withAuth"
 import { getCommentSchema } from "@/lib/validations/comment"
 import prisma from "@/prisma"
 const handler = async (req, res) => {
@@ -24,10 +25,11 @@ const handler = async (req, res) => {
 			take: 10,
 			orderBy: { id: "desc" },
 		})
+		console.log("=======GET COMMENT", comments)
 		comments.forEach(comment => {
 			const { likes, dislikes } = comment.comment_interactions.reduce(
 				(accum, value) => {
-					if (value.userId == req.user.id)
+					if (value.userId == req.user?.id)
 						comment.status = value.state
 					return {
 						...accum,
@@ -55,5 +57,5 @@ const handler = async (req, res) => {
 
 export default withMethods(
 	["GET"],
-	withValidation(getCommentSchema, handler, "query")
+	withAuth(withValidation(getCommentSchema, handler, "query"), false)
 )

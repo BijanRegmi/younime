@@ -54,24 +54,24 @@ model User {
     accounts      Account[]
 
     // User data
-    password             String?
-    lastWatchedEpisodeId Int?
-    history              history_entry[]
+    password String?
+    history  history_entry[]
 
     // Comments stuffs
     comments             comment[]             @relation("commented")
     comment_interactions comment_interaction[]
-
-    lastWatchedEp episode? @relation("lastWatched", fields: [lastWatchedEpisodeId], references: [id])
 }
 
 model history_entry {
     userId  String
     animeId Int
+    epId    Int? // Last watched episode id for that anime
     status  AnimeStatus
 
-    user  User  @relation(fields: [userId], references: [id])
-    anime anime @relation(fields: [animeId], references: [id])
+    user      User     @relation(fields: [userId], references: [id])
+    anime     anime    @relation(fields: [animeId], references: [id])
+    episode   episode? @relation(fields: [epId], references: [id])
+    updatedAt DateTime @updatedAt
 
     @@unique([userId, animeId])
 }
@@ -122,10 +122,10 @@ model episode {
     name     String?
     animeId  Int
 
-    comments     comment[]
-    lastWatchers User[]    @relation("lastWatched")
+    comments comment[]
 
-    anime anime @relation(fields: [animeId], references: [id])
+    anime         anime           @relation(fields: [animeId], references: [id])
+    history_entry history_entry[]
 }
 
 model genre {

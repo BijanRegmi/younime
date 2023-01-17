@@ -15,7 +15,7 @@ const EpList = ({ episodes }) => {
 
 	useEffect(() => {
 		ref?.current?.scrollIntoView({
-			behaviour: "smooth",
+			behavior: "smooth",
 			block: "nearest",
 			inline: "nearest",
 		})
