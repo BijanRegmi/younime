@@ -30,7 +30,7 @@
 				"./src/server/prisma/index.js"
 			],
 			"@/api/*": [
-				"pages/api/*"
+				"./src/pages/api/*"
 			],
 			"@/lib/*": [
 				"lib/*"

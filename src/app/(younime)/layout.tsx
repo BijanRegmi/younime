@@ -1,33 +1,39 @@
 import "@/styles/globals.css"
 import layout from "@/styles/index.module.css"
 
-import { unstable_getServerSession } from "next-auth"
+import { getServerSession } from "next-auth"
 import { authOptions } from "@/api/auth/[...nextauth]"
 
 import SessionContext from "@/components/Context/SessionContext"
-import QueryContext from "@/components/Context/QueryContext"
+import { TrpcProvider } from "@/components/Context/TrpcContext"
 
 import Header from "@/components/Navbar"
 import Sidebar from "@/components/Navbar/Sidebar"
 import ReactContext from "@/components/Context/ReactContext"
+import { ReactNode } from "react"
 
-export default async function RootLayout({ children }) {
-	const session = await unstable_getServerSession(authOptions)
+export default async function RootLayout({
+	children,
+}: {
+	children: ReactNode
+}) {
+	const session = await getServerSession(authOptions)
 
 	return (
 		<html>
 			<head></head>
 			<body>
 				<SessionContext session={session}>
-					<QueryContext>
+					<TrpcProvider>
 						<ReactContext>
+							{/* @ts-expect-error Server Component */}
 							<Header session={session} />
 							<div className={layout.content}>
 								<Sidebar />
 								{children}
 							</div>
 						</ReactContext>
-					</QueryContext>
+					</TrpcProvider>
 				</SessionContext>
 			</body>
 		</html>

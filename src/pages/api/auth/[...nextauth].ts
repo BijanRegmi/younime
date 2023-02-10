@@ -1,4 +1,4 @@
-import NextAuth from "next-auth"
+import NextAuth, { AuthOptions } from "next-auth"
 import GithubProvider from "next-auth/providers/github"
 import GoogleProvider from "next-auth/providers/google"
 import CredentialsProvider from "next-auth/providers/credentials"
@@ -6,16 +6,16 @@ import { PrismaAdapter } from "@next-auth/prisma-adapter"
 import { compareSync } from "bcryptjs"
 import prisma from "@/prisma"
 
-export const authOptions = {
+export const authOptions: AuthOptions = {
 	adapter: PrismaAdapter(prisma),
 	providers: [
 		GithubProvider({
-			clientId: process.env.GITHUB_CLIENT_ID,
-			clientSecret: process.env.GITHUB_CLIENT_SECRET,
+			clientId: process.env.GITHUB_CLIENT_ID as string,
+			clientSecret: process.env.GITHUB_CLIENT_SECRET as string,
 		}),
 		GoogleProvider({
-			clientId: process.env.GOOGLE_CLIENT_ID,
-			clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+			clientId: process.env.GOOGLE_CLIENT_ID as string,
+			clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
 		}),
 		CredentialsProvider({
 			name: "Credentials",
@@ -33,7 +33,7 @@ export const authOptions = {
 			},
 			async authorize(creds, req) {
 				const user = await prisma.user.findUnique({
-					where: { email: creds.email },
+					where: { email: creds?.email },
 					select: {
 						id: true,
 						name: true,
@@ -44,14 +44,14 @@ export const authOptions = {
 				if (user === null || !user.password)
 					throw new Error("User not registered.")
 
-				if (!compareSync(creds.password, user.password))
+				if (!compareSync(creds?.password as string, user.password))
 					throw new Error("Invalid password.")
 
 				return user
 			},
 		}),
 	],
-	callbacks: {
+	/* callbacks: {
 		jwt: async ({ token, user, account, profile, isNewUser }) => {
 			if (account) token.provider = account.provider
 			if (user) token.id = user.id
@@ -62,7 +62,7 @@ export const authOptions = {
 			session.user.id = token.id
 			return session
 		},
-	},
+	}, */
 	session: {
 		strategy: "jwt",
 	},
