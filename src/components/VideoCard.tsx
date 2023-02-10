@@ -1,8 +1,9 @@
 import Image from "next/image"
 import Link from "next/link"
 import styles from "@/styles/videocard.module.css"
+import { Anime } from "@/app/(younime)/page"
 
-const VideoCard = ({ video }) => {
+const VideoCard = ({ video }: { video: Anime }) => {
 	return (
 		<div className={styles.videoCard}>
 			<Link href={`/${video.id}`} style={{ height: "70%" }}>

@@ -2,14 +2,23 @@ import AnimeDesc from "@/components/WatchPage/AnimeDesc"
 import EpList from "@/components/WatchPage/EpList"
 import prisma from "@/prisma"
 import layout from "@/styles/index.module.css"
-import { unstable_getServerSession } from "next-auth"
+import { getServerSession } from "next-auth"
 import { authOptions } from "@/api/auth/[...nextauth]"
+import { ReactNode } from "react"
+import { notFound } from "next/navigation"
+import { AnimeStatus } from "@prisma/client"
 
-const animeLayout = async ({ params, children }) => {
+const animeLayout = async ({
+	params,
+	children,
+}: {
+	params: { "anime-id": string; "ep-id": string }
+	children: ReactNode
+}) => {
 	const animeId = Number(params["anime-id"])
 	const epId = Number(params["ep-id"])
 
-	const session = await unstable_getServerSession(authOptions)
+	const session = await getServerSession(authOptions)
 
 	const anime = await prisma.anime.findUnique({
 		where: { id: animeId },
@@ -41,8 +50,13 @@ const animeLayout = async ({ params, children }) => {
 		},
 	})
 
-	if (!anime.history || !anime.history?.length) {
-		anime.history = [{ status: "NONE", updatedAt: new Date() }]
+	if (!anime) return notFound()
+
+	if (!anime?.history || !anime.history?.length) {
+		anime.history = [
+			// TODO: make it so that you can set status to none or undefined
+			{ status: AnimeStatus.WATCHING, updatedAt: new Date() },
+		]
 	}
 
 	return (
