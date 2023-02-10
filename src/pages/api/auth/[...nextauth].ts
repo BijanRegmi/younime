@@ -1,10 +1,30 @@
-import NextAuth, { AuthOptions } from "next-auth"
+import NextAuth, { AuthOptions, DefaultSession } from "next-auth"
 import GithubProvider from "next-auth/providers/github"
 import GoogleProvider from "next-auth/providers/google"
 import CredentialsProvider from "next-auth/providers/credentials"
 import { PrismaAdapter } from "@next-auth/prisma-adapter"
 import { compareSync } from "bcryptjs"
 import prisma from "@/prisma"
+
+declare module "next-auth" {
+	interface Session {
+		user: {
+			provider?: string
+			id?: string
+		} & DefaultSession["user"]
+	}
+}
+
+declare module "next-auth/jwt" {
+	interface JWT {
+		provider?: string
+		id?: string
+	}
+}
+
+declare module "next-auth/jwt" {
+	interface JWT { }
+}
 
 export const authOptions: AuthOptions = {
 	adapter: PrismaAdapter(prisma),
@@ -31,12 +51,13 @@ export const authOptions: AuthOptions = {
 					placeholder: "Your password",
 				},
 			},
-			async authorize(creds, req) {
+			async authorize(creds) {
 				const user = await prisma.user.findUnique({
 					where: { email: creds?.email },
 					select: {
 						id: true,
 						name: true,
+						email: true,
 						image: true,
 						password: true,
 					},
@@ -47,22 +68,27 @@ export const authOptions: AuthOptions = {
 				if (!compareSync(creds?.password as string, user.password))
 					throw new Error("Invalid password.")
 
-				return user
+				return {
+					id: user.id,
+					name: user.name,
+					email: user.email,
+					image: user.image,
+				}
 			},
 		}),
 	],
-	/* callbacks: {
-		jwt: async ({ token, user, account, profile, isNewUser }) => {
+	callbacks: {
+		jwt: async ({ token, user, account }) => {
 			if (account) token.provider = account.provider
 			if (user) token.id = user.id
 			return token
 		},
-		session: async ({ session, user, token }) => {
+		session: async ({ session, token }) => {
 			session.user.provider = token.provider
 			session.user.id = token.id
 			return session
 		},
-	}, */
+	},
 	session: {
 		strategy: "jwt",
 	},
