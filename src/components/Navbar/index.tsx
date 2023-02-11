@@ -14,7 +14,7 @@ export type SearchAnime = {
 	alttitle: string | null
 }
 
-const Header = async ({ session }: { session: Session }) => {
+const Header = async ({ session }: { session: Session | null }) => {
 	const animeList: SearchAnime[] = await prisma.anime.findMany({
 		select: {
 			id: true,
