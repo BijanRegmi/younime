@@ -4,7 +4,7 @@ import { CommentInteraction } from "@prisma/client"
 
 export const getCommentSchema = z.object({
 	episodeId: z.number(),
-	page: z.number(),
+	cursor: z.number().nullish(),
 })
 
 export async function getCommentProc({
@@ -13,23 +13,16 @@ export async function getCommentProc({
 }: {
 	input: TypeOf<typeof getCommentSchema>
 	ctx: Context
-}): Promise<{
-	comments: {
-		comment_interactions: undefined
-		likes: number
-		dislikes: number
-		status: CommentInteraction | undefined
-		content: string
-		spoiler: boolean | null
-		id: number
-		commenter: { name: string | null; image: string | null }
-	}[]
-	next: number
-}> {
-	const { episodeId, page } = input
+}) {
+	const { episodeId, cursor } = input
 	const { prisma, session } = ctx
 
+	const limit = 10
+
 	const comments = await prisma.comment.findMany({
+		take: limit,
+		skip: cursor ? 1 : undefined,
+		cursor: cursor ? { id: cursor } : undefined,
 		where: { episodeId },
 		select: {
 			id: true,
@@ -43,8 +36,6 @@ export async function getCommentProc({
 				},
 			},
 		},
-		skip: page * 10,
-		take: 10,
 		orderBy: { id: "desc" },
 	})
 
@@ -75,6 +66,6 @@ export async function getCommentProc({
 	})
 	return {
 		comments: MappedComments,
-		next: MappedComments.length == 10 ? page + 1 : -1,
+		nextCursor: MappedComments[MappedComments.length - 1].id,
 	}
 }

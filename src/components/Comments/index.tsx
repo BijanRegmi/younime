@@ -5,13 +5,18 @@ import { usePathname } from "next/navigation"
 import Comment from "./Comment"
 import styles from "@/styles/comments.module.css"
 import CommentInput from "./Input"
-import { useCommentList } from "@/lib/hooks/comments"
+import { trpc } from "../Context/TrpcContext"
 
 export default function Comments() {
-	const episodeId = usePathname().split("/")[2]
+	const episodeId = Number(usePathname()?.split("/")[2])
 
 	const { data, isSuccess, hasNextPage, fetchNextPage, isFetchingNextPage } =
-		useCommentList(episodeId)
+		trpc.comment.get.useInfiniteQuery(
+			{ episodeId },
+			{
+				getNextPageParam: lastPage => lastPage.nextCursor,
+			}
+		)
 
 	const observeRef = useOnIntersection({
 		onIntersect: () => {
@@ -31,6 +36,7 @@ export default function Comments() {
 							key={comment.id}
 							pageIdx={pageIdx}
 							comment={comment}
+							episodeId={episodeId}
 						/>
 					))
 				)}
