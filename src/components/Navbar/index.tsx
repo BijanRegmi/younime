@@ -6,9 +6,16 @@ import ProfileHead from "@/components/Navbar/ProfileHead"
 import HamBurger from "@/components/Navbar/Hamburger"
 
 import styles from "@/styles/Navbar/header.module.css"
+import { Session } from "next-auth"
 
-const Header = async ({ session }) => {
-	const animeList = await prisma.anime.findMany({
+export type SearchAnime = {
+	id: number
+	title: string
+	alttitle: string | null
+}
+
+const Header = async ({ session }: { session: Session }) => {
+	const animeList: SearchAnime[] = await prisma.anime.findMany({
 		select: {
 			id: true,
 			title: true,

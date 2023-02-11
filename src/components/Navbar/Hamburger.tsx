@@ -9,9 +9,7 @@ import styles from "@/styles/Navbar/header.module.css"
 const Hamburger = () => {
 	const context = useContext(GlobalContext)
 
-	const toggle = e => {
-		e.preventDefault()
-
+	const toggle = () => {
 		context.setState(oldState => ({
 			...oldState,
 			sidebar: !oldState.sidebar,

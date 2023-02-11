@@ -1,6 +1,6 @@
 "use client"
 
-import { useRef, useState } from "react"
+import { ChangeEvent, CSSProperties, useRef, useState } from "react"
 import { useRouter } from "next/navigation"
 import useOnClickOutside from "@/lib/hooks/useOnClickOutside"
 
@@ -9,15 +9,20 @@ import fuzzysort from "fuzzysort"
 import SearchBtn from "@/assets/misc/search.svg"
 import Cross from "@/assets/misc/cross.svg"
 import styles from "@/styles/Navbar/searchbar.module.css"
+import { SearchAnime } from "."
 
-const SearchBar = ({ animeList }) => {
+const SearchBar = ({ animeList }: { animeList: SearchAnime[] }) => {
 	const [showSuggestion, setShowSuggestion] = useState(false)
-	const [filteredList, setFilteredList] = useState([])
-	const inputRef = useRef()
-	const formRef = useOnClickOutside(() => setShowSuggestion(false))
+	const [filteredList, setFilteredList] = useState<SearchAnime[]>([])
+
+	const inputRef = useRef<HTMLInputElement>(null)
+	const formRef = useOnClickOutside<HTMLDivElement>({
+		handler: () => setShowSuggestion(false),
+	})
+
 	const router = useRouter()
 
-	const filterList = e => {
+	const filterList = (e: ChangeEvent<HTMLInputElement>) => {
 		const { value } = e.target
 		if (value.length > 0) {
 			const results = fuzzysort.go(value, animeList, {
@@ -36,6 +41,7 @@ const SearchBar = ({ animeList }) => {
 
 	const clearFilter = () => {
 		setFilteredList([])
+		if (!inputRef.current) return
 		inputRef.current.value = ""
 		inputRef.current.focus()
 	}
@@ -50,7 +56,11 @@ const SearchBar = ({ animeList }) => {
 	}
 
 	return (
-		<div ref={formRef} className={styles.searchContainer} style={style}>
+		<div
+			ref={formRef}
+			className={styles.searchContainer}
+			style={style as CSSProperties}
+		>
 			<form className={styles.inputRow}>
 				<SearchBtn
 					style={{
@@ -83,6 +93,7 @@ const SearchBar = ({ animeList }) => {
 								<span
 									className={styles.animeTitle}
 									onClick={() => {
+										if (!inputRef.current) return
 										inputRef.current.value = item.title
 										setShowSuggestion(false)
 										router.push(`/${item.id}`)

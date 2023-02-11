@@ -3,15 +3,16 @@ import { useState } from "react"
 import Image from "next/image"
 import styles from "@/styles/Navbar/account.module.css"
 import Link from "next/link"
+import { Session } from "next-auth"
 
-const ProfileHead = ({ user }) => {
+const ProfileHead = ({ user }: { user: Session["user"] }) => {
 	const [show, setShow] = useState(false)
 	return (
 		<div className={styles.profileHead}>
 			<Image
-				src={user.image}
+				src={user.image as string}
 				fill={true}
-				alt={user.name}
+				alt={user.name as string}
 				className={styles.pfp}
 				onClick={() => setShow(old => !old)}
 			/>
@@ -19,9 +20,9 @@ const ProfileHead = ({ user }) => {
 				<div className={styles.accountPopup}>
 					<div className={styles.avatar}>
 						<Image
-							src={user.image}
+							src={user.image as string}
 							fill={true}
-							alt={user.name}
+							alt={user.name as string}
 							style={{
 								objectFit: "cover",
 								borderRadius: "50%",
