@@ -36,7 +36,7 @@ async function getAnime({
 				session && session?.user
 					? {
 						where: { userId: session?.user?.id, animeId },
-						select: { status: true, updatedAt: true },
+						select: { status: true },
 					}
 					: false,
 			_count: {
@@ -64,10 +64,7 @@ const animeLayout = async ({
 	if (!anime) return notFound()
 
 	if (!anime?.history || !anime.history?.length) {
-		anime.history = [
-			// TODO: make it so that you can set status to none or undefined
-			{ status: AnimeStatus.WATCHING, updatedAt: new Date() },
-		]
+		anime.history = [{ status: AnimeStatus.WATCHING }]
 	}
 
 	return (
