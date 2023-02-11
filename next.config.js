@@ -10,7 +10,6 @@ const nextConfig = {
 				{ loader: "@svgr/webpack", options: { runtimeConfig: false } },
 			],
 		})
-		config.resolve.extensions = [".mjs", ".js", ".jsx", ".json"]
 		return config
 	},
 	images: {
