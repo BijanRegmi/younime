@@ -6,19 +6,31 @@ import useHasWindow from "@/lib/hooks/useHasWindow"
 import useShowOnMouseMove from "@/lib/hooks/useShowOnMouseMove"
 import Controls from "./Controls"
 import layout from "@/styles/index.module.css"
+import { OnProgressProps } from "react-player/base"
 
-export const MODES = {
-	FULLSCREEN: "fullscreen",
-	THEATRE: "theatre",
-	MINI: "mini",
-	NORMAL: "",
+export enum MODES {
+	FULLSCREEN,
+	THEATRE,
+	MINI,
+	NORMAL,
 }
 
-const VideoPlayer = ({ url }) => {
+export interface VideoState {
+	mode: MODES
+	playing: boolean
+	muted: boolean
+	played: number
+	loaded: number
+	duration: number
+	playbackRate: number
+	volume: number
+}
+
+const VideoPlayer = ({ url }: { url: string }) => {
 	const hasWindow = useHasWindow()
 	const { show, setShow, cleartimeout, onMouseMove } = useShowOnMouseMove()
 
-	const [state, setState] = useState({
+	const [state, setState] = useState<VideoState>({
 		mode: MODES.NORMAL,
 		playing: false,
 		muted: false,
@@ -29,13 +41,13 @@ const VideoPlayer = ({ url }) => {
 		volume: 1,
 	})
 
-	const playerRef = useRef(null)
+	const playerRef = useRef<ReactPlayer>(null)
 
-	const onProgress = val => {
+	const onProgress = (val: OnProgressProps) => {
 		setState(old => ({ ...old, played: val.played, loaded: val.loaded }))
 	}
 
-	const setDuration = duration => {
+	const setDuration = (duration: number) => {
 		console.info("Video loaded.", { duration })
 		setState({ ...state, duration })
 	}

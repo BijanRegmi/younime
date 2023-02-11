@@ -13,9 +13,26 @@ import FullScreenClose from "@/assets/videoplayer/fullscreen-close.svg"
 
 import styles from "@/styles/videoplayer.module.css"
 import { durationFormatter } from "@/lib/helpers"
-import { MODES } from "./"
+import { MODES, VideoState } from "./"
+import {
+	CSSProperties,
+	Dispatch,
+	FormEvent,
+	MouseEvent,
+	RefObject,
+	SetStateAction,
+} from "react"
+import ReactPlayer from "react-player"
 
-const Controls = ({ state, setState, playerRef }) => {
+const Controls = ({
+	state,
+	setState,
+	playerRef,
+}: {
+	state: VideoState
+	setState: Dispatch<SetStateAction<VideoState>>
+	playerRef: RefObject<ReactPlayer>
+}) => {
 	// TOGGLE PLAY/PAUSE
 	const togglePlay = () => {
 		setState(old => ({ ...old, playing: !old.playing }))
@@ -27,10 +44,12 @@ const Controls = ({ state, setState, playerRef }) => {
 	}
 
 	// CHANGE VOLUME
-	const slideVolume = e => {
+	const slideVolume = (e: FormEvent<HTMLInputElement>) => {
 		setState(old => ({
 			...old,
+			/* @ts-expect-error Types ;-; */
 			volume: e.target.value,
+			/* @ts-expect-error Types ;-; */
 			muted: e.target.value == 0,
 		}))
 	}
@@ -72,13 +91,14 @@ const Controls = ({ state, setState, playerRef }) => {
 	// FULLSCREEN
 	const onFullScreen = () => {
 		if (document.fullscreenElement == null) {
-			document.getElementById("videoContainer").requestFullscreen()
+			document.getElementById("videoContainer")?.requestFullscreen()
 		} else {
 			document.exitFullscreen()
 		}
 	}
 
-	const seek = e => {
+	const seek = (e: MouseEvent<HTMLDivElement, globalThis.MouseEvent>) => {
+		/* @ts-expect-error Types ;-; */
 		const rec = e.target.getBoundingClientRect()
 		const pos =
 			Math.min(Math.max(0, e.clientX - rec.x), rec.width) / rec.width
@@ -94,7 +114,7 @@ const Controls = ({ state, setState, playerRef }) => {
 		<div className={styles.controlsContainer}>
 			<div
 				onClick={seek}
-				style={style}
+				style={style as CSSProperties}
 				className={styles.timelineContainer}
 			>
 				<div className={styles.timeline}>
