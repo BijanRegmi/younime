@@ -1,6 +1,6 @@
 "use client"
 
-import useOnIntersection from "@/lib/hooks/useObserver"
+import useOnIntersection from "@/hooks/useObserver"
 import { usePathname } from "next/navigation"
 import Comment from "./Comment"
 import styles from "@/styles/comments.module.css"

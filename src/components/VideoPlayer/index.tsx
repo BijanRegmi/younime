@@ -2,8 +2,8 @@
 
 import { useRef, useState } from "react"
 import ReactPlayer from "react-player"
-import useHasWindow from "@/lib/hooks/useHasWindow"
-import useShowOnMouseMove from "@/lib/hooks/useShowOnMouseMove"
+import useHasWindow from "@/hooks/useHasWindow"
+import useShowOnMouseMove from "@/hooks/useShowOnMouseMove"
 import Controls from "./Controls"
 import layout from "@/styles/index.module.css"
 import { OnProgressProps } from "react-player/base"

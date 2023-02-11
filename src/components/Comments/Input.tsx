@@ -1,5 +1,5 @@
 "use client"
-import useRequireAuth from "@/lib/hooks/useRequireAuth"
+import useRequireAuth from "@/hooks/useRequireAuth"
 import styles from "@/styles/comments.module.css"
 import Image from "next/image"
 import { usePathname } from "next/navigation"

@@ -27,7 +27,7 @@
 				"./public/assets/*"
 			],
 			"@/prisma": [
-				"./src/server/prisma/index.js"
+				"./src/server/prisma/index.ts"
 			],
 			"@/api/*": [
 				"./src/pages/api/*"

@@ -12,7 +12,7 @@ import FullScreenOpen from "@/assets/videoplayer/fullscreen-open.svg"
 import FullScreenClose from "@/assets/videoplayer/fullscreen-close.svg"
 
 import styles from "@/styles/videoplayer.module.css"
-import { durationFormatter } from "@/lib/helpers"
+import { durationFormatter } from "@/utils/helpers"
 import { MODES, VideoState } from "./"
 import {
 	CSSProperties,
