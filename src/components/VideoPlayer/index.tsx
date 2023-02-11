@@ -28,7 +28,7 @@ export interface VideoState {
 
 const VideoPlayer = ({ url }: { url: string }) => {
 	const hasWindow = useHasWindow()
-	const { show, setShow, cleartimeout, onMouseMove } = useShowOnMouseMove()
+	const { show, setShow, cleartimeout, onMouseMove } = useShowOnMouseMove<HTMLDivElement>()
 
 	const [state, setState] = useState<VideoState>({
 		mode: MODES.NORMAL,

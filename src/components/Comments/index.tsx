@@ -18,7 +18,7 @@ export default function Comments() {
 			}
 		)
 
-	const observeRef = useOnIntersection({
+	const observeRef = useOnIntersection<HTMLDivElement>({
 		onIntersect: () => {
 			console.log("Intersected")
 			console.log(hasNextPage)

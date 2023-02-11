@@ -1,4 +1,4 @@
-export const durationFormatter = time => {
+export const durationFormatter = (time: number) => {
 	const leadingZeros = new Intl.NumberFormat(undefined, {
 		minimumIntegerDigits: 2,
 	})

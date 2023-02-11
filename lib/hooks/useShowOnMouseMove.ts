@@ -1,16 +1,16 @@
-import { useState } from "react"
+import { MouseEvent, useState } from "react"
 
-const useShowOnMouseMove = () => {
-	const [timeout, settimeout] = useState(null)
+const useShowOnMouseMove = <T>() => {
+	const [timeout, settimeout] = useState<NodeJS.Timeout | null>(null)
 	const [show, setShow] = useState(false)
 
 	return {
 		show,
 		setShow,
 		cleartimeout: () => {
-			clearTimeout(timeout)
+			if (timeout) clearTimeout(timeout)
 		},
-		onMouseMove: e => {
+		onMouseMove: (e: MouseEvent<T>) => {
 			e.preventDefault()
 			if (timeout) {
 				clearTimeout(timeout)
