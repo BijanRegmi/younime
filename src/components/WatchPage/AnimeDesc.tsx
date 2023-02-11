@@ -3,21 +3,22 @@ import styles from "@/styles/watchpage.module.css"
 import Image from "next/image"
 import Synopsis from "@/components/WatchPage/synopsis"
 import Actions from "@/components/WatchPage/Actions"
+import { WatchAnime } from "@/app/(younime)/[anime-id]/[ep-id]/layout"
 
-const AnimeDesc = ({ anime }) => {
+const AnimeDesc = ({ anime }: {anime: WatchAnime}) => {
 	return (
 		<div className={layout.animedesc}>
 			<div className={styles.meta}>
 				<div className={styles.thumbnail}>
 					<Image
-						src={anime.thumbnail}
+						src={anime.thumbnail || ""}
 						alt={`Thumbnail-${anime.title}`}
 						fill={true}
 					/>
 				</div>
 				<div className={styles.info}>
 					<h1>{anime.title}</h1>
-					<subtitle>{anime.alttitle}</subtitle>
+					<h5>{anime.alttitle}</h5>
 					<div>
 						<span className={styles.topic}>Rating</span>
 						{anime.age_rating}
@@ -37,7 +38,7 @@ const AnimeDesc = ({ anime }) => {
 						{anime._count.episodes}
 					</div>
 				</div>
-				<Actions history={JSON.stringify(anime.history[0])} />
+				<Actions history={anime.history[0]} />
 			</div>
 			<div className={styles.genres}>
 				{anime.genres.map((g, idx) => (

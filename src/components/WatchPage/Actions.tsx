@@ -9,17 +9,15 @@ import Dropped from "@/assets/states/dropped.svg"
 import Hold from "@/assets/states/hold.svg"
 import Watching from "@/assets/states/watching.svg"
 import useRequireAuth from "@/lib/hooks/useRequireAuth"
-import { usePathname } from "next/navigation"
+import { notFound, usePathname } from "next/navigation"
+import { WatchAnime } from "@/app/(younime)/[anime-id]/[ep-id]/layout"
+import { AnimeStatus } from "@prisma/client"
 
-const Actions = ({ history }) => {
+const Actions = ({ history }: { history: WatchAnime["history"][number] }) => {
 	const [open, setOpen] = useState(false)
 
-	const { status, updatedAt } = JSON.parse(history)
-
-	const ref = useRef()
-	const { ref: authref } = useRequireAuth()
-
-	const [_, animeId, epId] = usePathname().split("/")
+	const ref = useRef<HTMLDivElement>(null)
+	const { ref: authref } = useRequireAuth<HTMLDivElement>()
 
 	const toggle = () => {
 		setOpen(o => !o)
@@ -34,15 +32,20 @@ const Actions = ({ history }) => {
 		}
 	}, [ref, open])
 
+	const paths = usePathname()?.split("/")
+	if (!paths) return notFound()
+	const animeId = paths[1]
+	const epId = paths[2]
+
 	const options = {
-		"Watching": <Watching />,
-		"Completed": <Completed />,
-		"Hold": <Hold />,
-		"Considering": <Considering />,
-		"Dropped": <Dropped />,
+		"WATCHING": <Watching />,
+		"COMPLETED": <Completed />,
+		"HOLD": <Hold />,
+		"CONSIDERING": <Considering />,
+		"DROPPED": <Dropped />,
 	}
 
-	const setStatus = status => {
+	const setStatus = (status: AnimeStatus) => {
 		fetch("/api/playlist/add", {
 			method: "POST",
 			body: JSON.stringify({
@@ -65,22 +68,24 @@ const Actions = ({ history }) => {
 
 			{open && (
 				<div className={styles.menu} ref={ref}>
-					{Object.entries(options).map((option, idx) => {
-						const selected =
-							status.toLowerCase() == option[0].toLowerCase()
+					{(
+						Object.keys(AnimeStatus) as Array<
+							keyof typeof AnimeStatus
+						>
+					).map((statusKey, idx) => {
+						const selected = statusKey === history.status.toString()
 						return (
 							<div
 								key={idx}
-								className={`${styles.menuItem} ${
-									selected ? styles.selected : ""
-								}`}
+								className={`${styles.menuItem} ${selected ? styles.selected : ""
+									}`}
 								onClick={e => {
 									e.preventDefault()
-									setStatus(option[0])
+									setStatus(statusKey)
 								}}
 							>
-								{option[1]}
-								<span>{option[0]}</span>
+								{options[statusKey]}
+								<span>{statusKey}</span>
 							</div>
 						)
 					})}
