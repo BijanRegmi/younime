@@ -22,10 +22,6 @@ declare module "next-auth/jwt" {
 	}
 }
 
-declare module "next-auth/jwt" {
-	interface JWT { }
-}
-
 export const authOptions: AuthOptions = {
 	adapter: PrismaAdapter(prisma),
 	providers: [

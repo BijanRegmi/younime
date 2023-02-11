@@ -30,28 +30,26 @@ const Comment = ({
 
 			utils.comment.get.cancel()
 
-			const prevData = utils.comment.get.getData({
-				episodeId,
-				cursor: pageIdx,
-			})
+			const prevData = utils.comment.get.getInfiniteData({ episodeId })
 
-			prevData?.comments.forEach(co => {
-				if (co.id == id) {
+			prevData?.pages[pageIdx].comments.forEach(comment => {
+				if (comment.id == id) {
 					if (reset) {
-						co.likes--
-						co.status = undefined
+						comment.likes--
+						comment.status = undefined
 					} else {
-						if (co.status == CommentInteraction.LIKED) co.likes--
-						else if (co.status == CommentInteraction.DISLIKED)
-							co.dislikes--
+						if (comment.status == CommentInteraction.LIKED)
+							comment.likes--
+						else if (comment.status == CommentInteraction.DISLIKED)
+							comment.dislikes--
 
-						co.likes++
-						co.status = CommentInteraction.LIKED
+						comment.likes++
+						comment.status = CommentInteraction.LIKED
 					}
 				}
 			})
 
-			utils.comment.get.setData({ episodeId, cursor: pageIdx }, prevData)
+			utils.comment.get.setInfiniteData({ episodeId }, prevData)
 		},
 	})
 
@@ -61,28 +59,26 @@ const Comment = ({
 
 			utils.comment.get.cancel()
 
-			const prevData = utils.comment.get.getData({
-				episodeId,
-				cursor: pageIdx,
-			})
+			const prevData = utils.comment.get.getInfiniteData({ episodeId })
 
-			prevData?.comments.forEach(co => {
-				if (co.id == id) {
+			prevData?.pages[pageIdx].comments.forEach(comment => {
+				if (comment.id == id) {
 					if (reset) {
-						co.dislikes--
-						co.status = undefined
+						comment.dislikes--
+						comment.status = undefined
 					} else {
-						if (co.status == CommentInteraction.LIKED) co.likes--
-						else if (co.status == CommentInteraction.DISLIKED)
-							co.dislikes--
+						if (comment.status == CommentInteraction.LIKED)
+							comment.likes--
+						else if (comment.status == CommentInteraction.DISLIKED)
+							comment.dislikes--
 
-						co.dislikes++
-						co.status = CommentInteraction.DISLIKED
+						comment.dislikes++
+						comment.status = CommentInteraction.DISLIKED
 					}
 				}
 			})
 
-			utils.comment.get.setData({ episodeId, cursor: pageIdx }, prevData)
+			utils.comment.get.setInfiniteData({ episodeId }, prevData)
 		},
 	})
 

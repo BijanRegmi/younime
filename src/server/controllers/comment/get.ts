@@ -66,6 +66,6 @@ export async function getCommentProc({
 	})
 	return {
 		comments: MappedComments,
-		nextCursor: MappedComments[MappedComments.length - 1].id,
+		nextCursor: MappedComments[MappedComments.length - 1]?.id || undefined,
 	}
 }
