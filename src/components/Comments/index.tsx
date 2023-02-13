@@ -3,7 +3,6 @@
 import useOnIntersection from "@/hooks/useObserver"
 import { usePathname } from "next/navigation"
 import Comment from "./Comment"
-import styles from "@/styles/comments.module.css"
 import CommentInput from "./Input"
 import { trpc } from "../Context/TrpcContext"
 
@@ -27,7 +26,7 @@ export default function Comments() {
 	})
 
 	return (
-		<div className={styles.wrapper}>
+		<div className="flex flex-col w-full bg-[var(--bg-color)]">
 			<CommentInput />
 			{isSuccess &&
 				data?.pages?.map((page, pageIdx) =>

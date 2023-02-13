@@ -1,6 +1,5 @@
 "use client"
 import useRequireAuth from "@/hooks/useRequireAuth"
-import styles from "@/styles/comments.module.css"
 import Image from "next/image"
 import { usePathname } from "next/navigation"
 import { FormEvent, useState } from "react"
@@ -27,8 +26,8 @@ const CommentInput = () => {
 	const { ref, session } = useRequireAuth<HTMLDivElement>()
 
 	return (
-		<div className={styles.cmtItem} ref={ref}>
-			<div className={styles.pfp}>
+		<div className="flex flex-row gap-5 p-1 mt-4" ref={ref}>
+			<div className="w-12 h-12 relative">
 				<Image
 					src={session.data?.user?.image as string}
 					fill={true}
@@ -40,28 +39,39 @@ const CommentInput = () => {
 					}}
 				/>
 			</div>
-			<form onSubmit={onsubmit} className={styles.comment}>
+			<form
+				onSubmit={onsubmit}
+				className="text-[color:var(--fg-color)] grow flex flex-col gap-1"
+			>
 				<input
 					type="text"
 					onChange={e => setContent(e.target.value)}
 					value={content}
-					className={styles.input}
+					className="outline-none bg-transparent border-b-2 border-solid border-[color:var(--fg-color)]"
 					placeholder="Add a comment..."
 					required={true}
 				/>
-				<div className={styles.btns}>
+				<div
+					className={`${content.length ? "flex" : "hidden"
+						} flex-row-reverse gap-4 p-4`}
+				>
 					<button
 						type="submit"
 						disabled={content.length == 0 ? true : false}
+						className="disabled:cursor-default bg-transparent text-[color:var(--fg-color)] cursor-pointer"
 					>
 						Submit
 					</button>
-					<button type="button" onClick={() => setContent("")}>
+					<button
+						type="button"
+						onClick={() => setContent("")}
+						className="disabled:cursor-default bg-transparent text-[color:var(--fg-color)] cursor-pointer"
+					>
 						Cancel
 					</button>
 				</div>
 			</form>
-			<div className={styles.actions} />
+			<div className="w-[5%] opacity-0" />
 		</div>
 	)
 }

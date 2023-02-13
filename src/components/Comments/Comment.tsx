@@ -1,4 +1,3 @@
-import styles from "@/styles/comments.module.css"
 import Image from "next/image"
 
 import LikeSvg from "@/assets/reactions/like.svg"
@@ -97,8 +96,8 @@ const Comment = ({
 	}
 
 	return (
-		<div className={styles.cmtItem}>
-			<div className={styles.pfp}>
+		<div className="flex flex-row gap-5 p-1 mt-4">
+			<div className="w-12 h-12 relative">
 				<Image
 					src={comment.commenter.image as string}
 					fill={true}
@@ -110,37 +109,37 @@ const Comment = ({
 					}}
 				/>
 			</div>
-			<div className={styles.comment}>
-				<div className={styles.info}>{comment.commenter.name}</div>
-				<div className={styles.content}>{comment.content}</div>
-				<div className={styles.stats}>
+			<div className="text-[color:var(--fg-color)] grow flex flex-col gap-1">
+				<div className="font-semibold">{comment.commenter.name}</div>
+				<div className="">{comment.content}</div>
+				<div className="flex flex-row gap-1">
 					{comment.status == "LIKED" ? (
 						<LikedSvg
 							onClick={like}
-							className={styles.interactBtn}
+							className="w-5 aspect-square fill-[color:var(--fg-color)] cursor-pointer"
 						/>
 					) : (
 						<LikeSvg
 							onClick={like}
-							className={styles.interactBtn}
+							className="w-5 aspect-square fill-[color:var(--fg-color)] cursor-pointer"
 						/>
 					)}
 					<span>{comment.likes}</span>
 					{comment.status == "DISLIKED" ? (
 						<DislikedSvg
 							onClick={dislike}
-							className={styles.interactBtn}
+							className="w-5 aspect-square fill-[color:var(--fg-color)] cursor-pointer"
 						/>
 					) : (
 						<DislikeSvg
 							onClick={dislike}
-							className={styles.interactBtn}
+							className="w-5 aspect-square fill-[color:var(--fg-color)] cursor-pointer"
 						/>
 					)}
 					<span>{comment.dislikes}</span>
 				</div>
 			</div>
-			<div className={styles.actions} />
+			<div className="w-[5%] opacity-0" />
 		</div>
 	)
 }
