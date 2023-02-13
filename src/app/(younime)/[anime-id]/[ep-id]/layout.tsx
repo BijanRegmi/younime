@@ -63,10 +63,6 @@ const animeLayout = async ({
 
 	if (!anime) return notFound()
 
-	if (!anime?.history || !anime.history?.length) {
-		anime.history = [{ status: AnimeStatus.WATCHING }]
-	}
-
 	return (
 		<div className={layout.watchpage}>
 			{children}

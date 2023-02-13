@@ -12,9 +12,21 @@ import useRequireAuth from "@/hooks/useRequireAuth"
 import { notFound, usePathname } from "next/navigation"
 import { WatchAnime } from "@/app/(younime)/[anime-id]/[ep-id]/layout"
 import { AnimeStatus } from "@prisma/client"
+import { trpc } from "../Context/TrpcContext"
 
-const Actions = ({ history }: { history: WatchAnime["history"][number] }) => {
+const Actions = ({
+	history,
+}: {
+	history: WatchAnime["history"][number] | undefined
+}) => {
 	const [open, setOpen] = useState(false)
+	const [status, setStatus] = useState<
+		WatchAnime["history"][number]["status"] | undefined
+	>()
+
+	useEffect(() => {
+		setStatus(history?.status)
+	}, [history?.status])
 
 	const ref = useRef<HTMLDivElement>(null)
 	const { ref: authref } = useRequireAuth<HTMLDivElement>()
@@ -34,8 +46,8 @@ const Actions = ({ history }: { history: WatchAnime["history"][number] }) => {
 
 	const paths = usePathname()?.split("/")
 	if (!paths) return notFound()
-	const animeId = paths[1]
-	const epId = paths[2]
+	const animeId = Number(paths[1])
+	const epId = Number(paths[2])
 
 	const options = {
 		"WATCHING": <Watching />,
@@ -45,18 +57,28 @@ const Actions = ({ history }: { history: WatchAnime["history"][number] }) => {
 		"DROPPED": <Dropped />,
 	}
 
-	const setStatus = (status: AnimeStatus) => {
-		fetch("/api/playlist/add", {
-			method: "POST",
-			body: JSON.stringify({
-				animeId: Number(animeId),
-				epId: Number(epId),
-				status: status.toUpperCase(),
-			}),
-			headers: { "content-type": "application/json" },
-		}).then(() => {
-			setOpen(false)
-		})
+	const { mutate: addMutate } = trpc.playlist.add.useMutation()
+	const { mutate: removeMutate } = trpc.playlist.remove.useMutation()
+
+	const mutateStatus = (stat: AnimeStatus) => {
+		if (stat !== status)
+			addMutate(
+				{ status: stat, animeId, epId },
+				{
+					onSuccess: () => {
+						setStatus(stat)
+					},
+				}
+			)
+		else
+			removeMutate(
+				{ animeId },
+				{
+					onSuccess: () => {
+						setStatus(undefined)
+					},
+				}
+			)
 	}
 
 	return (
@@ -73,7 +95,7 @@ const Actions = ({ history }: { history: WatchAnime["history"][number] }) => {
 							keyof typeof AnimeStatus
 						>
 					).map((statusKey, idx) => {
-						const selected = statusKey === history.status.toString()
+						const selected = statusKey === status?.toString()
 						return (
 							<div
 								key={idx}
@@ -81,7 +103,7 @@ const Actions = ({ history }: { history: WatchAnime["history"][number] }) => {
 									}`}
 								onClick={e => {
 									e.preventDefault()
-									setStatus(statusKey)
+									mutateStatus(statusKey)
 								}}
 							>
 								{options[statusKey]}
