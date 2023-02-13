@@ -24,16 +24,13 @@ const WatchPage = async ({
 	if (!result) return notFound()
 
 	// Encrypting thevar tobeEncrypted = 'some secret string';
-	const secret = Buffer.from(
-		process.env.YOUNIME_SECRET || "younime_secret",
-		"base64"
-	)
+	const secret = Buffer.from(process.env.YOUNIME_SECRET as string, "base64")
 	const cipher = crypto.createCipheriv("aes-256-ecb", secret, null)
 	const encrypted = Buffer.concat([
 		cipher.update(result.file_url as string),
 		cipher.final(),
 	])
-	result.file_url = "/api/video?key=" + encrypted.toString("base64")
+	result.file_url = "/api/video?key=" + encrypted.toString("hex")
 
 	// If the status of anime is WATCHING for that user
 	// then update the last watching episode id

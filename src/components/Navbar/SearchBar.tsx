@@ -9,11 +9,11 @@ import fuzzysort from "fuzzysort"
 import SearchBtn from "@/assets/misc/search.svg"
 import Cross from "@/assets/misc/cross.svg"
 import styles from "@/styles/Navbar/searchbar.module.css"
-import { SearchAnime } from "."
+import { SearchableAnime } from "@/utils/getSearchList"
 
-const SearchBar = ({ animeList }: { animeList: SearchAnime[] }) => {
+const SearchBar = ({ animeList }: { animeList: SearchableAnime[] }) => {
 	const [showSuggestion, setShowSuggestion] = useState(false)
-	const [filteredList, setFilteredList] = useState<SearchAnime[]>([])
+	const [filteredList, setFilteredList] = useState<SearchableAnime[]>([])
 
 	const inputRef = useRef<HTMLInputElement>(null)
 	const formRef = useOnClickOutside<HTMLDivElement>({

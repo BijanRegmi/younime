@@ -6,7 +6,7 @@ import Play from "@/assets/videoplayer/play.svg"
 import { notFound, usePathname } from "next/navigation"
 import { useEffect, useRef } from "react"
 import Link from "next/link"
-import { WatchAnime } from "@/app/(younime)/[anime-id]/[ep-id]/layout"
+import { WatchAnime } from "@/utils/getWatchAnime"
 
 const EpList = ({ episodes }: { episodes: WatchAnime["episodes"] }) => {
 	const ref = useRef<HTMLDivElement>(null)

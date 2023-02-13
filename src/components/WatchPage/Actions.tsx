@@ -10,9 +10,9 @@ import Hold from "@/assets/states/hold.svg"
 import Watching from "@/assets/states/watching.svg"
 import useRequireAuth from "@/hooks/useRequireAuth"
 import { notFound, usePathname } from "next/navigation"
-import { WatchAnime } from "@/app/(younime)/[anime-id]/[ep-id]/layout"
 import { AnimeStatus } from "@prisma/client"
 import { trpc } from "../Context/TrpcContext"
+import { WatchAnime } from "@/utils/getWatchAnime"
 
 const Actions = ({
 	history,

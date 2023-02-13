@@ -17,7 +17,7 @@ export default async function handler(
 	const secret = Buffer.from(process.env.YOUNIME_SECRET as string, "base64")
 	const decipher = crypto.createDecipheriv("aes-256-ecb", secret, null)
 	const decrypted = Buffer.concat([
-		decipher.update(key, "base64"),
+		decipher.update(key, "hex"),
 		decipher.final(),
 	])
 	const url = decrypted.toString()

@@ -3,7 +3,7 @@ import styles from "@/styles/watchpage.module.css"
 import Image from "next/image"
 import Synopsis from "@/components/WatchPage/synopsis"
 import Actions from "@/components/WatchPage/Actions"
-import { WatchAnime } from "@/app/(younime)/[anime-id]/[ep-id]/layout"
+import { WatchAnime } from "@/utils/getWatchAnime"
 
 const AnimeDesc = ({ anime }: {anime: WatchAnime}) => {
 	return (

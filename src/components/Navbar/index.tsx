@@ -7,21 +7,10 @@ import HamBurger from "@/components/Navbar/Hamburger"
 
 import styles from "@/styles/Navbar/header.module.css"
 import { Session } from "next-auth"
-
-export type SearchAnime = {
-	id: number
-	title: string
-	alttitle: string | null
-}
+import { getSearchList } from "@/utils/getSearchList"
 
 const Header = async ({ session }: { session: Session | null }) => {
-	const animeList: SearchAnime[] = await prisma.anime.findMany({
-		select: {
-			id: true,
-			title: true,
-			alttitle: true,
-		},
-	})
+	const animeList = await getSearchList({ prisma })
 
 	return (
 		<div className={styles.header}>

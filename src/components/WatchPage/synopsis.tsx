@@ -1,6 +1,6 @@
 "use client"
-import { WatchAnime } from "@/app/(younime)/[anime-id]/[ep-id]/layout"
 import styles from "@/styles/watchpage.module.css"
+import { WatchAnime } from "@/utils/getWatchAnime"
 import { useState } from "react"
 
 const Synopsis = ({ synopsis }: { synopsis: WatchAnime["synopsis"] }) => {
