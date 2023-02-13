@@ -12,13 +12,8 @@ const CommentInput = () => {
 
 	const utils = trpc.useContext()
 	const { mutate } = trpc.comment.add.useMutation({
-		onSuccess: data => {
-			utils.comment.get.cancel()
-
-			const prevData = utils.comment.get.getData({ episodeId })
-			prevData?.comments.unshift(data)
-			utils.comment.get.setData({ episodeId }, prevData)
-
+		onSuccess: () => {
+			utils.comment.get.invalidate()
 			setContent("")
 		},
 	})

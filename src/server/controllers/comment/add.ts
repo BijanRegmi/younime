@@ -17,7 +17,7 @@ export const addCommentProc = async ({
 	const { session, prisma } = ctx
 	const { content, spoiler, episodeId } = input
 
-	const comment = await prisma.comment.create({
+	await prisma.comment.create({
 		data: {
 			content,
 			spoiler,
@@ -32,5 +32,5 @@ export const addCommentProc = async ({
 		},
 	})
 
-	return { ...comment, likes: 0, dislikes: 0 }
+	return { success: true }
 }
