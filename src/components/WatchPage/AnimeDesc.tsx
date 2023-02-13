@@ -1,4 +1,3 @@
-import layout from "@/styles/index.module.css"
 import styles from "@/styles/watchpage.module.css"
 import Image from "next/image"
 import Synopsis from "@/components/WatchPage/synopsis"
@@ -7,7 +6,7 @@ import { WatchAnime } from "@/utils/getWatchAnime"
 
 const AnimeDesc = ({ anime }: {anime: WatchAnime}) => {
 	return (
-		<div className={layout.animedesc}>
+		<div className="flex flex-col gap-2">
 			<div className={styles.meta}>
 				<div className={styles.thumbnail}>
 					<Image

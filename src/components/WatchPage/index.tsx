@@ -1,6 +1,5 @@
 import { authOptions } from "@/api/auth/[...nextauth]"
 import prisma from "@/prisma"
-import layout from "@/styles/index.module.css"
 import { getServerSession } from "next-auth"
 import Comments from "../Comments"
 import VideoPlayer from "../VideoPlayer"
@@ -49,7 +48,7 @@ const WatchPage = async ({
 	return (
 		<>
 			<VideoPlayer url={result?.file_url} />
-			<div className={layout.comments}>
+			<div className="comments">
 				<Comments />
 			</div>
 		</>

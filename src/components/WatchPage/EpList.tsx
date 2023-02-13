@@ -1,5 +1,4 @@
 "use client"
-import layout from "@/styles/index.module.css"
 import styles from "@/styles/watchpage.module.css"
 
 import Play from "@/assets/videoplayer/play.svg"
@@ -26,7 +25,7 @@ const EpList = ({ episodes }: { episodes: WatchAnime["episodes"] }) => {
 	const curr = episodes.find(ep => ep.id === epId)
 
 	return (
-		<div className={layout.eplist}>
+		<div className='flex flex-col gap-1 w-full overflow-hidden eplist'>
 			<div className={styles.stat}>Currently Playing: {curr?.name}</div>
 			<div className={styles.list}>
 				{episodes.map(ep => {

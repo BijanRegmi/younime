@@ -18,7 +18,7 @@ const VideoCard = ({ anime }: { anime: CardAnime }) => {
 			</Link>
 			<div className={styles.metadata}>
 				<div className={styles.avatar}>
-					{anime.studio ? anime.studio[0] : ""}
+					{anime.score}
 				</div>
 				<div className={styles.details}>
 					<h4 className={styles.title}>{anime.title}</h4>

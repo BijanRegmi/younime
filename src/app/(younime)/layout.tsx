@@ -1,5 +1,4 @@
 import "@/styles/globals.css"
-import layout from "@/styles/index.module.css"
 
 import { getServerSession } from "next-auth"
 import { authOptions } from "@/api/auth/[...nextauth]"
@@ -28,7 +27,7 @@ export default async function RootLayout({
 						<ReactContext>
 							{/* @ts-expect-error Server Component */}
 							<Header session={session} />
-							<div className={layout.content}>
+							<div className="m-2 max-w-[1400px] flex flex-row gap-2 content">
 								<Sidebar />
 								{children}
 							</div>

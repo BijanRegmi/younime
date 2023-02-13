@@ -5,7 +5,6 @@ import ReactPlayer from "react-player"
 import useHasWindow from "@/hooks/useHasWindow"
 import useShowOnMouseMove from "@/hooks/useShowOnMouseMove"
 import Controls from "./Controls"
-import layout from "@/styles/index.module.css"
 import { OnProgressProps } from "react-player/base"
 
 export enum MODES {
@@ -28,7 +27,8 @@ export interface VideoState {
 
 const VideoPlayer = ({ url }: { url: string }) => {
 	const hasWindow = useHasWindow()
-	const { show, setShow, cleartimeout, onMouseMove } = useShowOnMouseMove<HTMLDivElement>()
+	const { show, setShow, cleartimeout, onMouseMove } =
+		useShowOnMouseMove<HTMLDivElement>()
 
 	const [state, setState] = useState<VideoState>({
 		mode: MODES.NORMAL,
@@ -65,7 +65,9 @@ const VideoPlayer = ({ url }: { url: string }) => {
 			id="videoContainer"
 			onMouseMove={onMouseMove}
 			onMouseLeave={onMouseLeave}
-			className={`${layout.videoplayer} ${layout[state.mode]}`}
+			className={`relative bg-black self-center justify-self-center w-full aspect-[16/9] videoplayer ${state.mode
+				.toString()
+				.toLowerCase()}`}
 		>
 			{hasWindow && (
 				<ReactPlayer
