@@ -1,24 +1,26 @@
 "use client"
-import styles from "@/styles/watchpage.module.css"
 import { WatchAnime } from "@/utils/getWatchAnime"
 import { useState } from "react"
 
 const Synopsis = ({ synopsis }: { synopsis: WatchAnime["synopsis"] }) => {
-	const [expanded, setExpanded] = useState(false)
+    const [expanded, setExpanded] = useState(false)
 
-	const toggle = () => {
-		setExpanded(o => !o)
-	}
+    const toggle = () => {
+        setExpanded(o => !o)
+    }
 
-	return (
-		<p className={styles.synopsis}>
-			{expanded ? synopsis : synopsis ? synopsis.slice(0, 400) : null}
-			{expanded ? <br /> : <span>...</span>}
-			<button onClick={toggle}>
-				{expanded ? "Show Less" : "Show More"}
-			</button>
-		</p>
-	)
+    return (
+        <p className="bg-[color:var(--bg-color-3)] text-[color:var(--fg-color)] rounded-2xl p-2">
+            {expanded ? synopsis : synopsis ? synopsis.slice(0, 400) : null}
+            {expanded ? <br /> : <span className="mr-1">...</span>}
+            <button
+                onClick={toggle}
+                className="decoration-solid no-underline bg-none text-[color:inherit] cursor-pointer hover:text-[color:var(--fg-color-2)]"
+            >
+                {expanded ? "Show Less" : "Show More"}
+            </button>
+        </p>
+    )
 }
 
 export default Synopsis
