@@ -8,10 +8,10 @@ import Controls from "./Controls"
 import { OnProgressProps } from "react-player/base"
 
 export enum MODES {
-	FULLSCREEN,
-	THEATRE,
-	MINI,
-	NORMAL,
+	FULLSCREEN = "fullscreen",
+	THEATRE = "theatre",
+	MINI = "mini",
+	NORMAL = "normal",
 }
 
 export interface VideoState {
@@ -65,6 +65,7 @@ const VideoPlayer = ({ url }: { url: string }) => {
 			id="videoContainer"
 			onMouseMove={onMouseMove}
 			onMouseLeave={onMouseLeave}
+            style={{ cursor: show || !state.playing ? 'default': 'none' }}
 			className={`relative bg-black self-center justify-self-center w-full aspect-[16/9] videoplayer ${state.mode
 				.toString()
 				.toLowerCase()}`}
@@ -93,7 +94,7 @@ const VideoPlayer = ({ url }: { url: string }) => {
 				/>
 			)}
 
-			{show && (
+			{(show || !state.playing) && (
 				<Controls
 					state={state}
 					setState={setState}

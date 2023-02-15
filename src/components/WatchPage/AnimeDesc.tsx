@@ -15,7 +15,7 @@ const DataRow = ({ datas }: { datas: { title: string; value: any }[] }) => {
                         >
                             {data.title}
                         </span>
-                        {data.title}
+                        {data.value}
                     </>
                 )
             })}

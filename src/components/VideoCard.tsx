@@ -4,40 +4,36 @@ import { CardAnime } from ".."
 
 const VideoCard = ({ anime }: { anime: CardAnime }) => {
     return (
-        <div className="w-[250px] h-[300px] flex flex-col gap-[10px]">
-            <Link href={`/${anime.id}`} style={{ height: "70%" }}>
+        <div className="w-[250px] h-[300px] flex flex-col rounded-xl">
+            <Link href={`/${anime.id}`} className="h-2/3">
                 <div className="w-full h-full relative cursor-pointer transition-transform after:inset-0 after:flex after:items-center after:justify-center after:content-['Play'] after:absolute after:text-accent-900 after:bg-black after:rounded-md after:opacity-0 after:transition-opacity hover:after:opacity-80">
                     <Image
                         src={anime.thumbnail as string}
-                        // {/*TAILWIND: background-image: radial-gradient(circle, #eaeaea 0%, #8b8b8b 100%) */}
-                        className="h-full w-full rounded-md object-contain"
+                        className="h-full w-full rounded-md object-contain bg-[radial-gradient(circle,#eaeaea_0%,#8b8b8b_100%)]"
                         alt="Thumbnail"
                         fill={true}
                     />
                 </div>
             </Link>
-            <div className="w-full h-[30%] flex flex-row gap-[10px]">
-                {/*TAILWIND: background-image: radial-gradient(
-                                circle,
-                                rgb(196, 166, 166) 0%,
-                                rgb(255, 11, 11) 100%
-                            );
-                */}
-                <div className="h-1/2 aspect-square rounded-full flex items-center justify-center text-lg">
-                    {anime.score}
-                </div>
-                <div className="w-full h-full flex flex-col justify-around">
-                    <h4 className="w-full h-2/5 font-medium overflow-hidden text-ellipsis text-lg">
-                        {anime.title}
-                    </h4>
-                    <div className="w-full text-accent-800 flex items-center">
-                        {anime.age_rating}
+            <div className="h-1/3 p-2 bg-accent-100 rounded-b-xl">
+                <h1
+                    style={{
+                        display: "-webkit-box",
+                        lineClamp: 2,
+                        WebkitLineClamp: 2,
+                        WebkitBoxOrient: "vertical",
+                    }}
+                    title={anime.title}
+                    className="font-semibold text-accent-900 overflow-hidden text-ellipsis border-b border-solid border-accent-150 h-2/3"
+                >
+                    {anime.title}
+                </h1>
+                <div className="flex justify-start items-center gap-4 my-1">
+                    <div className="py-1 px-3 bg-accent-100 border border-solid border-accent-600 text-accent-850 rounded-md cursor-pointer">
+                        {anime.score} / 10
                     </div>
-                    <div className="w-full flex items-center text-accent-800">
-                        {anime.studio}
-                        <span className="text-[color:inherit] font-medium ml-1">
-                            [{anime.score}]
-                        </span>
+                    <div className="py-1 px-3 bg-accent-100 border border-solid border-accent-600 text-accent-850 rounded-md cursor-pointer">
+                        {anime.type}
                     </div>
                 </div>
             </div>

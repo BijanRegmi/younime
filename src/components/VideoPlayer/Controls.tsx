@@ -115,7 +115,7 @@ const Controls = ({
     return (
         <div
             style={styles as CSSProperties}
-            className="absolute bottom-0 left-0 right-0 w-full text-accent-900 z-10 transition-all bg-black bg-opacity-5"
+            className="absolute bottom-0 left-0 right-0 w-full text-accent-900 z-10 transition-all"
             onMouseEnter={() => setHover(true)}
             onMouseLeave={() => setHover(false)}
         >
@@ -124,11 +124,13 @@ const Controls = ({
                 className="w-full h-4 flex items-center cursor-pointer relative"
             >
                 <div
+                    style={{
+                        height: hover ? "20%" : "15%",
+                    }}
                     className={
-                        "w-full h-[15%] cursor-pointer relative bg-accent-50 bg-opacity-30 " +
-                        (hover ? "h-[20%] " : " ") +
+                        "w-full cursor-pointer relative bg-accent-800 bg-opacity-30 mt-auto " +
                         "after:content-[''] after:bg-red-900 after:absolute after:top-0 after:bottom-0 after:left-0 after:right-[calc(100%-var(--played-percent))] " +
-                        "before:content-[''] before:bg-accent-700 before:absolute before:top-0 before:bottom-0 before:left-0 before:right-[calc(100%-var(--loaded-percent))]"
+                        "before:content-[''] before:bg-accent-300 before:absolute before:top-0 before:bottom-0 before:left-0 before:right-[calc(100%-var(--loaded-percent))]"
                     }
                 >
                     <div
@@ -140,7 +142,7 @@ const Controls = ({
                     />
                 </div>
             </div>
-            <div className="flex gap-2 p-1 flex-row items-center">
+            <div className="flex gap-2 p-1 flex-row items-center bg-black bg-opacity-50">
                 {state.playing ? (
                     <Pause onClick={togglePlay} className="controlBtn" />
                 ) : (
