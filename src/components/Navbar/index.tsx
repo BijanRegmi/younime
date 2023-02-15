@@ -12,7 +12,7 @@ const Header = async ({ session }: { session: Session | null }) => {
     const animeList = await getSearchList({ prisma })
 
     return (
-        <div className="flex items-center justify-center h-14 p-2">
+        <div className="flex items-center justify-center h-14 p-1">
             <HamBurger />
             <div className="text-center w-sidebarExtend px-2 text-accent-900 decoration-solid no-underline font-semibold cursor-pointer">
                 Younime

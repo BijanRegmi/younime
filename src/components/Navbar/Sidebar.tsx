@@ -16,13 +16,18 @@ const Sidebar = () => {
 
     const links = [
         ["/", Home, "Home"],
-        ["/shorts", Shorts, "Shorts"],
-        ["/subs", Subs, "Subs"],
-        ["/explore", Explore, "Explore"]
+        ["/genre", Shorts, "Genres"],
+        ["/top", Subs, "Top"],
+        ["/explore", Explore, "Explore"],
     ]
 
     return (
-        <div className="h-full flex-shrink-0 overflow-x-hidden flex flex-col gap-2 border border-solid border-y-0 border-l-0 border-r-accent-150">
+        <div
+            className={
+                "h-full flex-shrink-0 overflow-x-hidden flex flex-col gap-2 border border-solid border-y-0 border-l-0 border-r-accent-150 " +
+                (open ? "w-sidebarFull" : "w-sidebarSmall")
+            }
+        >
             {links.map(([href, Item, Text], idx) => {
                 return (
                     <Link
@@ -30,9 +35,9 @@ const Sidebar = () => {
                         key={idx}
                         className={
                             (open
-                                ? "w-sidebarFull p-2 flex-row justify-start gap-2 h-12 "
-                                : "w-sidebarSmall py-2 px-3 flex-col justify-center ") +
-                            " flex-shrink-0 no-underline decoration-solid rounded-2xl flex items-center hover:bg-accent-450"
+                                ? "p-2 flex-row justify-start gap-2 h-12 "
+                                : "py-2 px-3 flex-col justify-center ") +
+                            " w-full flex-shrink-0 no-underline decoration-solid rounded-2xl flex items-center hover:bg-accent-450"
                         }
                     >
                         <Item

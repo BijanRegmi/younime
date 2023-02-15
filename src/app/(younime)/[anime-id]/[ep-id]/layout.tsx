@@ -22,7 +22,7 @@ const animeLayout = async ({
 	if (!anime) return notFound()
 
 	return (
-		<div className="w-full overflow-y-scroll grid gap-y-2 gap-x-4 watchpage">
+		<div className="w-full overflow-y-scroll grid gap-y-2 gap-x-4 h-full watchpage">
 			{children}
 			<EpList episodes={anime.episodes} />
 			<AnimeDesc anime={anime} />

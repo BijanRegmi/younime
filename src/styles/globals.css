@@ -69,6 +69,7 @@ html,
 body,
 #__next {
     @apply bg-accent-50 text-accent-900 h-screen w-screen;
+    --sidebarwidth: 12rem;
 }
 
 #__next {

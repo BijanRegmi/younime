@@ -1,6 +1,6 @@
 "use client"
 
-import { useContext } from "react"
+import { useContext, useEffect } from "react"
 import { GlobalContext } from "@/components/Context/ReactContext"
 
 import Ham from "@/assets/misc/hamburger.svg"
@@ -8,11 +8,17 @@ import Ham from "@/assets/misc/hamburger.svg"
 const Hamburger = () => {
     const context = useContext(GlobalContext)
 
+    useEffect(() => {
+        document.documentElement.style.setProperty(
+            "--sidebarwidth",
+            context.state.sidebar ? "3rem" : "12rem"
+        )
+    }, [context.state.sidebar])
+
     const toggle = () => {
-        context.setState(oldState => ({
-            ...oldState,
-            sidebar: !oldState.sidebar,
-        }))
+        context.setState(oldState => {
+            return { ...oldState, sidebar: !oldState.sidebar }
+        })
     }
 
     return (

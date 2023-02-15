@@ -78,7 +78,7 @@ const SearchBar = ({ animeList }: { animeList: SearchableAnime[] }) => {
                 {inputRef.current?.value.length ? (
                     <Cross
                         onClick={clearFilter}
-                        className="h-full w-[30px] flex-shrink-0 cursor-pointer fill-accent-650 bg-accent-100 border-y border-solid border-y-accent-300 hover:fill-accent-700"
+                        className="h-full w-[30px] flex-shrink-0 cursor-pointer fill-accent-650 bg-accent-100 border-y border-solid border-y-accent-300 hover:fill-accent-700 py-2"
                     />
                 ) : (
                     ""
