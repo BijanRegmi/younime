@@ -96,7 +96,7 @@ const Comment = ({
 	}
 
 	return (
-		<div className="flex flex-row gap-5 p-1 mt-4">
+		<div className="flex flex-row gap-5 p-1 mt-4 border-b border-solid border-accent-150">
 			<div className="w-12 h-12 relative">
 				<Image
 					src={comment.commenter.image as string}
@@ -109,31 +109,31 @@ const Comment = ({
 					}}
 				/>
 			</div>
-			<div className="text-[color:var(--fg-color)] grow flex flex-col gap-1">
+			<div className="text-accent-900 grow flex flex-col gap-1">
 				<div className="font-semibold">{comment.commenter.name}</div>
 				<div className="">{comment.content}</div>
 				<div className="flex flex-row gap-1">
 					{comment.status == "LIKED" ? (
 						<LikedSvg
 							onClick={like}
-							className="w-5 aspect-square fill-[color:var(--fg-color)] cursor-pointer"
+							className="w-5 aspect-square fill-accent-900 cursor-pointer"
 						/>
 					) : (
 						<LikeSvg
 							onClick={like}
-							className="w-5 aspect-square fill-[color:var(--fg-color)] cursor-pointer"
+							className="w-5 aspect-square fill-accent-900 cursor-pointer"
 						/>
 					)}
 					<span>{comment.likes}</span>
 					{comment.status == "DISLIKED" ? (
 						<DislikedSvg
 							onClick={dislike}
-							className="w-5 aspect-square fill-[color:var(--fg-color)] cursor-pointer"
+							className="w-5 aspect-square fill-accent-900 cursor-pointer"
 						/>
 					) : (
 						<DislikeSvg
 							onClick={dislike}
-							className="w-5 aspect-square fill-[color:var(--fg-color)] cursor-pointer"
+							className="w-5 aspect-square fill-accent-900 cursor-pointer"
 						/>
 					)}
 					<span>{comment.dislikes}</span>

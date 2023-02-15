@@ -10,12 +10,12 @@ const Synopsis = ({ synopsis }: { synopsis: WatchAnime["synopsis"] }) => {
     }
 
     return (
-        <p className="bg-[color:var(--bg-color-3)] text-[color:var(--fg-color)] rounded-2xl p-2">
+        <p className="bg-accent-150 text-accent-800 rounded-2xl p-2">
             {expanded ? synopsis : synopsis ? synopsis.slice(0, 400) : null}
             {expanded ? <br /> : <span className="mr-1">...</span>}
             <button
                 onClick={toggle}
-                className="decoration-solid no-underline bg-none text-[color:inherit] cursor-pointer hover:text-[color:var(--fg-color-2)]"
+                className="cursor-pointer hover:text-accent-900"
             >
                 {expanded ? "Show Less" : "Show More"}
             </button>

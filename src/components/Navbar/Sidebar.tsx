@@ -14,42 +14,48 @@ const Sidebar = () => {
     const context = useContext(GlobalContext)
     const open = context.state.sidebar
 
-    const navItemCss =
-        (open
-            ? "w-[var(--sidebar-smol-size) px-4 py-[0.4rem] flex-row justify-start gap-2 h-12 "
-            : "w-[var(--sidebar-smol-size)] px-[0.3rem] py-4 flex-col justify-center ") +
-        " flex-shrink-0 no-underline decoration-solid rounded-2xl flex items-center hover:bg-[#333a]"
-    const navItemSvgCss =
-        "flex-shrink-0 " +
-        (open ? "h-4/5" : "w-4/5") +
-        " aspect-square fill-white"
-    const navItemSpanCss = "text-white " + (open ? "" : "h-1/5") + " text-sm"
+    const links = [
+        ["/", Home, "Home"],
+        ["/shorts", Shorts, "Shorts"],
+        ["/subs", Subs, "Subs"],
+        ["/explore", Explore, "Explore"]
+    ]
 
     return (
-        <div className="h-full flex-shrink-0 overflow-x-hidden flex flex-col gap-2">
-            <Link href="/" className={navItemCss}>
-                <Home className={navItemSvgCss} />
-                <span className={navItemSpanCss}>Home</span>
-            </Link>
-
-            <Link href="/shorts" className={navItemCss}>
-                <Shorts className={navItemSvgCss} />
-                <span className={navItemSpanCss}>Shorts</span>
-            </Link>
-
-            <Link href="/subs" className={navItemCss}>
-                <Subs className={navItemSvgCss} />
-                <span className={navItemSpanCss}>Subs</span>
-            </Link>
-
-            <Link href="/explore" className={navItemCss}>
-                <Explore className={navItemSvgCss} />
-                <span className={navItemSpanCss}>Explore</span>
-            </Link>
+        <div className="h-full flex-shrink-0 overflow-x-hidden flex flex-col gap-2 border border-solid border-y-0 border-l-0 border-r-accent-150">
+            {links.map(([href, Item, Text], idx) => {
+                return (
+                    <Link
+                        href={href}
+                        key={idx}
+                        className={
+                            (open
+                                ? "w-sidebarFull p-2 flex-row justify-start gap-2 h-12 "
+                                : "w-sidebarSmall py-2 px-3 flex-col justify-center ") +
+                            " flex-shrink-0 no-underline decoration-solid rounded-2xl flex items-center hover:bg-accent-450"
+                        }
+                    >
+                        <Item
+                            className={
+                                "fill-accent-900 flex-shrink-0 aspect-square " +
+                                (open ? "h-4/5" : "w-4/5")
+                            }
+                        />
+                        <span
+                            className={
+                                "text-sm text-accent-900 " +
+                                (open ? "" : "h-1/5")
+                            }
+                        >
+                            {Text}
+                        </span>
+                    </Link>
+                )
+            })}
 
             {context.state.sidebar && (
                 <>
-                    <hr className="bg-[#333] h-[1px] w-full" />
+                    <hr className="bg-accent-400 h-[1px] w-5/6 m-auto" />
                     <div className="py-2 flex-grow">
                         <div className="h-12 px-2">
                             <SignIn />

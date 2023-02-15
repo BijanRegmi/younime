@@ -36,7 +36,7 @@ const EpList = ({ episodes }: { episodes: WatchAnime["episodes"] }) => {
                             key={ep.id}
                             // TAILWINDCSS: box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px,
                             // 	rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
-                            className="h-8 bg-[color:var(--bg-color-3)] m-1 p-1 flex items-center gap-[0.3rem] cursor-pointer  hover:bg-[color:var(--bg-color)]"
+                            className="h-8 bg-accent-300 m-1 p-1 flex items-center gap-[0.3rem] cursor-pointer hover:bg-accent-250"
                             ref={playing ? ref : undefined}
                         >
                             <Play

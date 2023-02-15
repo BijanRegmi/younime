@@ -26,7 +26,7 @@ export default function Comments() {
 	})
 
 	return (
-		<div className="flex flex-col w-full bg-[var(--bg-color)]">
+		<div className="flex flex-col w-full bg-accent-50">
 			<CommentInput />
 			{isSuccess &&
 				data?.pages?.map((page, pageIdx) =>

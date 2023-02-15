@@ -49,19 +49,11 @@ const Actions = ({
     const epId = Number(paths[2])
 
     const options = {
-        "WATCHING": (
-            <Watching classname="h-4/5 aspect-square text-white fill-none" />
-        ),
-        "COMPLETED": (
-            <Completed classname="h-4/5 aspect-square text-white fill-none" />
-        ),
-        "HOLD": <Hold classname="h-4/5 aspect-square text-white fill-none" />,
-        "CONSIDERING": (
-            <Considering classname="h-4/5 aspect-square text-white fill-none" />
-        ),
-        "DROPPED": (
-            <Dropped classname="h-4/5 aspect-square text-white fill-none" />
-        ),
+        "WATCHING": Watching,
+        "COMPLETED": Completed,
+        "HOLD": Hold,
+        "CONSIDERING": Considering,
+        "DROPPED": Dropped,
     }
 
     const { mutate: addMutate } = trpc.playlist.add.useMutation()
@@ -91,14 +83,16 @@ const Actions = ({
     return (
         <div className="h-12 relative" ref={authref}>
             <None
-                className={`h-full aspect-square text-white fill-none cursor-pointer transition-transform ${open ? "rotate-45" : ""
-                    }`}
+                className={
+                    "h-full aspect-square text-white fill-none cursor-pointer transition-transform " +
+                    (open ? "rotate-45" : "")
+                }
                 onClick={toggle}
             />
 
             {open && (
                 <div
-                    className="absolute top-full right-1/2 bg-[color:var(--bg-color)] border border-solid border-[color:var(--bg-color-3)] rounded-2xl flex flex-col py-2 px-[0.2rem]"
+                    className="absolute top-full right-1/2 bg-accent-100 border border-solid border-accent-300 rounded-2xl flex flex-col p-2"
                     ref={ref}
                 >
                     {(
@@ -107,19 +101,22 @@ const Actions = ({
                         >
                     ).map((statusKey, idx) => {
                         const selected = statusKey === status?.toString()
+                        const Item = options[statusKey]
                         return (
                             <div
                                 key={idx}
-                                className={`h-10 flex flex-row justify-center items-center cursor-pointer rounded-md hover:bg-[color:var(--bg-color-2)] ${selected
-                                        ? "bg-[color:var(--bg-color-3)] border border-solid border-[color:var(--fg-color-2)]"
-                                        : ""
-                                    }`}
+                                className={
+                                    "h-10 flex flex-row justify-center items-center cursor-pointer rounded-md hover:bg-accent-150 " +
+                                    (selected
+                                        ? "bg-accent-150 border border-solid border-accent-500"
+                                        : "")
+                                }
                                 onClick={e => {
                                     e.preventDefault()
                                     mutateStatus(statusKey)
                                 }}
                             >
-                                {options[statusKey]}
+                                <Item className="h-4/5 aspect-square text-white fill-none" />
                                 <span className="flex-grow">{statusKey}</span>
                             </div>
                         )

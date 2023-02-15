@@ -32,6 +32,11 @@ module.exports = {
                     900: "#FFFFFFff",
                 },
             },
+            spacing: {
+                sidebarSmall: '3rem',
+                sidebarExtend: '9rem',
+                sidebarFull: '12rem'
+            }
         },
     },
     plugins: [],

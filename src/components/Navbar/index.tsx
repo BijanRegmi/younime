@@ -14,7 +14,7 @@ const Header = async ({ session }: { session: Session | null }) => {
     return (
         <div className="flex items-center justify-center h-12 m-2">
             <HamBurger />
-            <div className="text-center w-[length:calc(var(--sidebar-big-size)-var(--sidebar-smol-size))] px-2 text-[color:var(--fg-color)] decoration-solid no-underline font-semibold cursor-pointer">
+            <div className="text-center w-sidebarExtend px-2 text-accent-900 decoration-solid no-underline font-semibold cursor-pointer">
                 Younime
             </div>
             <SearchBar animeList={animeList} />

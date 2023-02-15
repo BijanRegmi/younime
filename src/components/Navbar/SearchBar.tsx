@@ -78,14 +78,14 @@ const SearchBar = ({ animeList }: { animeList: SearchableAnime[] }) => {
                 {inputRef.current?.value.length ? (
                     <Cross
                         onClick={clearFilter}
-                        className="h-full w-[30px] flex-shrink-0 cursor-pointer fill-accent-650 bg-accent-100 border-y border-solid border-y-accent-300 hover:bg-accent-150"
+                        className="h-full w-[30px] flex-shrink-0 cursor-pointer fill-accent-650 bg-accent-100 border-y border-solid border-y-accent-300 hover:fill-accent-700"
                     />
                 ) : (
                     ""
                 )}
                 <SearchBtn
                     className={
-                        "w-[55px] h-full p-2 flex-shrink-0 border border-solid border-accent-300 rounded-tr-2xl cursor-pointer fill-accent-650 bg-accent-100 hover:bg-accent-150 " +
+                        "w-[55px] h-full p-2 flex-shrink-0 border border-solid border-accent-300 rounded-tr-2xl cursor-pointer fill-accent-650 bg-accent-100 hover:bg-accent-150 hover:fill-accent-700 " +
                         (showSuggestion && filteredList.length
                             ? "rounded-br-none"
                             : "rounded-br-2xl")
@@ -97,18 +97,16 @@ const SearchBar = ({ animeList }: { animeList: SearchableAnime[] }) => {
                         {filteredList.map(item => (
                             <div
                                 key={item.id}
-                                className="flex justify-start items-center cursor-pointer w-full h-full flex-grow py-[3px] hover:bg-accent-200"
+                                className="flex justify-start items-center cursor-pointer w-full h-full flex-grow py-[3px] text-accent-750 hover:bg-accent-200 hover:text-accent-850"
+                                onClick={() => {
+                                    if (!inputRef.current) return
+                                    inputRef.current.value = item.title
+                                    setShowSuggestion(false)
+                                    router.push(`/${item.id}`)
+                                }}
                             >
                                 <SearchBtn className="border-none h-full w-10 fill-accent-650 p-2" />
-                                <span
-                                    className="text-accent-750 w-4/5 whitespace-nowrap flex-grow hover:text-accent-850"
-                                    onClick={() => {
-                                        if (!inputRef.current) return
-                                        inputRef.current.value = item.title
-                                        setShowSuggestion(false)
-                                        router.push(`/${item.id}`)
-                                    }}
-                                >
+                                <span className="w-4/5 pl-2 whitespace-nowrap flex-grow">
                                     {item.title}
                                 </span>
                             </div>

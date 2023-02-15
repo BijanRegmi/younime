@@ -17,7 +17,7 @@ const Hamburger = () => {
 
     return (
         <Ham
-            className="fill-[color:var(--fg-color)] flex-shrink-0 w-[var(--sidebar-smol-size)] aspect-square p-2 cursor-pointer rounded-full hover:bg-[#333]"
+            className="fill-accent-900 flex-shrink-0 w-sidebarSmall aspect-square p-2 cursor-pointer rounded-full hover:bg-accent-400"
             onClick={toggle}
         />
     )

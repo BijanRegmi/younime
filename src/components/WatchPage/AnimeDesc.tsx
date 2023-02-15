@@ -3,6 +3,26 @@ import Synopsis from "@/components/WatchPage/synopsis"
 import Actions from "@/components/WatchPage/Actions"
 import { WatchAnime } from "@/utils/getWatchAnime"
 
+const DataRow = ({ datas }: { datas: { title: string; value: any }[] }) => {
+    return (
+        <div className="text-accent-700 mx-[-0.4rem]">
+            {datas.map((data, idx) => {
+                return (
+                    <>
+                        <span
+                            key={idx}
+                            className="text-accent-800 font-semibold mx-[0.4rem] after:content-[':']"
+                        >
+                            {data.title}
+                        </span>
+                        {data.title}
+                    </>
+                )
+            })}
+        </div>
+    )
+}
+
 const AnimeDesc = ({ anime }: { anime: WatchAnime }) => {
     return (
         <div className="flex flex-col gap-2">
@@ -16,38 +36,26 @@ const AnimeDesc = ({ anime }: { anime: WatchAnime }) => {
                     />
                 </div>
                 <div className="flex flex-col gap-[0.1rem] flex-grow">
-                    <h1>{anime.title}</h1>
-                    <h5>{anime.alttitle}</h5>
-                    <div className="text-[color:var(--fg-color-2)] mx-[-0.4rem]">
-                        <span className="text-[color:var(--fg-color)] font-bold mx-[0.4rem] after:content-[':']">
-                            Rating
-                        </span>
-                        {anime.age_rating}
-                        <span className="text-[color:var(--fg-color)] font-bold mx-[0.4rem] after:content-[':']">
-                            Score
-                        </span>
-                        {anime.score}☆
-                    </div>
-                    <div className="text-[color:var(--fg-color-2)] mx-[-0.4rem]">
-                        <span className="text-[color:var(--fg-color)] font-bold mx-[0.4rem] after:content-[':']">
-                            Studio
-                        </span>
-                        {anime.studio}
-                        <span className="text-[color:var(--fg-color)] font-bold mx-[0.4rem] after:content-[':']">
-                            Season
-                        </span>
-                        {anime.season}
-                        <span className="text-[color:var(--fg-color)] font-bold mx-[0.4rem] after:content-[':']">
-                            Type
-                        </span>
-                        {anime.type}
-                    </div>
-                    <div className="text-[color:var(--fg-color-2)] mx-[-0.4rem]">
-                        <span className="text-[color:var(--fg-color)] font-bold mx-[0.4rem] after:content-[':']">
-                            Episodes
-                        </span>
-                        {anime._count.episodes}
-                    </div>
+                    <h1 className="text-2xl font-semibold text-accent-900">{anime.title}</h1>
+                    <h2 className="text-sm text-accent-800">{anime.alttitle}</h2>
+                    <DataRow
+                        datas={[
+                            { title: "Rating", value: anime.age_rating },
+                            { title: "Score", value: `${anime.score}☆` },
+                        ]}
+                    />
+                    <DataRow
+                        datas={[
+                            { title: "Studio", value: anime.studio },
+                            { title: "Season", value: anime.season },
+                            { title: "Type", value: anime.type },
+                        ]}
+                    />
+                    <DataRow
+                        datas={[
+                            { title: "Episodes", value: anime._count.episodes },
+                        ]}
+                    />
                 </div>
                 <Actions history={anime.history[0]} />
             </div>
@@ -55,7 +63,7 @@ const AnimeDesc = ({ anime }: { anime: WatchAnime }) => {
                 {anime.genres.map((g, idx) => (
                     <div
                         key={idx}
-                        className="border border-solid border-[color:var(--fg-color-2)] bg-[color:var(--bg-color-3)] px-[10px] py-[2px] cursor-default hover:bg-[color:var(--bg-color-2)]"
+                        className="border border-solid border-accent-300 bg-accent-150 px-2 py-1 cursor-default rounded-md hover:border-accent-600"
                     >
                         {g.name}
                     </div>

@@ -16,7 +16,7 @@ const ProfileHead = ({ user }: { user: Session["user"] }) => {
                 onClick={() => setShow(old => !old)}
             />
             {show ? (
-                <div className="absolute -bottom-1 right-[10%] min-w-[250px] bg-[color:var(--bg-color-3)] rounded-lg p-4 grid grid-cols-[1fr_minmax(0,1fr)] items-center gap-x-2 z-10">
+                <div className="absolute top-full right-[10%] min-w-[250px] bg-accent-400 rounded-lg p-4 grid grid-cols-[1fr_minmax(0,1fr)] items-center gap-x-2 z-10">
                     <div className="row-start-1 row-end-auto col-start-1 col-end-auto relative w-full aspect-square">
                         <Image
                             src={user.image as string}
@@ -29,10 +29,10 @@ const ProfileHead = ({ user }: { user: Session["user"] }) => {
                         />
                     </div>
                     <div className="row-start-1 row-end-auto col-start-2 col-end-auto break-words flex flex-col gap-[0.1rem]">
-                        <div className="break-words text:[color:var(--fg-color-1)] font-bold">
+                        <div className="break-words text-accent-850 font-bold">
                             {user.name ?? "undefined"}
                         </div>
-                        <div className="break-words text:[color:var(--fg-color-1)]">
+                        <div className="break-words text-accent-850">
                             {user.email ?? "undefined"}
                         </div>
                     </div>
