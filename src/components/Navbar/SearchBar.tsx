@@ -1,6 +1,6 @@
 "use client"
 
-import { ChangeEvent, CSSProperties, useRef, useState } from "react"
+import { ChangeEvent, useRef, useState } from "react"
 import { useRouter } from "next/navigation"
 import useOnClickOutside from "@/hooks/useOnClickOutside"
 
@@ -45,23 +45,20 @@ const SearchBar = ({ animeList }: { animeList: SearchableAnime[] }) => {
         inputRef.current.focus()
     }
 
-    const style = {
-        "--bottom-radius":
-            showSuggestion && filteredList.length ? "0rem" : "1rem",
-    }
-
     return (
         <div
             ref={formRef}
-            className="h-full flex-grow flex justify-center"
-            style={style as CSSProperties}
+            className="h-5/6 w-full flex-grow flex justify-center"
         >
-            <form className="relative min-w-3/4 h-full flex flex-row justify-center items-center">
+            <form className="relative w-1/2 h-full flex flex-row justify-center items-center">
                 <SearchBtn
-                    style={{
-                        opacity: showSuggestion ? 1 : 0,
-                    }}
-                    className="h-full w-10 p-2 flex-shrink-0 border border-solid border-[color:var(--border-color)] border-r-0 rounded-tl-2xl rounded-bl-[length:var(--bottom-radius)] fill-[color:var(--fg-color-2)] bg-[color:var(--bg-color-2)]"
+                    className={
+                        "h-full w-10 p-2 flex-shrink-0 border border-solid border-accent-300 border-r-0 rounded-tl-2xl fill-accent-650 bg-accent-100 " +
+                        (showSuggestion ? "opacity-100 " : "opacity-0 ") +
+                        (showSuggestion && filteredList.length
+                            ? "rounded-bl-none"
+                            : "rounded-bl-2xl")
+                    }
                 />
                 <input
                     ref={inputRef}
@@ -71,29 +68,40 @@ const SearchBar = ({ animeList }: { animeList: SearchableAnime[] }) => {
                     placeholder="Search"
                     onChange={filterList}
                     onFocus={() => setShowSuggestion(true)}
-                    className={`outline-none bg-[color:var(--bg-color-2)] text-[color:var(--fg-color)] h-full p-2 flex-grow border border-solid border-[color:var(--border-color)] border-r-0 ${showSuggestion
+                    className={
+                        "outline-none bg-accent-100 text-accent-800 h-full p-2 flex-grow border border-solid border-accent-300 border-r-0 " +
+                        (showSuggestion
                             ? "border-l-0 rounded-tl-none rounded-bl-none"
-                            : "rounded-tl-2xl rounded-bl-2xl"
-                        }`}
+                            : "rounded-tl-2xl rounded-bl-2xl")
+                    }
                 />
-                {inputRef.current?.value.length != 0 && (
+                {inputRef.current?.value.length ? (
                     <Cross
                         onClick={clearFilter}
-                        className="h-full w-[30px] flex-shrink-0 cursor-pointer fill-[color:var(--fg-color-2)] bg-[color:var(--bg-color-2)] border-y border-solid border-y-[color:var(--border-color)]"
+                        className="h-full w-[30px] flex-shrink-0 cursor-pointer fill-accent-650 bg-accent-100 border-y border-solid border-y-accent-300 hover:bg-accent-150"
                     />
+                ) : (
+                    ""
                 )}
-                <SearchBtn className="w-[55px] h-full p-2 pl-4 flex-shrink-0 border border-solid border-[color:var(--border-color)] rounded-tr-2xl rounded-br-[length:var(--bottom-radius)] cursor-pointer fill-[color:var(--fg-color-2)] bg-[color:var(--bg-color-2)]" />
+                <SearchBtn
+                    className={
+                        "w-[55px] h-full p-2 flex-shrink-0 border border-solid border-accent-300 rounded-tr-2xl cursor-pointer fill-accent-650 bg-accent-100 hover:bg-accent-150 " +
+                        (showSuggestion && filteredList.length
+                            ? "rounded-br-none"
+                            : "rounded-br-2xl")
+                    }
+                />
 
                 {showSuggestion && filteredList.length > 0 && (
-                    <div className="absolute z-10 bg-[color:var(--bg-color)] top-full w-full max-h-[70vh] overflow-y-scroll overflow-x-hidden border border-solid border-[color:var(--border-color)] flex-shrink-0 rounded-l-2xl rounded-r-2xl">
+                    <div className="absolute z-10 bg-accent-100 top-full w-full max-h-[70vh] overflow-y-scroll overflow-x-hidden border border-solid border-accent-300 flex-shrink-0 rounded-bl-2xl rounded-br-2xl">
                         {filteredList.map(item => (
                             <div
                                 key={item.id}
-                                className="flex justify-start items-center cursor-pointer w-full h-full flex-grow py-[3px]"
+                                className="flex justify-start items-center cursor-pointer w-full h-full flex-grow py-[3px] hover:bg-accent-200"
                             >
-                                <SearchBtn className="border-none bg-transparent focus:hover:bg-[color:var(--bg-color-3)]" />
+                                <SearchBtn className="border-none h-full w-10 fill-accent-650 p-2" />
                                 <span
-                                    className="text-[color:var(--fg-color-2)] w-4/5 whitespace-nowrap flex-grow"
+                                    className="text-accent-750 w-4/5 whitespace-nowrap flex-grow hover:text-accent-850"
                                     onClick={() => {
                                         if (!inputRef.current) return
                                         inputRef.current.value = item.title
