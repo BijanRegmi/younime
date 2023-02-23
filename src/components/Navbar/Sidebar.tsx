@@ -13,7 +13,6 @@ import Watching from "@/assets/states/watching.svg"
 import Home from "@/assets/sidebar/home.svg"
 import Shorts from "@/assets/sidebar/shorts.svg"
 import Subs from "@/assets/sidebar/subs.svg"
-import Explore from "@/assets/sidebar/library.svg"
 
 const Sidebar = () => {
     const context = useContext(GlobalContext)
@@ -23,7 +22,6 @@ const Sidebar = () => {
         ["/", Home, "Home"],
         ["/genre", Shorts, "Genres"],
         ["/top", Subs, "Top"],
-        ["/explore", Explore, "Explore"],
     ]
 
     const hiddenLinks = [
