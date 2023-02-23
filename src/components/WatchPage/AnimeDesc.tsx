@@ -57,7 +57,7 @@ const AnimeDesc = ({ anime }: { anime: WatchAnime }) => {
                         ]}
                     />
                 </div>
-                <Actions history={anime.history[0]} />
+                <Actions history={anime.history?.at(0)} />
             </div>
             <div className="p-1 flex flex-row flex-wrap gap-[0.3rem]">
                 {anime.genres.map((g, idx) => (

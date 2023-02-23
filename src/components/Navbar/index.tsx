@@ -18,7 +18,13 @@ const Header = async ({ session }: { session: Session | null }) => {
                 Younime
             </div>
             <SearchBar animeList={animeList} />
-            {session?.user ? <ProfileHead user={session.user} /> : <SignIn />}
+            {session?.user ? (
+                <ProfileHead user={session.user} />
+            ) : (
+                <div className="h-4/5">
+                    <SignIn />
+                </div>
+            )}
         </div>
     )
 }
