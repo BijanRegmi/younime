@@ -1,9 +1,9 @@
 import { PrismaClient } from "@prisma/client"
 import { CardAnime } from "@/index"
 
-export async function getTopAnime({ prisma }: { prisma: PrismaClient }) {
+export async function getOngoingAnime({ prisma }: { prisma: PrismaClient }) {
     const result: CardAnime[] = await prisma.anime.findMany({
-        where: { title: { not: { contains: "Dub" } } },
+        where: { status: "Ongoing" },
         select: {
             id: true,
             title: true,
@@ -11,7 +11,6 @@ export async function getTopAnime({ prisma }: { prisma: PrismaClient }) {
             type: true,
             thumbnail: true,
         },
-        distinct: "malId",
         orderBy: { score: "desc" },
         take: 32,
     })

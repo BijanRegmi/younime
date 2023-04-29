@@ -106,6 +106,7 @@ model anime {
     type       String  @default("Unknown")
     thumbnail  String
     synopsis   String  @default("")
+    status     String
     malId      Int
 
     genres   genre[]
@@ -132,7 +133,7 @@ model comment {
 
 model episode {
     id       Int
-    file_url String  @unique
+    file_url String @unique
     name     String
 
     // of which anime?

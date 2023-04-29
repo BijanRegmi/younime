@@ -22,6 +22,8 @@ const Sidebar = () => {
         ["/", Home, "Home"],
         ["/genre", Shorts, "Genres"],
         ["/top", Subs, "Top"],
+        ["/ongoing", Subs, "Ongoing"],
+        ["/upcoming", Subs, "Upcoming"],
     ]
 
     const hiddenLinks = [
