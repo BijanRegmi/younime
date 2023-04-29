@@ -44,6 +44,14 @@ enum CommentInteraction {
     DISLIKED
 }
 
+enum ReportItem {
+    ANIME
+    EPISODE
+    COMMENT
+    USER
+    NONE
+}
+
 model User {
     // Next Auth
     id            String    @id @default(cuid())
@@ -60,6 +68,8 @@ model User {
     // Comments stuffs
     comments             comment[]             @relation("commented")
     comment_interactions comment_interaction[] @relation("user_interaction")
+
+    reports report[]
 }
 
 model history_entry {
@@ -149,4 +159,14 @@ model episode {
 model genre {
     name  String  @id
     anime anime[]
+}
+
+model report {
+    id      Int        @id @default(autoincrement())
+    kind    ReportItem @default(NONE)
+    refId   String?
+    content String
+
+    user   User   @relation(fields: [userId], references: [id])
+    userId String
 }
