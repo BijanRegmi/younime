@@ -3,25 +3,25 @@ import type { Context } from "./context"
 import { initTRPC, TRPCError } from "@trpc/server"
 
 const t = initTRPC.context<Context>().create({
-	errorFormatter({ shape, error }) {
-		return {
-			...shape,
-			data: {
-				...shape.data,
-				zodError:
-					error.code == "BAD_REQUEST" &&
-						error.cause instanceof ZodError
-						? error.cause
-						: null,
-			},
-		}
-	},
+    errorFormatter({ shape, error }) {
+        return {
+            ...shape,
+            data: {
+                ...shape.data,
+                zodError:
+                    error.code == "BAD_REQUEST" &&
+                    error.cause instanceof ZodError
+                        ? error.cause
+                        : null,
+            },
+        }
+    },
 })
 
 const withAuth = t.middleware(({ next, ctx }) => {
-	if (!ctx.session) throw new TRPCError({ code: "UNAUTHORIZED" })
+    if (!ctx.session) throw new TRPCError({ code: "UNAUTHORIZED" })
 
-	return next()
+    return next()
 })
 
 export const router = t.router

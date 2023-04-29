@@ -4,11 +4,11 @@ import { CardAnime } from ".."
 
 const VideoCard = ({ anime }: { anime: CardAnime }) => {
     return (
-        <div className="w-[250px] h-[300px] flex flex-col rounded-xl">
+        <div className="w-96 h-80 flex flex-col rounded-xl">
             <Link href={`/${anime.id}`} className="h-2/3">
                 <div className="w-full h-full relative cursor-pointer transition-transform after:inset-0 after:flex after:items-center after:justify-center after:content-['Play'] after:absolute after:text-accent-900 after:bg-black after:rounded-md after:opacity-0 after:transition-opacity hover:after:opacity-80">
                     <Image
-                        src={anime.thumbnail as string}
+                        src={anime.thumbnail || ""}
                         className="h-full w-full rounded-md object-contain bg-[radial-gradient(circle,#eaeaea_0%,#8b8b8b_100%)]"
                         alt="Thumbnail"
                         fill={true}
@@ -28,7 +28,7 @@ const VideoCard = ({ anime }: { anime: CardAnime }) => {
                 >
                     {anime.title}
                 </h1>
-                <div className="flex justify-start items-center gap-4 my-1">
+                <div className="flex justify-start h-1/3 items-center gap-4 my-1">
                     <div className="py-1 px-3 bg-accent-100 border border-solid border-accent-600 text-accent-850 rounded-md cursor-pointer">
                         {anime.score} / 10
                     </div>

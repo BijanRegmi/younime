@@ -1,39 +1,39 @@
 import { router, publicProcedure, privateProcedure } from "@/server/trpc"
 
 import {
-	addCommentProc,
-	addCommentSchema,
+    addCommentProc,
+    addCommentSchema,
 } from "@/server/controllers/comment/add"
 import {
-	getCommentProc,
-	getCommentSchema,
+    getCommentProc,
+    getCommentSchema,
 } from "@/server/controllers/comment/get"
 import {
-	deleteCommentProc,
-	deleteCommentSchema,
+    deleteCommentProc,
+    deleteCommentSchema,
 } from "@/server/controllers/comment/delete"
 import {
-	dislikeCommentProc,
-	dislikeCommentSchema,
+    dislikeCommentProc,
+    dislikeCommentSchema,
 } from "@/server/controllers/comment/dislike"
 import {
-	likeCommentProc,
-	likeCommentSchema,
+    likeCommentProc,
+    likeCommentSchema,
 } from "@/server/controllers/comment/like"
 import {
-	editCommentProc,
-	editCommentSchema,
+    editCommentProc,
+    editCommentSchema,
 } from "@/server/controllers/comment/edit"
 
 export const commentRouter = router({
-	add: privateProcedure.input(addCommentSchema).mutation(addCommentProc),
-	get: publicProcedure.input(getCommentSchema).query(getCommentProc),
-	delete: privateProcedure
-		.input(deleteCommentSchema)
-		.mutation(deleteCommentProc),
-	dislike: privateProcedure
-		.input(dislikeCommentSchema)
-		.mutation(dislikeCommentProc),
-	like: privateProcedure.input(likeCommentSchema).mutation(likeCommentProc),
-	edit: privateProcedure.input(editCommentSchema).mutation(editCommentProc),
+    add: privateProcedure.input(addCommentSchema).mutation(addCommentProc),
+    get: publicProcedure.input(getCommentSchema).query(getCommentProc),
+    delete: privateProcedure
+        .input(deleteCommentSchema)
+        .mutation(deleteCommentProc),
+    dislike: privateProcedure
+        .input(dislikeCommentSchema)
+        .mutation(dislikeCommentProc),
+    like: privateProcedure.input(likeCommentSchema).mutation(likeCommentProc),
+    edit: privateProcedure.input(editCommentSchema).mutation(editCommentProc),
 })

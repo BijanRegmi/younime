@@ -5,8 +5,8 @@ import { getServerSession } from "next-auth"
 import prisma from "@/prisma"
 
 export async function createContext(opts: CreateNextContextOptions) {
-	const session = await getServerSession(opts.req, opts.res, authOptions)
-	return { req: opts.req, res: opts.res, session, prisma }
+    const session = await getServerSession(opts.req, opts.res, authOptions)
+    return { req: opts.req, res: opts.res, session, prisma }
 }
 
 export type Context = inferAsyncReturnType<typeof createContext>

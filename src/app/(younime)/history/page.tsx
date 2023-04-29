@@ -20,7 +20,11 @@ const HistoryPage = async ({
     const histories = await getHistory({ status, session, prisma })
 
     if (histories.length === 0) {
-        return <div className="h-full w-full flex justify-center items-center text-3xl font-bold">Nothing Here :(</div>
+        return (
+            <div className="h-full w-full flex justify-center items-center text-3xl font-bold">
+                Nothing Here :(
+            </div>
+        )
     }
 
     return (

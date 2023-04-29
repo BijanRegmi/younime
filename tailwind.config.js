@@ -33,10 +33,12 @@ module.exports = {
                 },
             },
             spacing: {
-                sidebarSmall: '3rem',
-                sidebarExtend: '9rem',
-                sidebarFull: '12rem'
-            }
+                sidebarWide: "15rem",
+                sidebarNarrow: "4rem",
+                sidebarExtra: "11rem",
+                mainWide: "calc(100% - 3rem)",
+                mainNarrow: "calc(100% - 15rem)",
+            },
         },
     },
     plugins: [],

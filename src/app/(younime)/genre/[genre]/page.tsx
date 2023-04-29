@@ -2,7 +2,7 @@ import VideoCard from "@/components/VideoCard"
 import prisma from "@/prisma"
 import { notFound } from "next/navigation"
 
-const Page = async ({ params }: { params: { "genre": string } }) => {
+const Page = async ({ params }: { params: { genre: string } }) => {
     const genre = params.genre
 
     const result = await prisma.genre.findUnique({

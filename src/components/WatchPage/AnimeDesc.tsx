@@ -36,8 +36,12 @@ const AnimeDesc = ({ anime }: { anime: WatchAnime }) => {
                     />
                 </div>
                 <div className="flex flex-col gap-[0.1rem] flex-grow">
-                    <h1 className="text-2xl font-semibold text-accent-900">{anime.title}</h1>
-                    <h2 className="text-sm text-accent-800">{anime.alttitle}</h2>
+                    <h1 className="text-2xl font-semibold text-accent-900">
+                        {anime.title}
+                    </h1>
+                    <h2 className="text-sm text-accent-800">
+                        {anime.alttitle}
+                    </h2>
                     <DataRow
                         datas={[
                             { title: "Rating", value: anime.age_rating },

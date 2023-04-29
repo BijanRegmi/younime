@@ -45,15 +45,15 @@ const Actions = ({
 
     const paths = usePathname()?.split("/")
     if (!paths) return notFound()
-    const animeId = Number(paths[1])
+    const animeId = paths[1]
     const epId = Number(paths[2])
 
     const options = {
-        "WATCHING": Watching,
-        "COMPLETED": Completed,
-        "HOLD": Hold,
-        "CONSIDERING": Considering,
-        "DROPPED": Dropped,
+        WATCHING: Watching,
+        COMPLETED: Completed,
+        HOLD: Hold,
+        CONSIDERING: Considering,
+        DROPPED: Dropped,
     }
 
     const { mutate: addMutate } = trpc.playlist.add.useMutation()

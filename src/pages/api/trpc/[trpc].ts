@@ -3,6 +3,6 @@ import { createContext } from "@/server/context"
 import { appRouter } from "@/server/routers/_app"
 
 export default createNextApiHandler({
-	router: appRouter,
-	createContext,
+    router: appRouter,
+    createContext,
 })
