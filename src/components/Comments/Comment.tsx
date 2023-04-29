@@ -4,6 +4,9 @@ import LikeSvg from "@/assets/reactions/like.svg"
 import DislikeSvg from "@/assets/reactions/dislike.svg"
 import LikedSvg from "@/assets/reactions/liked.svg"
 import DislikedSvg from "@/assets/reactions/disliked.svg"
+import ReportSvg from "@/assets/comments/report.svg"
+import DeleteSvg from "@/assets/comments/delete.svg"
+
 import { inferRouterOutputs } from "@trpc/server"
 import { AppRouter } from "@/server/routers/_app"
 import { trpc } from "../Context/TrpcContext"
@@ -16,10 +19,12 @@ const Comment = ({
     comment,
     pageIdx,
     episodeId,
+    episodeAnimeId,
 }: {
     comment: Comment
     pageIdx: number
     episodeId: number
+    episodeAnimeId: string
 }) => {
     const utils = trpc.useContext()
 
@@ -29,26 +34,31 @@ const Comment = ({
 
             utils.comment.get.cancel()
 
-            const prevData = utils.comment.get.getInfiniteData({ episodeId })
+            const prevData = utils.comment.get.getInfiniteData({
+                episodeId,
+                episodeAnimeId,
+            })
 
-            prevData?.pages[pageIdx].comments.forEach(comment => {
-                if (comment.id == id) {
+            prevData?.pages[pageIdx].comments.forEach(c => {
+                if (c.id == id) {
                     if (reset) {
-                        comment.likes--
-                        comment.status = undefined
+                        c.likes--
+                        c.status = undefined
                     } else {
-                        if (comment.status == CommentInteraction.LIKED)
-                            comment.likes--
-                        else if (comment.status == CommentInteraction.DISLIKED)
-                            comment.dislikes--
+                        if (c.status == CommentInteraction.LIKED) c.likes--
+                        else if (c.status == CommentInteraction.DISLIKED)
+                            c.dislikes--
 
-                        comment.likes++
-                        comment.status = CommentInteraction.LIKED
+                        c.likes++
+                        c.status = CommentInteraction.LIKED
                     }
                 }
             })
 
-            utils.comment.get.setInfiniteData({ episodeId }, prevData)
+            utils.comment.get.setInfiniteData(
+                { episodeId, episodeAnimeId },
+                prevData
+            )
         },
     })
 
@@ -58,26 +68,31 @@ const Comment = ({
 
             utils.comment.get.cancel()
 
-            const prevData = utils.comment.get.getInfiniteData({ episodeId })
+            const prevData = utils.comment.get.getInfiniteData({
+                episodeId,
+                episodeAnimeId,
+            })
 
-            prevData?.pages[pageIdx].comments.forEach(comment => {
-                if (comment.id == id) {
+            prevData?.pages[pageIdx].comments.forEach(c => {
+                if (c.id == id) {
                     if (reset) {
-                        comment.dislikes--
-                        comment.status = undefined
+                        c.dislikes--
+                        c.status = undefined
                     } else {
-                        if (comment.status == CommentInteraction.LIKED)
-                            comment.likes--
-                        else if (comment.status == CommentInteraction.DISLIKED)
-                            comment.dislikes--
+                        if (c.status == CommentInteraction.LIKED) c.likes--
+                        else if (c.status == CommentInteraction.DISLIKED)
+                            c.dislikes--
 
-                        comment.dislikes++
-                        comment.status = CommentInteraction.DISLIKED
+                        c.dislikes++
+                        c.status = CommentInteraction.DISLIKED
                     }
                 }
             })
 
-            utils.comment.get.setInfiniteData({ episodeId }, prevData)
+            utils.comment.get.setInfiniteData(
+                { episodeId, episodeAnimeId },
+                prevData
+            )
         },
     })
 
@@ -94,6 +109,32 @@ const Comment = ({
             id: comment.id,
         })
     }
+
+    const { mutate: deleteCommment } = trpc.comment.delete.useMutation({
+        onSuccess: (_data, vars) => {
+            const { id } = vars
+            const prevData = utils.comment.get.getInfiniteData({
+                episodeId,
+                episodeAnimeId,
+            })
+
+            prevData?.pages[pageIdx].comments.forEach(c => {
+                if (c.id == id) {
+                    c.id = -1
+                }
+            })
+
+            utils.comment.get.setInfiniteData(
+                { episodeId, episodeAnimeId },
+                prevData
+            )
+        },
+    })
+
+    const LikeIcon = comment.status === "LIKED" ? LikedSvg : LikeSvg
+    const DislikeIcon = comment.status == "DISLIKED" ? DislikedSvg : DislikeSvg
+
+    if (comment.id == -1) return <></>
 
     return (
         <div className="flex flex-row gap-5 p-1 mt-4 border-b border-solid border-accent-150">
@@ -113,33 +154,33 @@ const Comment = ({
                 <div className="font-semibold">{comment.commenter.name}</div>
                 <div className="">{comment.content}</div>
                 <div className="flex flex-row gap-1">
-                    {comment.status == "LIKED" ? (
-                        <LikedSvg
-                            onClick={like}
-                            className="w-5 aspect-square fill-accent-900 cursor-pointer"
-                        />
-                    ) : (
-                        <LikeSvg
-                            onClick={like}
-                            className="w-5 aspect-square fill-accent-900 cursor-pointer"
-                        />
-                    )}
+                    <LikeIcon
+                        onClick={like}
+                        className="w-5 aspect-square fill-accent-900 cursor-pointer"
+                    />
                     <span>{comment.likes}</span>
-                    {comment.status == "DISLIKED" ? (
-                        <DislikedSvg
-                            onClick={dislike}
-                            className="w-5 aspect-square fill-accent-900 cursor-pointer"
-                        />
-                    ) : (
-                        <DislikeSvg
-                            onClick={dislike}
-                            className="w-5 aspect-square fill-accent-900 cursor-pointer"
-                        />
-                    )}
+                    <DislikeIcon
+                        onClick={dislike}
+                        className="w-5 aspect-square fill-accent-900 cursor-pointer"
+                    />
                     <span>{comment.dislikes}</span>
+                    <div className="flex grow justify-end px-4">
+                        {comment.own ? (
+                            <DeleteSvg
+                                className="w-5 aspect-square cursor-pointer"
+                                onClick={() => {
+                                    deleteCommment({ id: comment.id })
+                                }}
+                            />
+                        ) : (
+                            <ReportSvg
+                                className="w-5 aspect-square cursor-pointer"
+                                onClick={() => {}}
+                            />
+                        )}
+                    </div>
                 </div>
             </div>
-            <div className="w-[5%] opacity-0" />
         </div>
     )
 }

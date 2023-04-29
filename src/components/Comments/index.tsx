@@ -1,30 +1,33 @@
 "use client"
 
 import useOnIntersection from "@/hooks/useObserver"
-import { usePathname } from "next/navigation"
+import { notFound, usePathname } from "next/navigation"
 import Comment from "./Comment"
 import CommentInput from "./Input"
 import { trpc } from "../Context/TrpcContext"
 import { Fragment } from "react"
 
 export default function Comments() {
-    const episodeId = Number(usePathname()?.split("/")[2])
+    const observeRef = useOnIntersection<HTMLDivElement>({
+        onIntersect: () => {
+            if (hasNextPage) fetchNextPage()
+        },
+    })
+
+    const paths = usePathname()?.split("/")
+
+    if (!paths) return notFound()
+
+    const episodeAnimeId = paths[1]
+    const episodeId = Number(paths[2])
 
     const { data, isSuccess, hasNextPage, fetchNextPage, isFetchingNextPage } =
         trpc.comment.get.useInfiniteQuery(
-            { episodeId },
+            { episodeId, episodeAnimeId },
             {
                 getNextPageParam: lastPage => lastPage.nextCursor,
             }
         )
-
-    const observeRef = useOnIntersection<HTMLDivElement>({
-        onIntersect: () => {
-            console.log("Intersected")
-            console.log(hasNextPage)
-            if (hasNextPage) fetchNextPage()
-        },
-    })
 
     return (
         <div className="flex flex-col w-full bg-accent-50">
@@ -38,6 +41,7 @@ export default function Comments() {
                                 pageIdx={pageIdx}
                                 comment={comment}
                                 episodeId={episodeId}
+                                episodeAnimeId={episodeAnimeId}
                             />
                         ))}
                     </Fragment>

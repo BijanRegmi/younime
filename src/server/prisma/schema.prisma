@@ -100,7 +100,7 @@ model comment_interaction {
 
     // on which comment?
     commentId Int
-    comment   comment @relation("comment_interaction", fields: [commentId], references: [id])
+    comment   comment @relation("comment_interaction", fields: [commentId], references: [id], onDelete: Cascade)
 
     @@id([userId, commentId])
 }
