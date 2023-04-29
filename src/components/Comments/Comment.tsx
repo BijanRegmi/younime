@@ -11,6 +11,10 @@ import { inferRouterOutputs } from "@trpc/server"
 import { AppRouter } from "@/server/routers/_app"
 import { trpc } from "../Context/TrpcContext"
 import { CommentInteraction } from "@prisma/client"
+import { useState } from "react"
+import { Report } from "@/components/Report"
+import { Popup } from "../Popup"
+import { DeleteComment } from "./Delete"
 
 type Comment =
     inferRouterOutputs<AppRouter>["comment"]["get"]["comments"][number]
@@ -27,6 +31,13 @@ const Comment = ({
     episodeAnimeId: string
 }) => {
     const utils = trpc.useContext()
+    const [reporting, setReporting] = useState(false)
+    const [deleting, setDeleting] = useState(false)
+
+    const openReportPopup = () => setReporting(true)
+    const closeReportPopup = () => setReporting(false)
+    const openDeletePopup = () => setDeleting(true)
+    const closeDeletePopup = () => setDeleting(false)
 
     const { mutate: likeMutate } = trpc.comment.like.useMutation({
         onSuccess: (_data, vars) => {
@@ -110,26 +121,24 @@ const Comment = ({
         })
     }
 
-    const { mutate: deleteCommment } = trpc.comment.delete.useMutation({
-        onSuccess: (_data, vars) => {
-            const { id } = vars
-            const prevData = utils.comment.get.getInfiniteData({
-                episodeId,
-                episodeAnimeId,
-            })
+    const onDeleteSuccess = () => {
+        const prevData = utils.comment.get.getInfiniteData({
+            episodeId,
+            episodeAnimeId,
+        })
 
-            prevData?.pages[pageIdx].comments.forEach(c => {
-                if (c.id == id) {
-                    c.id = -1
-                }
-            })
+        prevData?.pages[pageIdx].comments.forEach(c => {
+            if (c.id == comment.id) {
+                c.id = -1
+            }
+        })
 
-            utils.comment.get.setInfiniteData(
-                { episodeId, episodeAnimeId },
-                prevData
-            )
-        },
-    })
+        utils.comment.get.setInfiniteData(
+            { episodeId, episodeAnimeId },
+            prevData
+        )
+        closeDeletePopup()
+    }
 
     const LikeIcon = comment.status === "LIKED" ? LikedSvg : LikeSvg
     const DislikeIcon = comment.status == "DISLIKED" ? DislikedSvg : DislikeSvg
@@ -168,19 +177,36 @@ const Comment = ({
                         {comment.own ? (
                             <DeleteSvg
                                 className="w-5 aspect-square cursor-pointer"
-                                onClick={() => {
-                                    deleteCommment({ id: comment.id })
-                                }}
+                                onClick={openDeletePopup}
                             />
                         ) : (
                             <ReportSvg
                                 className="w-5 aspect-square cursor-pointer"
-                                onClick={() => {}}
+                                onClick={openReportPopup}
                             />
                         )}
                     </div>
                 </div>
             </div>
+            {reporting && (
+                <Popup onClickOutside={closeReportPopup}>
+                    <Report
+                        onSuccess={closeReportPopup}
+                        onCancel={closeReportPopup}
+                        kind="COMMENT"
+                        refId={comment.id.toString()}
+                    />
+                </Popup>
+            )}
+            {deleting && (
+                <Popup onClickOutside={closeDeletePopup}>
+                    <DeleteComment
+                        onSuccess={onDeleteSuccess}
+                        onCancel={closeDeletePopup}
+                        id={comment.id}
+                    />
+                </Popup>
+            )}
         </div>
     )
 }
