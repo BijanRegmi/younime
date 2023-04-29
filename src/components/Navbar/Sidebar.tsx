@@ -36,7 +36,7 @@ const Sidebar = () => {
         <div
             className={
                 "h-full flex-shrink-0 overflow-x-hidden flex flex-col gap-2 border border-solid border-y-0 border-l-0 border-r-accent-150 " +
-                (open ? "w-sidebarFull" : "w-sidebarSmall")
+                (open ? "w-sidebarWide" : "w-sidebarNarrow")
             }
         >
             {links.map(([href, Item, Text], idx) => {
@@ -47,12 +47,9 @@ const Sidebar = () => {
                         text={Text}
                         sidebarOpen={open}
                     >
-                        <Item
-                            className={
-                                "fill-accent-900 flex-shrink-0 aspect-square " +
-                                (open ? "h-4/5" : "w-4/5")
-                            }
-                        />
+                        <div className="w-sidebarNarrow aspect-square flex-shrink-0 flex justify-center items-center">
+                            <Item className="fill-accent-900 w-2/3 aspect-square" />
+                        </div>
                     </NavItem>
                 )
             })}
@@ -71,7 +68,9 @@ const Sidebar = () => {
                                 text={Text}
                                 sidebarOpen={open}
                             >
-                                <Item className="h-4/5 aspect-square text-white fill-none" />
+                                <div className="w-sidebarNarrow aspect-square flex-shrink-0 flex justify-center items-center">
+                                    <Item className="fill-none w-2/3 text-white aspect-square" />
+                                </div>
                             </NavItem>
                         )
                     })}
@@ -96,10 +95,8 @@ const NavItem = ({
         <Link
             href={href}
             className={
-                (sidebarOpen
-                    ? "p-2 flex-row justify-start gap-2 h-12 "
-                    : "py-2 px-3 flex-col justify-center ") +
-                " w-full flex-shrink-0 no-underline decoration-solid rounded-2xl flex items-center hover:bg-accent-450"
+                (sidebarOpen ? "flex-row" : "flex-col") +
+                " w-full flex-shrink-0 no-underline decoration-solid rounded-2xl flex items-center hover:bg-accent-250"
             }
         >
             {children}

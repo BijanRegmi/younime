@@ -10,6 +10,7 @@ import Header from "@/components/Navbar"
 import Sidebar from "@/components/Navbar/Sidebar"
 import ReactContext from "@/components/Context/ReactContext"
 import { ReactNode } from "react"
+import { MainLayout } from "@/components/MainLayout"
 
 export default async function RootLayout({
     children,
@@ -27,16 +28,9 @@ export default async function RootLayout({
                         <ReactContext>
                             {/* @ts-expect-error Server Component */}
                             <Header session={session} />
-                            <div className="px-2 flex flex-row gap-2 h-[calc(100%-4rem)] w-full">
+                            <div className="flex flex-row gap-2 h-[calc(100%-5rem)] w-full">
                                 <Sidebar />
-                                <div
-                                    style={{
-                                        width: "calc(100% - var(--sidebarwidth))",
-                                    }}
-                                    className="h-full max-h-full flex-grow flex-shrink"
-                                >
-                                    {children}
-                                </div>
+                                <MainLayout>{children}</MainLayout>
                             </div>
                         </ReactContext>
                     </TrpcProvider>
