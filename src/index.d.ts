@@ -4,7 +4,7 @@ declare module "*.svg" {
 }
 
 export interface CardAnime {
-    id: number
+    id: string
     title: string
     score: number
     type: string | null

@@ -8,26 +8,26 @@ import { notFound } from "next/navigation"
 import { getWatchAnime } from "@/utils/getWatchAnime"
 
 const animeLayout = async ({
-	params,
-	children,
+    params,
+    children,
 }: {
-	params: { "anime-id": string; "ep-id": string }
-	children: ReactNode
+    params: { "anime-id": string; "ep-id": string }
+    children: ReactNode
 }) => {
-	const animeId = Number(params["anime-id"])
-	const session = await getServerSession(authOptions)
+    const animeId = params["anime-id"]
+    const session = await getServerSession(authOptions)
 
-	const anime = await getWatchAnime({ animeId, session, prisma })
+    const anime = await getWatchAnime({ animeId, session, prisma })
 
-	if (!anime) return notFound()
+    if (!anime) return notFound()
 
-	return (
-		<div className="w-full overflow-y-scroll grid gap-y-2 gap-x-4 h-full watchpage">
-			{children}
-			<EpList episodes={anime.episodes} />
-			<AnimeDesc anime={anime} />
-		</div>
-	)
+    return (
+        <div className="w-full overflow-y-scroll grid gap-y-2 gap-x-4 h-full watchpage">
+            {children}
+            <EpList episodes={anime.episodes} />
+            <AnimeDesc anime={anime} />
+        </div>
+    )
 }
 
 export default animeLayout
