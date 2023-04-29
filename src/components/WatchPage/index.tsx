@@ -4,55 +4,48 @@ import { getServerSession } from "next-auth"
 import Comments from "../Comments"
 import VideoPlayer from "../VideoPlayer"
 import { AnimeStatus } from "@prisma/client"
-import crypto from "crypto"
 import { notFound } from "next/navigation"
+import { getSources } from "@/utils/getSources"
 
 const WatchPage = async ({
-	params,
+    params,
 }: {
-	params: { "ep-id": string; "anime-id": string }
+    params: { "ep-id": string; "anime-id": string }
 }) => {
-	const id = Number(params["ep-id"])
-	const animeId = Number(params["anime-id"])
+    const id = Number(params["ep-id"])
+    const animeId = params["anime-id"]
 
-	const result = await prisma.episode.findUnique({
-		where: { id },
-		select: { file_url: true },
-	})
+    if (isNaN(id)) return notFound()
 
-	if (!result) return notFound()
+    const result = await prisma.episode.findUnique({
+        where: { id_animeId: { id, animeId } },
+        select: { file_url: true },
+    })
 
-	// Encrypting thevar tobeEncrypted = 'some secret string';
-	const secret = Buffer.from(process.env.YOUNIME_SECRET as string, "base64")
-	const cipher = crypto.createCipheriv("aes-256-ecb", secret, null)
-	const encrypted = Buffer.concat([
-		cipher.update(result.file_url as string),
-		cipher.final(),
-	])
-	result.file_url = "/api/video?key=" + encrypted.toString("hex")
+    if (!result) return notFound()
 
-	// If the status of anime is WATCHING for that user
-	// then update the last watching episode id
-	const session = await getServerSession(authOptions)
-	if (session && session.user?.id) {
-		await prisma.history_entry.updateMany({
-			where: {
-				animeId,
-				userId: session.user.id,
-				status: AnimeStatus.WATCHING,
-			},
-			data: { epId: id },
-		})
-	}
+    const sources = await getSources(result.file_url)
 
-	return (
-		<>
-			<VideoPlayer url={result?.file_url} />
-			<div className="comments">
-				<Comments />
-			</div>
-		</>
-	)
+    const session = await getServerSession(authOptions)
+    if (session && session.user?.id) {
+        await prisma.history_entry.updateMany({
+            where: {
+                animeId,
+                userId: session.user.id,
+                status: AnimeStatus.WATCHING,
+            },
+            data: { epId: id },
+        })
+    }
+
+    return (
+        <>
+            <VideoPlayer sources={sources} />
+            <div className="comments">
+                <Comments />
+            </div>
+        </>
+    )
 }
 
 export default WatchPage

@@ -23,6 +23,18 @@ import {
     useState,
 } from "react"
 import ReactPlayer from "react-player"
+import { Settings } from "./Settings"
+
+const PLAYBACK_RATES = [
+    "0.25",
+    "0.5",
+    "0.75",
+    "Normal",
+    "1.25",
+    "1.5",
+    "1.75",
+    "2",
+]
 
 const Controls = ({
     state,
@@ -55,10 +67,8 @@ const Controls = ({
     }
 
     // CHANGE RATE
-    const onRateChange = () => {
-        let newRate = state.playbackRate + 0.25
-        if (newRate > 2) newRate = 0.25
-        setState(old => ({ ...old, playbackRate: newRate }))
+    const setPlayBackRate = (idx: number) => {
+        setState(old => ({ ...old, playbackRate: (idx + 1) * 0.25 }))
     }
 
     // MINI PLAYER
@@ -175,15 +185,52 @@ const Controls = ({
                         onInput={slideVolume}
                     />
                 </div>
+
                 <div className="flex items-center gap-[0.1rem] flex-grow">
                     <div>
                         {durationFormatter(state.played * state.duration || 0)}
                     </div>
                     /<div>{durationFormatter(state.duration || 0)}</div>
                 </div>
-                <span className="controlBtn" onClick={onRateChange}>
-                    {state.playbackRate}x
-                </span>
+
+                <Settings
+                    options={[
+                        {
+                            title: "Playback Speed",
+                            options: PLAYBACK_RATES,
+                            selected: state.playbackRate / 0.25 - 1,
+                            setter: setPlayBackRate,
+                        },
+                        {
+                            title: "Source",
+                            options: state.sources.map(
+                                (_, idx) => `Source ${idx + 1}`
+                            ),
+                            selected: state.active_source,
+                            setter: (idx: number) => {
+                                setState(o => ({
+                                    ...o,
+                                    active_source: idx,
+                                    active_quality: Math.min(
+                                        o.active_quality,
+                                        o.sources[idx].length
+                                    ),
+                                }))
+                            },
+                        },
+                        {
+                            title: "Quality",
+                            options: state.sources[state.active_source].map(
+                                s => s.name
+                            ),
+                            selected: state.active_quality,
+                            setter: (idx: number) => {
+                                setState(o => ({ ...o, active_quality: idx }))
+                            },
+                        },
+                    ]}
+                />
+
                 <MiniPlayer className="controlBtn" onClick={onMiniPlayer} />
                 {state.mode == MODES.THEATRE ? (
                     <TheaterWide className="controlBtn" onClick={onTheatre} />
