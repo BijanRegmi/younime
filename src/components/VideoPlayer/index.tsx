@@ -6,7 +6,7 @@ import useHasWindow from "@/hooks/useHasWindow"
 import useShowOnMouseMove from "@/hooks/useShowOnMouseMove"
 import Controls from "./Controls"
 import { OnProgressProps } from "react-player/base"
-import { source } from "@/utils/getSources"
+import { source } from "@/lib/getSources"
 
 export enum MODES {
     FULLSCREEN = "fullscreen",

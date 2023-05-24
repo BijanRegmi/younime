@@ -11,7 +11,7 @@ import TheaterWide from "@/assets/videoplayer/theater-wide.svg"
 import FullScreenOpen from "@/assets/videoplayer/fullscreen-open.svg"
 import FullScreenClose from "@/assets/videoplayer/fullscreen-close.svg"
 
-import { durationFormatter } from "@/utils/helpers"
+import { durationFormatter } from "@/lib/helpers"
 import { MODES, VideoState } from "./"
 import {
     CSSProperties,

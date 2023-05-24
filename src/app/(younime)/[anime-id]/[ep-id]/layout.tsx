@@ -5,7 +5,7 @@ import { getServerSession } from "next-auth"
 import { authOptions } from "@/api/auth/[...nextauth]"
 import { ReactNode } from "react"
 import { notFound } from "next/navigation"
-import { getWatchAnime } from "@/utils/getWatchAnime"
+import { getWatchAnime } from "@/lib/getWatchAnime"
 
 const animeLayout = async ({
     params,

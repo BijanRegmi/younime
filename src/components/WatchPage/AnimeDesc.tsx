@@ -1,7 +1,7 @@
 import Image from "next/image"
 import Synopsis from "@/components/WatchPage/synopsis"
 import Actions from "@/components/WatchPage/Actions"
-import { WatchAnime } from "@/utils/getWatchAnime"
+import { WatchAnime } from "@/lib/getWatchAnime"
 
 const DataRow = ({ datas }: { datas: { title: string; value: any }[] }) => {
     return (

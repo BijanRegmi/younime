@@ -1,4 +1,4 @@
-import { getHistory } from "@/utils/getHistory"
+import { getHistory } from "@/lib/getHistory"
 import { AnimeStatus } from "@prisma/client"
 import { notFound, redirect } from "next/navigation"
 import prisma from "@/prisma"

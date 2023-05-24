@@ -4,7 +4,7 @@ import Play from "@/assets/videoplayer/play.svg"
 import { notFound, usePathname } from "next/navigation"
 import { ReactNode, useEffect, useRef } from "react"
 import Link from "next/link"
-import { WatchAnime } from "@/utils/getWatchAnime"
+import { WatchAnime } from "@/lib/getWatchAnime"
 
 const EpList = ({ episodes }: { episodes: WatchAnime["episodes"] }) => {
     const ref = useRef<HTMLAnchorElement>(null)

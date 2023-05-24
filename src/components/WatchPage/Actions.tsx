@@ -11,7 +11,7 @@ import useRequireAuth from "@/hooks/useRequireAuth"
 import { notFound, usePathname } from "next/navigation"
 import { AnimeStatus } from "@prisma/client"
 import { trpc } from "../Context/TrpcContext"
-import { WatchAnime } from "@/utils/getWatchAnime"
+import { WatchAnime } from "@/lib/getWatchAnime"
 
 const Actions = ({
     history,

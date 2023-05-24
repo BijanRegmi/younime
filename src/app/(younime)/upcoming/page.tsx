@@ -1,4 +1,4 @@
-import { getOngoingAnime } from "@/utils/getOngoing"
+import { getOngoingAnime } from "@/lib/getOngoing"
 import prisma from "@/prisma"
 import VideoCard from "@/components/VideoCard"
 

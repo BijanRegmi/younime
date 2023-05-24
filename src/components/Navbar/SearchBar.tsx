@@ -8,7 +8,7 @@ import fuzzysort from "fuzzysort"
 
 import SearchBtn from "@/assets/misc/search.svg"
 import Cross from "@/assets/misc/cross.svg"
-import { SearchableAnime } from "@/utils/getSearchList"
+import { SearchableAnime } from "@/lib/getSearchList"
 
 const SearchBar = ({ animeList }: { animeList: SearchableAnime[] }) => {
     const [showSuggestion, setShowSuggestion] = useState(false)

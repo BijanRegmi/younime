@@ -1,5 +1,5 @@
 "use client"
-import { WatchAnime } from "@/utils/getWatchAnime"
+import { WatchAnime } from "@/lib/getWatchAnime"
 import { useState } from "react"
 
 const Synopsis = ({ synopsis }: { synopsis: WatchAnime["synopsis"] }) => {

@@ -1,4 +1,4 @@
-import { getUpcomingAnime } from "@/utils/getUpcoming"
+import { getUpcomingAnime } from "@/lib/getUpcoming"
 import prisma from "@/prisma"
 import VideoCard from "@/components/VideoCard"
 

@@ -1,4 +1,4 @@
-import { getTopAnime } from "@/utils/getTopAnime"
+import { getTopAnime } from "@/lib/getTopAnime"
 import prisma from "@/prisma"
 import VideoCard from "@/components/VideoCard"
 

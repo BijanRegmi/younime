@@ -6,7 +6,7 @@ import ProfileHead from "@/components/Navbar/ProfileHead"
 import HamBurger from "@/components/Navbar/Hamburger"
 
 import { Session } from "next-auth"
-import { getSearchList } from "@/utils/getSearchList"
+import { getSearchList } from "@/lib/getSearchList"
 import Link from "next/link"
 
 const Header = async ({ session }: { session: Session | null }) => {

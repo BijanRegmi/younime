@@ -5,7 +5,7 @@ import Comments from "../Comments"
 import VideoPlayer from "../VideoPlayer"
 import { AnimeStatus } from "@prisma/client"
 import { notFound } from "next/navigation"
-import { getSources } from "@/utils/getSources"
+import { getSources } from "@/lib/getSources"
 
 const WatchPage = async ({
     params,
