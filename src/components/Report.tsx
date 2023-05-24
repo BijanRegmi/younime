@@ -10,8 +10,13 @@ const options = {
         "Wrong video",
         "No subtitles",
     ],
-    ANIME: ["Missing episodes", "No release of new episodes", "Duplicate"],
-    COMMENT: ["Smells like spoiler", "Offensive", "Spam or self-promotion"],
+    ANIME: ["Missing episodes", "Not up-to-date", "Duplicate"],
+    COMMENT: [
+        "Smells like spoiler",
+        "Offensive",
+        "Spam or self-promotion",
+        "Irrevelant",
+    ],
     USER: [
         "Harasment or bullying",
         "Spamming",
