@@ -1,15 +1,17 @@
+import Section from "@/components/Sections"
 import VideoCard from "@/components/VideoCard"
 import prisma from "@/prisma"
-import { getRandomAnime } from "@/utils/getRandomAnime"
+import { getRandomAnime } from "@/lib/getRandomAnime"
+import { getInteresedAnime } from "@/lib/getInterests"
 
 export default async function Home() {
     const homeAnimes = await getRandomAnime({ prisma })
+    const interested = await getInteresedAnime({ prisma })
 
     return (
-        <div className="flex flex-row flex-wrap justify-evenly gap-x-4 gap-y-8 overflow-scroll h-full py-3">
-            {homeAnimes.map(anime => (
-                <VideoCard key={anime.id} anime={anime} />
-            ))}
+        <div className="">
+            <Section animes={homeAnimes} title="Random" />
+            <Section animes={interested} title="You may be interested in" />
         </div>
     )
 }
