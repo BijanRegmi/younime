@@ -3,7 +3,7 @@ import { CardAnime } from "@/index"
 import { getServerSession } from "next-auth"
 import { authOptions } from "@/pages/api/auth/[...nextauth]"
 
-export async function getInteresedAnime() {
+export async function getInteresedAnime({ take = 8 }: { take?: number }) {
     const session = await getServerSession(authOptions)
 
     const userId = session?.user.id
@@ -19,7 +19,7 @@ export async function getInteresedAnime() {
         0
     )
 
-    const increment = (1 / total) * 8
+    const increment = (1 / total) * take
     const genreCount = interest.reduce((accum, value) => {
         value.anime.genres.forEach(genre => {
             if (accum[genre.name]) accum[genre.name] += increment
@@ -31,16 +31,13 @@ export async function getInteresedAnime() {
     const unionQuery = Object.entries(genreCount)
         .map(
             ([genre, count]) =>
-                `(SELECT "A" as id from "_animeTogenre" where "B" = '${genre}' ORDER BY random() LIMIT ${Math.ceil(
+                `(SELECT "A" AS id FROM "_animeTogenre" WHERE "B" = '${genre}' ORDER BY random() LIMIT ${Math.ceil(
                     count
                 )})`
         )
         .join(" UNION ALL ")
 
-    const finalQuery =
-        "SELECT id, title, score, type, thumbnail from anime WHERE id IN (" +
-        unionQuery +
-        ")"
+    const finalQuery = `SELECT id, title, score, type, thumbnail FROM anime WHERE id IN (${unionQuery});`
 
     const data = await prisma.$queryRawUnsafe<CardAnime[]>(finalQuery)
 

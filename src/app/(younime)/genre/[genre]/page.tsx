@@ -1,4 +1,4 @@
-import VideoCard from "@/components/VideoCard"
+import Section from "@/components/Sections"
 import prisma from "@/prisma"
 import { notFound } from "next/navigation"
 
@@ -24,13 +24,7 @@ const Page = async ({ params }: { params: { genre: string } }) => {
 
     if (!result || !result.anime.length) return notFound()
 
-    return (
-        <div className="flex flex-row flex-wrap justify-evenly gap-x-4 gap-y-8 overflow-scroll h-[90%] pt-2">
-            {result.anime.map(anime => (
-                <VideoCard key={anime.id} anime={anime} />
-            ))}
-        </div>
-    )
+    return <Section animes={result.anime} />
 }
 
 export default Page

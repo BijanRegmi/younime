@@ -2,7 +2,7 @@ import { getHistory } from "@/lib/getHistory"
 import { AnimeStatus } from "@prisma/client"
 import { notFound, redirect } from "next/navigation"
 import { getServerSession } from "next-auth"
-import VideoCard from "@/components/VideoCard"
+import Section from "@/components/Sections"
 
 const HistoryPage = async ({
     searchParams,
@@ -26,13 +26,7 @@ const HistoryPage = async ({
         )
     }
 
-    return (
-        <div className="flex flex-row flex-wrap justify-center gap-x-4 gap-y-8 px-4 overflow-scroll h-full">
-            {animes.map(anime => (
-                <VideoCard anime={anime} key={anime.id} />
-            ))}
-        </div>
-    )
+    return <Section animes={animes} />
 }
 
 export default HistoryPage
