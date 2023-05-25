@@ -1,6 +1,6 @@
-import { PrismaClient } from "@prisma/client"
+import prisma from "@/prisma"
 
-export async function getSearchList({ prisma }: { prisma: PrismaClient }) {
+export async function getSearchList() {
     const result = await prisma.anime.findMany({
         select: {
             id: true,

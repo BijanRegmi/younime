@@ -1,7 +1,7 @@
-import { PrismaClient } from "@prisma/client"
+import prisma from "@/prisma"
 import { CardAnime } from "@/index"
 
-export async function getOngoingAnime({ prisma }: { prisma: PrismaClient }) {
+export async function getOngoingAnime() {
     const result: CardAnime[] = await prisma.anime.findMany({
         where: { status: "Ongoing" },
         select: {

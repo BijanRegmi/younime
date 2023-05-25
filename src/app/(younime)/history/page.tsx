@@ -1,7 +1,6 @@
 import { getHistory } from "@/lib/getHistory"
 import { AnimeStatus } from "@prisma/client"
 import { notFound, redirect } from "next/navigation"
-import prisma from "@/prisma"
 import { getServerSession } from "next-auth"
 import VideoCard from "@/components/VideoCard"
 
@@ -17,7 +16,7 @@ const HistoryPage = async ({
 
     if (!Object.keys(AnimeStatus).includes(status)) return notFound()
 
-    const histories = await getHistory({ status, session, prisma })
+    const histories = await getHistory({ status })
 
     if (histories.length === 0) {
         return (

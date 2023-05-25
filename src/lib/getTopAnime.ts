@@ -1,7 +1,7 @@
-import { PrismaClient } from "@prisma/client"
+import prisma from "@/prisma"
 import { CardAnime } from "@/index"
 
-export async function getTopAnime({ prisma }: { prisma: PrismaClient }) {
+export async function getTopAnime() {
     const result: CardAnime[] = await prisma.anime.findMany({
         where: { title: { not: { contains: "Dub" } } },
         select: {

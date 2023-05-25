@@ -1,9 +1,9 @@
-import { PrismaClient } from "@prisma/client"
+import prisma from "@/prisma"
 import { CardAnime } from "@/index"
 import { getServerSession } from "next-auth"
 import { authOptions } from "@/pages/api/auth/[...nextauth]"
 
-export async function getInteresedAnime({ prisma }: { prisma: PrismaClient }) {
+export async function getInteresedAnime() {
     const session = await getServerSession(authOptions)
 
     const userId = session?.user.id

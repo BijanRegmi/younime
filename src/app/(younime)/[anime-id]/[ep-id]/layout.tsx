@@ -1,8 +1,5 @@
 import AnimeDesc from "@/components/WatchPage/AnimeDesc"
 import EpList from "@/components/WatchPage/EpList"
-import prisma from "@/prisma"
-import { getServerSession } from "next-auth"
-import { authOptions } from "@/api/auth/[...nextauth]"
 import { ReactNode } from "react"
 import { notFound } from "next/navigation"
 import { getWatchAnime } from "@/lib/getWatchAnime"
@@ -15,9 +12,8 @@ const animeLayout = async ({
     children: ReactNode
 }) => {
     const animeId = params["anime-id"]
-    const session = await getServerSession(authOptions)
 
-    const anime = await getWatchAnime({ animeId, session, prisma })
+    const anime = await getWatchAnime({ animeId })
 
     if (!anime) return notFound()
 

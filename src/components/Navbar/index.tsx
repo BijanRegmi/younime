@@ -1,5 +1,3 @@
-import prisma from "@/prisma"
-
 import SearchBar from "@/components/Navbar/SearchBar"
 import SignIn from "@/components/Navbar/SignIn"
 import ProfileHead from "@/components/Navbar/ProfileHead"
@@ -10,7 +8,7 @@ import { getSearchList } from "@/lib/getSearchList"
 import Link from "next/link"
 
 const Header = async ({ session }: { session: Session | null }) => {
-    const animeList = await getSearchList({ prisma })
+    const animeList = await getSearchList()
 
     return (
         <div className="flex items-center justify-center h-20 py-3">

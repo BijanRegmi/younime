@@ -1,15 +1,9 @@
-import { PrismaClient } from "@prisma/client"
-import { Session } from "next-auth"
+import { authOptions } from "@/pages/api/auth/[...nextauth]"
+import prisma from "@/prisma"
+import { getServerSession } from "next-auth"
 
-export async function getWatchAnime({
-    animeId,
-    session,
-    prisma,
-}: {
-    animeId: string
-    session: Session | null
-    prisma: PrismaClient
-}) {
+export async function getWatchAnime({ animeId }: { animeId: string }) {
+    const session = await getServerSession(authOptions)
     const anime = await prisma.anime.findUnique({
         where: { id: animeId },
         select: {
