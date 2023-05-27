@@ -181,7 +181,7 @@ const Controls = ({
         "--played-percent": `${state.played * 100}%`,
     }
 
-    if (!hovering && !showSettings) return <></>
+    if (!hovering && !showSettings && state.playing) return <></>
 
     return (
         <div

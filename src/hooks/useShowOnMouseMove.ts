@@ -4,9 +4,19 @@ const useShowOnMouseMove = <T>() => {
     const [timeout, settimeout] = useState<NodeJS.Timeout | null>(null)
     const [show, setShow] = useState(false)
 
+    const display = (milliSec: number) => {
+        settimeout(
+            setTimeout(() => {
+                setShow(false)
+            }, milliSec)
+        )
+        setShow(true)
+    }
+
     return {
         show,
         setShow,
+        display,
         cleartimeout: () => {
             if (timeout) clearTimeout(timeout)
         },
@@ -16,13 +26,7 @@ const useShowOnMouseMove = <T>() => {
                 clearTimeout(timeout)
                 settimeout(null)
             }
-
-            settimeout(
-                setTimeout(() => {
-                    setShow(false)
-                }, 5000)
-            )
-            setShow(true)
+            display(5000)
         },
     }
 }
