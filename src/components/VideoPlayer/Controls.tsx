@@ -11,7 +11,7 @@ import {
     BsSliders2 as Quality,
     BsSpeedometer2 as PlayBackSpeed,
 } from "react-icons/bs"
-import { MdOutlineLanguage } from "react-icons/md"
+import { MdOutlineLanguage, MdClosedCaptionOff } from "react-icons/md"
 import { AiOutlineVideoCamera } from "react-icons/ai"
 
 import { durationFormatter } from "@/lib/helpers"
@@ -19,7 +19,6 @@ import { MODES, VideoState } from "./"
 import {
     CSSProperties,
     Dispatch,
-    FormEvent,
     MouseEvent,
     RefObject,
     SetStateAction,
@@ -41,10 +40,12 @@ const PLAYBACK_RATES = [
 ]
 
 const Controls = ({
+    hovering,
     state,
     setState,
     playerRef,
 }: {
+    hovering: boolean
     state: VideoState
     setState: Dispatch<SetStateAction<VideoState>>
     playerRef: RefObject<ReactPlayer>
@@ -91,6 +92,9 @@ const Controls = ({
     }
 
     const [hover, setHover] = useState<boolean>(false)
+    const [showSettings, setShowSettings] = useState<boolean>(false)
+    const closeSettings = () => setShowSettings(false)
+    const toggleSettings = () => setShowSettings(o => !o)
 
     const seek = (e: MouseEvent<HTMLDivElement, globalThis.MouseEvent>) => {
         /* @ts-expect-error Types ;-; */
@@ -116,6 +120,10 @@ const Controls = ({
             subdub,
             srcIdx: Math.min(o.srcIdx, srcIdx),
             qualityIdx: Math.min(o.qualityIdx, qualityIdx),
+            trackIdx:
+                state.resources[subdub]?.tracks?.findIndex(
+                    t => t.default == true
+                ) || -1,
         }))
     }
 
@@ -148,10 +156,32 @@ const Controls = ({
         }))
     }
 
+    const trackSetter = (idx: number) => {
+        let trackIdx = Math.min(
+            idx,
+            (state.resources[state.subdub]?.tracks.length || 0) - 1
+        )
+
+        let tracks = playerRef.current?.getInternalPlayer().textTracks
+
+        for (let i = 0; i < tracks?.length; i++) {
+            tracks[i].mode = "disabled"
+            if (i == trackIdx) {
+                tracks[i].mode = "showing"
+                setState(o => ({
+                    ...o,
+                    trackIdx: trackIdx ?? -1,
+                }))
+            }
+        }
+    }
+
     const styles = {
         "--loaded-percent": `${state.loaded * 100}%`,
         "--played-percent": `${state.played * 100}%`,
     }
+
+    if (!hovering && !showSettings) return <></>
 
     return (
         <div
@@ -199,6 +229,9 @@ const Controls = ({
                 </div>
 
                 <Settings
+                    state={showSettings}
+                    toggle={toggleSettings}
+                    close={closeSettings}
                     options={[
                         {
                             title: "Playback Speed",
@@ -235,6 +268,16 @@ const Controls = ({
                                 ]?.qualities.map(s => s.name) || [],
                             selected: state.qualityIdx,
                             setter: qualitySetter,
+                        },
+                        {
+                            title: "Captions",
+                            Icon: MdClosedCaptionOff,
+                            options:
+                                state.resources[state.subdub]?.tracks.map(
+                                    t => t.label
+                                ) || [],
+                            selected: state.trackIdx,
+                            setter: trackSetter,
                         },
                     ]}
                 />

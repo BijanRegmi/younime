@@ -28,6 +28,7 @@ export interface VideoState {
     subdub: "sub" | "dub"
     srcIdx: number
     qualityIdx: number
+    trackIdx: number
 }
 
 const VideoPlayer = ({ resources }: { resources: AnimeResources }) => {
@@ -48,24 +49,42 @@ const VideoPlayer = ({ resources }: { resources: AnimeResources }) => {
         subdub: "sub",
         srcIdx: -1,
         qualityIdx: -1,
+        trackIdx: -1,
     })
 
     useEffect(() => {
         let subdub: "sub" | "dub" = "sub"
-        let srcIdx: number = -1
-        let qualityIdx: number = -1
 
         if (resources["sub"]) subdub = "sub"
         else if (resources["dub"]) subdub = "dub"
 
-        srcIdx = (resources[subdub]?.source.length || 0) - 1
-        qualityIdx =
+        let srcIdx = (resources[subdub]?.source.length || 0) - 1
+        let qualityIdx =
             (resources[subdub]?.source[srcIdx]?.qualities.length || 0) - 1
 
-        setState(o => ({ ...o, subdub, srcIdx, qualityIdx, resources }))
+        let trackIdx =
+            resources[subdub]?.tracks?.findIndex(t => t.default == true) || -1
+
+        setState(o => ({
+            ...o,
+            subdub,
+            srcIdx,
+            qualityIdx,
+            trackIdx,
+            resources,
+        }))
     }, [resources])
 
     const playerRef = useRef<ReactPlayer>(null)
+
+    const onReady = () => {
+        let tracks = playerRef.current?.getInternalPlayer().textTracks
+
+        for (let i = 0; i < tracks?.length; i++) {
+            tracks[i].mode = "disabled"
+            if (i == state.trackIdx) tracks[i].mode = "showing"
+        }
+    }
 
     const onProgress = (val: OnProgressProps) => {
         setState(old => ({ ...old, played: val.played, loaded: val.loaded }))
@@ -100,6 +119,19 @@ const VideoPlayer = ({ resources }: { resources: AnimeResources }) => {
                         state.resources[state.subdub]?.source[state.srcIdx]
                             ?.qualities[state.qualityIdx]?.url
                     }
+                    config={{
+                        file: {
+                            attributes: {
+                                crossOrigin: "anonymous",
+                            },
+                            tracks: state.resources[state.subdub]?.tracks.map(
+                                t => ({
+                                    ...t,
+                                    default: false,
+                                })
+                            ),
+                        },
+                    }}
                     playing={state.playing}
                     loop={false}
                     controls={false}
@@ -116,18 +148,18 @@ const VideoPlayer = ({ resources }: { resources: AnimeResources }) => {
                     width="100%"
                     height="100%"
                     /* Callbacks */
+                    onReady={onReady}
                     onProgress={onProgress}
                     onDuration={setDuration}
                 />
             )}
 
-            {(show || !state.playing) && (
-                <Controls
-                    state={state}
-                    setState={setState}
-                    playerRef={playerRef}
-                />
-            )}
+            <Controls
+                hovering={show}
+                state={state}
+                setState={setState}
+                playerRef={playerRef}
+            />
         </div>
     )
 }

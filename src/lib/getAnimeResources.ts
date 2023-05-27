@@ -9,7 +9,13 @@ interface VideoSource {
     qualities: Quality[]
 }
 
-type Track = { file: string; label: string; kind: string; default?: Boolean }
+type Track = {
+    src: string
+    label: string
+    kind: string
+    srcLang: string
+    default?: boolean
+}
 
 interface AnimeResource {
     source: VideoSource[]

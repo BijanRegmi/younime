@@ -1,4 +1,3 @@
-"use client"
 import SettingIcon from "@/assets/videoplayer/settings.svg"
 import useOnClickOutside from "@/hooks/useOnClickOutside"
 import "@/styles/globals.css"
@@ -14,23 +13,25 @@ interface option {
     setter: (idx: number) => void
 }
 
-export const Settings = ({ options }: { options: option[] }) => {
+export const Settings = ({
+    options,
+    toggle,
+    close,
+    state,
+}: {
+    options: option[]
+    toggle: () => void
+    close: () => void
+    state: boolean
+}) => {
     const [selected, Select] = useState(-1)
-    const [open, setOpen] = useState(false)
-
-    const close = () => setOpen(false)
 
     const ref = useOnClickOutside<HTMLDivElement>({ handler: close })
 
     return (
         <div className="relative h-8 w-8" ref={ref}>
-            <SettingIcon
-                className="controlBtn"
-                onClick={() => {
-                    setOpen(o => !o)
-                }}
-            />
-            {open && (
+            <SettingIcon className="controlBtn" onClick={toggle} />
+            {state && (
                 <div className="absolute bottom-[110%] right-0 w-max rounded-md bg-accent-150/75 border border-solid border-accent-250 text-sm px-4">
                     {selected == -1 ? (
                         options.map((o, idx) => {
