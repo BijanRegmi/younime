@@ -8,8 +8,11 @@ import {
     BsPip as MiniPlayer,
     BsFullscreen as FullScreenOpen,
     BsFullscreenExit as FullScreenClose,
+    BsSliders2 as Quality,
+    BsSpeedometer2 as PlayBackSpeed,
 } from "react-icons/bs"
-import { MdOutlineRectangle as Theater } from "react-icons/md"
+import { MdOutlineLanguage } from "react-icons/md"
+import { AiOutlineVideoCamera } from "react-icons/ai"
 
 import { durationFormatter } from "@/lib/helpers"
 import { MODES, VideoState } from "./"
@@ -199,12 +202,14 @@ const Controls = ({
                     options={[
                         {
                             title: "Playback Speed",
+                            Icon: PlayBackSpeed,
                             options: PLAYBACK_RATES,
                             selected: state.playbackRate / 0.25 - 1,
                             setter: playbackSetter,
                         },
                         {
                             title: "Language",
+                            Icon: MdOutlineLanguage,
                             options: Object.keys(state.resources),
                             selected: Object.keys(state.resources).indexOf(
                                 state.subdub
@@ -213,6 +218,7 @@ const Controls = ({
                         },
                         {
                             title: "Source",
+                            Icon: AiOutlineVideoCamera,
                             options:
                                 state.resources[state.subdub]?.source.map(
                                     (_, idx) => `Source ${idx + 1}`
@@ -222,6 +228,7 @@ const Controls = ({
                         },
                         {
                             title: "Quality",
+                            Icon: Quality,
                             options:
                                 state.resources[state.subdub]?.source[
                                     state.srcIdx
