@@ -5,7 +5,6 @@ export const addCommentSchema = z.object({
     content: z.string().min(1).max(1024),
     spoiler: z.boolean().default(false),
     episodeId: z.number().nonnegative(),
-    animeId: z.number(),
 })
 
 export const addCommentProc = async ({
@@ -16,13 +15,13 @@ export const addCommentProc = async ({
     ctx: Context
 }) => {
     const { session, prisma } = ctx
-    const { content, spoiler, episodeId, animeId } = input
+    const { content, spoiler, episodeId } = input
 
     await prisma.comment.create({
         data: {
             content,
             spoiler,
-            episode: { connect: { id_animeId: { id: episodeId, animeId } } },
+            episode: { connect: { id: episodeId } },
             commenter: { connect: { id: session?.user.id } },
         },
         select: {

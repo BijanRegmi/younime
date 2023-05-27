@@ -8,7 +8,6 @@ import { trpc } from "../Context/TrpcContext"
 const CommentInput = () => {
     const [content, setContent] = useState("")
     const episodeId = Number(usePathname()?.split("/")[2])
-    const animeId = Number(usePathname()?.split("/")[1])
 
     const utils = trpc.useContext()
     const { mutate } = trpc.comment.add.useMutation({
@@ -21,7 +20,7 @@ const CommentInput = () => {
     const onsubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault()
         if (content.length == 0) return
-        mutate({ episodeId, animeId, spoiler: false, content })
+        mutate({ episodeId, spoiler: false, content })
     }
 
     const { ref, session } = useRequireAuth<HTMLDivElement>()

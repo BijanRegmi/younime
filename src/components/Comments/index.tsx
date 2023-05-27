@@ -18,12 +18,11 @@ export default function Comments() {
 
     if (!paths) return notFound()
 
-    const episodeAnimeId = Number(paths[1])
     const episodeId = Number(paths[2])
 
     const { data, isSuccess, hasNextPage, fetchNextPage, isFetchingNextPage } =
         trpc.comment.get.useInfiniteQuery(
-            { episodeId, episodeAnimeId },
+            { episodeId },
             {
                 getNextPageParam: lastPage => lastPage.nextCursor,
             }
@@ -41,7 +40,6 @@ export default function Comments() {
                                 pageIdx={pageIdx}
                                 comment={comment}
                                 episodeId={episodeId}
-                                episodeAnimeId={episodeAnimeId}
                             />
                         ))}
                     </Fragment>

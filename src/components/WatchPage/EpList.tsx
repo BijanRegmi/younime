@@ -27,9 +27,10 @@ const EpList = ({ episodes }: { episodes: WatchAnime["episodes"] }) => {
     return (
         <div className="flex flex-col gap-1 w-full overflow-hidden eplist border border-accent-250 border-solid rounded-lg p-4">
             <div className="justify-self-center border-b border-accent-450 border-solid">
-                <span className="font-bold">Playing</span> {curr?.id} / {total}
+                <span className="font-bold">Playing</span> {curr?.order} /{" "}
+                {total}
                 <br />
-                {"->"} <span className="text-accent-700">{curr?.name}</span>
+                <span className="text-accent-700">{curr?.name}</span>
             </div>
             <div className="overflow-scroll flex-grow flex flex-col">
                 {episodes.map(ep => {
@@ -42,11 +43,10 @@ const EpList = ({ episodes }: { episodes: WatchAnime["episodes"] }) => {
                             href={`/${animeId}/${ep.id}`}
                         >
                             <Play
-                                className={`w-12 aspect-square text-white transition-opacity ease-linear ${
-                                    playing ? "opacity-100" : "opacity-0"
-                                }`}
+                                className={`w-12 aspect-square text-white transition-opacity ease-linear ${playing ? "opacity-100" : "opacity-0"
+                                    }`}
                             />
-                            <span className="inline-block">{ep.id}:</span>
+                            <span className="inline-block">{ep.order}:</span>
                             <span
                                 className="overflow-hidden w-full whitespace-nowrap text-ellipsis inline-block"
                                 title={ep.name}

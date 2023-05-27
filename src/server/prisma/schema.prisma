@@ -81,11 +81,11 @@ model history_entry {
     user   User   @relation(fields: [userId], references: [id])
 
     // which anime?
-    anime   anime  @relation(fields: [animeId], references: [id])
+    anime   anime @relation(fields: [animeId], references: [id])
     animeId Int
 
     // which episode
-    episode episode @relation(fields: [epId, animeId], references: [id, animeId])
+    episode episode @relation(fields: [epId], references: [id])
     epId    Int
 
     @@id([userId, animeId])
@@ -106,7 +106,7 @@ model comment_interaction {
 }
 
 model anime {
-    id         Int  @id
+    id         Int     @id
     title      String
     alttitle   String?
     score      Float   @default(0.0)
@@ -129,9 +129,8 @@ model comment {
     spoiler Boolean @default(false)
 
     // on which episode of which anime
-    episodeId      Int
-    episodeAnimeId Int
-    episode        episode @relation(fields: [episodeId, episodeAnimeId], references: [id, animeId])
+    episodeId Int
+    episode   episode @relation(fields: [episodeId], references: [id])
 
     // by whom?
     commenterId String
@@ -141,19 +140,17 @@ model comment {
 }
 
 model episode {
-    id     Int
+    id     Int     @id
     name   String
     order  Int
     filler Boolean
 
     // of which anime?
     animeId Int
-    anime   anime  @relation(fields: [animeId], references: [id])
+    anime   anime @relation(fields: [animeId], references: [id])
 
     comments      comment[]
     history_entry history_entry[]
-
-    @@id([id, animeId])
 }
 
 model genre {

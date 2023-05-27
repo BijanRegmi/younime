@@ -18,14 +18,13 @@ const WatchPage = async ({
     if (isNaN(id)) return notFound()
 
     const result = await prisma.episode.findUnique({
-        where: { id_animeId: { id, animeId } },
+        where: { id },
         select: { id: true },
     })
 
     if (!result) return notFound()
 
     const resources = await getAnimeResources(result.id)
-    console.log(resources)
 
     if (!resources || (!resources.sub && !resources.dub)) return notFound()
 

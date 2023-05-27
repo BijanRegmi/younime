@@ -29,7 +29,7 @@ export const addPlaylistProc = async ({
             status,
             user: { connect: { id: session?.user.id as string } },
             anime: { connect: { id: animeId } },
-            episode: { connect: { id_animeId: { id: epId, animeId } } },
+            episode: { connect: { id: epId } },
         },
         update: {
             status,

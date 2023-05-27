@@ -4,7 +4,6 @@ import { CommentInteraction } from "@prisma/client"
 
 export const getCommentSchema = z.object({
     episodeId: z.number(),
-    episodeAnimeId: z.number(),
     cursor: z.number().nullish(),
 })
 
@@ -15,7 +14,7 @@ export async function getCommentProc({
     input: TypeOf<typeof getCommentSchema>
     ctx: Context
 }) {
-    const { episodeId, episodeAnimeId, cursor } = input
+    const { episodeId, cursor } = input
     const { prisma, session } = ctx
 
     const limit = 10
@@ -24,7 +23,7 @@ export async function getCommentProc({
         take: limit,
         skip: cursor ? 1 : undefined,
         cursor: cursor ? { id: cursor } : undefined,
-        where: { episodeId, episodeAnimeId },
+        where: { episodeId },
         select: {
             id: true,
             content: true,

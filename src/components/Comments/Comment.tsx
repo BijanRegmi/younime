@@ -23,12 +23,10 @@ const Comment = ({
     comment,
     pageIdx,
     episodeId,
-    episodeAnimeId,
 }: {
     comment: Comment
     pageIdx: number
     episodeId: number
-    episodeAnimeId: number
 }) => {
     const utils = trpc.useContext()
     const [reporting, setReporting] = useState(false)
@@ -47,7 +45,6 @@ const Comment = ({
 
             const prevData = utils.comment.get.getInfiniteData({
                 episodeId,
-                episodeAnimeId,
             })
 
             prevData?.pages[pageIdx].comments.forEach(c => {
@@ -66,10 +63,7 @@ const Comment = ({
                 }
             })
 
-            utils.comment.get.setInfiniteData(
-                { episodeId, episodeAnimeId },
-                prevData
-            )
+            utils.comment.get.setInfiniteData({ episodeId }, prevData)
         },
     })
 
@@ -81,7 +75,6 @@ const Comment = ({
 
             const prevData = utils.comment.get.getInfiniteData({
                 episodeId,
-                episodeAnimeId,
             })
 
             prevData?.pages[pageIdx].comments.forEach(c => {
@@ -100,10 +93,7 @@ const Comment = ({
                 }
             })
 
-            utils.comment.get.setInfiniteData(
-                { episodeId, episodeAnimeId },
-                prevData
-            )
+            utils.comment.get.setInfiniteData({ episodeId }, prevData)
         },
     })
 
@@ -124,7 +114,6 @@ const Comment = ({
     const onDeleteSuccess = () => {
         const prevData = utils.comment.get.getInfiniteData({
             episodeId,
-            episodeAnimeId,
         })
 
         prevData?.pages[pageIdx].comments.forEach(c => {
@@ -133,10 +122,7 @@ const Comment = ({
             }
         })
 
-        utils.comment.get.setInfiniteData(
-            { episodeId, episodeAnimeId },
-            prevData
-        )
+        utils.comment.get.setInfiniteData({ episodeId }, prevData)
         closeDeletePopup()
     }
 

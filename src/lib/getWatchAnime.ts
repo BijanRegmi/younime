@@ -19,15 +19,15 @@ export async function getWatchAnime({ animeId }: { animeId: number }) {
             synopsis: true,
             genres: true,
             episodes: {
-                select: { name: true, id: true },
-                orderBy: { id: "asc" },
+                select: { name: true, id: true, order: true },
+                orderBy: { order: "asc" },
             },
             history:
                 session && session?.user
                     ? {
-                          where: { userId: session?.user?.id, animeId },
-                          select: { status: true },
-                      }
+                        where: { userId: session?.user?.id, animeId },
+                        select: { status: true },
+                    }
                     : false,
             _count: {
                 select: { episodes: true },

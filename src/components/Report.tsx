@@ -1,4 +1,3 @@
-"use client"
 import React, { ChangeEvent, FormEvent, useState } from "react"
 import { ReportItem } from "@prisma/client"
 import { trpc } from "./Context/TrpcContext"
