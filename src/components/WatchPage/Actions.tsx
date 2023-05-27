@@ -45,7 +45,7 @@ const Actions = ({
 
     const paths = usePathname()?.split("/")
     if (!paths) return notFound()
-    const animeId = paths[1]
+    const animeId = Number(paths[1])
     const epId = Number(paths[2])
 
     const options = {

@@ -1,5 +1,6 @@
 "use client"
 import SettingIcon from "@/assets/videoplayer/settings.svg"
+import useOnClickOutside from "@/hooks/useOnClickOutside"
 import "@/styles/globals.css"
 import { useState } from "react"
 
@@ -14,8 +15,12 @@ export const Settings = ({ options }: { options: option[] }) => {
     const [selected, Select] = useState(-1)
     const [open, setOpen] = useState(false)
 
+    const close = () => setOpen(false)
+
+    const ref = useOnClickOutside<HTMLDivElement>({ handler: close })
+
     return (
-        <div className="relative h-8 w-8">
+        <div className="relative h-8 w-8" ref={ref}>
             <SettingIcon
                 className="controlBtn"
                 onClick={() => {
@@ -65,7 +70,7 @@ export const Settings = ({ options }: { options: option[] }) => {
                                         <span
                                             className={
                                                 options[selected].selected ==
-                                                idx
+                                                    idx
                                                     ? "opacity-100"
                                                     : "opacity-0"
                                             }

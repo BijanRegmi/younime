@@ -4,7 +4,7 @@ import { CommentInteraction } from "@prisma/client"
 
 export const getCommentSchema = z.object({
     episodeId: z.number(),
-    episodeAnimeId: z.string(),
+    episodeAnimeId: z.number(),
     cursor: z.number().nullish(),
 })
 

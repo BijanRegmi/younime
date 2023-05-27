@@ -2,7 +2,7 @@ import { TypeOf, z } from "zod"
 import { Context } from "@/server/context"
 
 export const removePlaylistSchema = z.object({
-    animeId: z.string(),
+    animeId: z.number(),
 })
 
 export const removePlaylistProc = async ({

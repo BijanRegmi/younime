@@ -5,7 +5,7 @@ export const addCommentSchema = z.object({
     content: z.string().min(1).max(1024),
     spoiler: z.boolean().default(false),
     episodeId: z.number().nonnegative(),
-    animeId: z.string(),
+    animeId: z.number(),
 })
 
 export const addCommentProc = async ({

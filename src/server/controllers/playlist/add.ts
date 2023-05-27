@@ -3,7 +3,7 @@ import { Context } from "@/server/context"
 import { AnimeStatus } from "@prisma/client"
 
 export const addPlaylistSchema = z.object({
-    animeId: z.string(),
+    animeId: z.number(),
     epId: z.number(),
     status: z.nativeEnum(AnimeStatus),
 })

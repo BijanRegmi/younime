@@ -4,7 +4,7 @@ import { authOptions } from "@/api/auth/[...nextauth]"
 import { notFound, redirect } from "next/navigation"
 
 const Page = async ({ params }: { params: { "anime-id": string } }) => {
-    const animeId = params["anime-id"]
+    const animeId = Number(params["anime-id"])
 
     const session = await getServerSession(authOptions)
 
@@ -13,7 +13,10 @@ const Page = async ({ params }: { params: { "anime-id": string } }) => {
     if (session && session?.user) {
         const res = await prisma.history_entry.findUnique({
             where: {
-                userId_animeId: { userId: session.user.id || "", animeId },
+                userId_animeId: {
+                    userId: session.user.id || "",
+                    animeId: animeId,
+                },
             },
             select: { epId: true },
         })

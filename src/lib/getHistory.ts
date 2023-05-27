@@ -16,25 +16,23 @@ export async function getHistory({
     const session = await getServerSession(authOptions)
     if (!session) return []
 
-    const ans = await prisma.anime.findMany({
-        where: {
-            history: {
-                some: {
-                    status: AnimeStatus[status],
-                    userId: session.user.id,
+    const histories = await prisma.history_entry.findMany({
+        where: { userId: session.user.id, status: AnimeStatus[status] },
+        skip,
+        take,
+        orderBy: { updatedAt: "desc" },
+        select: {
+            anime: {
+                select: {
+                    id: true,
+                    title: true,
+                    score: true,
+                    type: true,
+                    thumbnail: true,
                 },
             },
         },
-        skip,
-        take,
-        select: {
-            id: true,
-            title: true,
-            score: true,
-            type: true,
-            thumbnail: true,
-        },
     })
 
-    return ans as CardAnime[]
+    return histories.map(history => history.anime) as CardAnime[]
 }

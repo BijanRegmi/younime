@@ -28,7 +28,7 @@ const Comment = ({
     comment: Comment
     pageIdx: number
     episodeId: number
-    episodeAnimeId: string
+    episodeAnimeId: number
 }) => {
     const utils = trpc.useContext()
     const [reporting, setReporting] = useState(false)

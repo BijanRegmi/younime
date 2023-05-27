@@ -5,7 +5,7 @@ import Comments from "../Comments"
 import VideoPlayer from "../VideoPlayer"
 import { AnimeStatus } from "@prisma/client"
 import { notFound } from "next/navigation"
-import { getSources } from "@/lib/getSources"
+import { getAnimeResources } from "@/lib/getAnimeResources"
 
 const WatchPage = async ({
     params,
@@ -13,18 +13,21 @@ const WatchPage = async ({
     params: { "ep-id": string; "anime-id": string }
 }) => {
     const id = Number(params["ep-id"])
-    const animeId = params["anime-id"]
+    const animeId = Number(params["anime-id"])
 
     if (isNaN(id)) return notFound()
 
     const result = await prisma.episode.findUnique({
         where: { id_animeId: { id, animeId } },
-        select: { file_url: true },
+        select: { id: true },
     })
 
     if (!result) return notFound()
 
-    const sources = await getSources(result.file_url)
+    const resources = await getAnimeResources(result.id)
+    console.log(resources)
+
+    if (!resources || (!resources.sub && !resources.dub)) return notFound()
 
     const session = await getServerSession(authOptions)
     if (session && session.user?.id) {
@@ -40,7 +43,7 @@ const WatchPage = async ({
 
     return (
         <>
-            <VideoPlayer sources={sources} />
+            <VideoPlayer resources={resources} />
             <div className="comments">
                 <Comments />
             </div>

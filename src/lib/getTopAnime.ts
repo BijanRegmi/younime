@@ -11,7 +11,6 @@ export async function getTopAnime() {
             type: true,
             thumbnail: true,
         },
-        distinct: "malId",
         orderBy: { score: "desc" },
         take: 32,
     })

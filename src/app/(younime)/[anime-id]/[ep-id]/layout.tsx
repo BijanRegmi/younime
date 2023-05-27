@@ -11,7 +11,7 @@ const animeLayout = async ({
     params: { "anime-id": string; "ep-id": string }
     children: ReactNode
 }) => {
-    const animeId = params["anime-id"]
+    const animeId = Number(params["anime-id"])
 
     const anime = await getWatchAnime({ animeId })
 

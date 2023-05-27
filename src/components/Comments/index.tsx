@@ -18,7 +18,7 @@ export default function Comments() {
 
     if (!paths) return notFound()
 
-    const episodeAnimeId = paths[1]
+    const episodeAnimeId = Number(paths[1])
     const episodeId = Number(paths[2])
 
     const { data, isSuccess, hasNextPage, fetchNextPage, isFetchingNextPage } =

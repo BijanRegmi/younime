@@ -1,14 +1,14 @@
 "use client"
 import useRequireAuth from "@/hooks/useRequireAuth"
 import Image from "next/image"
-import { notFound, usePathname } from "next/navigation"
+import { usePathname } from "next/navigation"
 import { FormEvent, useState } from "react"
 import { trpc } from "../Context/TrpcContext"
 
 const CommentInput = () => {
     const [content, setContent] = useState("")
     const episodeId = Number(usePathname()?.split("/")[2])
-    const animeId = usePathname()?.split("/")[1] || ""
+    const animeId = Number(usePathname()?.split("/")[1])
 
     const utils = trpc.useContext()
     const { mutate } = trpc.comment.add.useMutation({
@@ -53,9 +53,8 @@ const CommentInput = () => {
                     required={true}
                 />
                 <div
-                    className={`${
-                        content.length ? "flex" : "hidden"
-                    } flex-row-reverse gap-4 p-4`}
+                    className={`${content.length ? "flex" : "hidden"
+                        } flex-row-reverse gap-4 p-4`}
                 >
                     <button
                         type="submit"

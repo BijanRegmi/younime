@@ -1,15 +1,15 @@
 "use client"
-// SVGs
-import Play from "@/assets/videoplayer/play.svg"
-import Pause from "@/assets/videoplayer/pause.svg"
-import VolumeHigh from "@/assets/videoplayer/volume-high.svg"
-import VolumeLow from "@/assets/videoplayer/volume-low.svg"
-import VolumeMute from "@/assets/videoplayer/volume-mute.svg"
-import MiniPlayer from "@/assets/videoplayer/miniPlayer.svg"
 import TheaterTall from "@/assets/videoplayer/theater-tall.svg"
 import TheaterWide from "@/assets/videoplayer/theater-wide.svg"
-import FullScreenOpen from "@/assets/videoplayer/fullscreen-open.svg"
-import FullScreenClose from "@/assets/videoplayer/fullscreen-close.svg"
+
+import {
+    BsFillPlayFill as Play,
+    BsPause as Pause,
+    BsPip as MiniPlayer,
+    BsFullscreen as FullScreenOpen,
+    BsFullscreenExit as FullScreenClose,
+} from "react-icons/bs"
+import { MdOutlineRectangle as Theater } from "react-icons/md"
 
 import { durationFormatter } from "@/lib/helpers"
 import { MODES, VideoState } from "./"
@@ -24,6 +24,7 @@ import {
 } from "react"
 import ReactPlayer from "react-player"
 import { Settings } from "./Settings"
+import VolumeController from "./VolumeController"
 
 const PLAYBACK_RATES = [
     "0.25",
@@ -48,27 +49,6 @@ const Controls = ({
     // TOGGLE PLAY/PAUSE
     const togglePlay = () => {
         setState(old => ({ ...old, playing: !old.playing }))
-    }
-
-    // TOGGLE VOLUME
-    const toggleVolume = () => {
-        setState(old => ({ ...old, muted: !old.muted }))
-    }
-
-    // CHANGE VOLUME
-    const slideVolume = (e: FormEvent<HTMLInputElement>) => {
-        setState(old => ({
-            ...old,
-            /* @ts-expect-error Types ;-; */
-            volume: e.target.value,
-            /* @ts-expect-error Types ;-; */
-            muted: e.target.value == 0,
-        }))
-    }
-
-    // CHANGE RATE
-    const setPlayBackRate = (idx: number) => {
-        setState(old => ({ ...old, playbackRate: (idx + 1) * 0.25 }))
     }
 
     // MINI PLAYER
@@ -117,6 +97,54 @@ const Controls = ({
         playerRef.current?.seekTo(pos)
     }
 
+    const playbackSetter = (idx: number) => {
+        setState(old => ({ ...old, playbackRate: (idx + 1) * 0.25 }))
+    }
+
+    const languageSetter = (idx: number) => {
+        let subdub = Object.keys(state.resources)[idx] as "sub" | "dub"
+
+        let srcIdx = (state.resources[subdub]?.source.length || 0) - 1
+        let qualityIdx =
+            (state.resources[subdub]?.source[srcIdx]?.qualities.length || 0) - 1
+
+        setState(o => ({
+            ...o,
+            subdub,
+            srcIdx: Math.min(o.srcIdx, srcIdx),
+            qualityIdx: Math.min(o.qualityIdx, qualityIdx),
+        }))
+    }
+
+    const sourceSetter = (idx: number) => {
+        let srcIdx = Math.min(
+            idx,
+            state.resources[state.subdub]?.source.length || -1
+        )
+        let qualityIdx =
+            (state.resources[state.subdub]?.source[srcIdx]?.qualities.length ||
+                0) - 1
+
+        setState(o => ({
+            ...o,
+            srcIdx,
+            qualityIdx: Math.min(o.qualityIdx, qualityIdx),
+        }))
+    }
+
+    const qualitySetter = (idx: number) => {
+        let qualityIdx = Math.min(
+            idx,
+            (state.resources[state.subdub]?.source[state.srcIdx]?.qualities
+                .length || 0) - 1
+        )
+
+        setState(o => ({
+            ...o,
+            qualityIdx,
+        }))
+    }
+
     const styles = {
         "--loaded-percent": `${state.loaded * 100}%`,
         "--played-percent": `${state.played * 100}%`,
@@ -125,7 +153,7 @@ const Controls = ({
     return (
         <div
             style={styles as CSSProperties}
-            className="absolute bottom-0 left-0 right-0 w-full text-accent-900 z-10 transition-all"
+            className="absolute bottom-0 left-0 right-0 top-[calc(100%-4rem)] w-full text-accent-900 z-10 transition-all"
             onMouseEnter={() => setHover(true)}
             onMouseLeave={() => setHover(false)}
         >
@@ -152,39 +180,13 @@ const Controls = ({
                     />
                 </div>
             </div>
-            <div className="flex gap-2 p-1 flex-row items-center bg-black bg-opacity-50">
+            <div className="flex gap-2 p-1 flex-row items-center bg-black bg-opacity-50 h-full">
                 {state.playing ? (
                     <Pause onClick={togglePlay} className="controlBtn" />
                 ) : (
                     <Play onClick={togglePlay} className="controlBtn" />
                 )}
-                <div className="flex items-center">
-                    {state.muted ? (
-                        <VolumeMute
-                            onClick={toggleVolume}
-                            className="controlBtn"
-                        />
-                    ) : state.volume < 0.5 ? (
-                        <VolumeLow
-                            onClick={toggleVolume}
-                            className="controlBtn"
-                        />
-                    ) : (
-                        <VolumeHigh
-                            onClick={toggleVolume}
-                            className="controlBtn"
-                        />
-                    )}
-                    <input
-                        className="ml-2 w-0 scale-0 transition-all focus-within:w-2/5 focus-within:scale-100"
-                        type="range"
-                        min="0"
-                        max="1"
-                        step="any"
-                        value={state.volume}
-                        onInput={slideVolume}
-                    />
-                </div>
+                <VolumeController state={state} setState={setState} />
 
                 <div className="flex items-center gap-[0.1rem] flex-grow">
                     <div>
@@ -199,34 +201,33 @@ const Controls = ({
                             title: "Playback Speed",
                             options: PLAYBACK_RATES,
                             selected: state.playbackRate / 0.25 - 1,
-                            setter: setPlayBackRate,
+                            setter: playbackSetter,
+                        },
+                        {
+                            title: "Language",
+                            options: Object.keys(state.resources),
+                            selected: Object.keys(state.resources).indexOf(
+                                state.subdub
+                            ),
+                            setter: languageSetter,
                         },
                         {
                             title: "Source",
-                            options: state.sources.map(
-                                (_, idx) => `Source ${idx + 1}`
-                            ),
-                            selected: state.active_source,
-                            setter: (idx: number) => {
-                                setState(o => ({
-                                    ...o,
-                                    active_source: idx,
-                                    active_quality: Math.min(
-                                        o.active_quality,
-                                        o.sources[idx].length
-                                    ),
-                                }))
-                            },
+                            options:
+                                state.resources[state.subdub]?.source.map(
+                                    (_, idx) => `Source ${idx + 1}`
+                                ) || [],
+                            selected: state.srcIdx,
+                            setter: sourceSetter,
                         },
                         {
                             title: "Quality",
-                            options: state.sources[state.active_source].map(
-                                s => s.name
-                            ),
-                            selected: state.active_quality,
-                            setter: (idx: number) => {
-                                setState(o => ({ ...o, active_quality: idx }))
-                            },
+                            options:
+                                state.resources[state.subdub]?.source[
+                                    state.srcIdx
+                                ]?.qualities.map(s => s.name) || [],
+                            selected: state.qualityIdx,
+                            setter: qualitySetter,
                         },
                     ]}
                 />
@@ -239,12 +240,12 @@ const Controls = ({
                 )}
                 {state.mode == MODES.FULLSCREEN ? (
                     <FullScreenClose
-                        className="controlBtn"
+                        className="controlBtn p-2"
                         onClick={onFullScreen}
                     />
                 ) : (
                     <FullScreenOpen
-                        className="controlBtn"
+                        className="controlBtn p-2"
                         onClick={onFullScreen}
                     />
                 )}

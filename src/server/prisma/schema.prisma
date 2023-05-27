@@ -82,7 +82,7 @@ model history_entry {
 
     // which anime?
     anime   anime  @relation(fields: [animeId], references: [id])
-    animeId String
+    animeId Int
 
     // which episode
     episode episode @relation(fields: [epId, animeId], references: [id, animeId])
@@ -106,7 +106,7 @@ model comment_interaction {
 }
 
 model anime {
-    id         String  @id
+    id         Int  @id
     title      String
     alttitle   String?
     score      Float   @default(0.0)
@@ -117,7 +117,6 @@ model anime {
     thumbnail  String
     synopsis   String  @default("")
     status     String
-    malId      Int
 
     genres   genre[]
     episodes episode[]
@@ -131,7 +130,7 @@ model comment {
 
     // on which episode of which anime
     episodeId      Int
-    episodeAnimeId String
+    episodeAnimeId Int
     episode        episode @relation(fields: [episodeId, episodeAnimeId], references: [id, animeId])
 
     // by whom?
@@ -142,12 +141,13 @@ model comment {
 }
 
 model episode {
-    id       Int
-    file_url String @unique
-    name     String
+    id     Int
+    name   String
+    order  Int
+    filler Boolean
 
     // of which anime?
-    animeId String
+    animeId Int
     anime   anime  @relation(fields: [animeId], references: [id])
 
     comments      comment[]

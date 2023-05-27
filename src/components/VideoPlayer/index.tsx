@@ -6,7 +6,7 @@ import useHasWindow from "@/hooks/useHasWindow"
 import useShowOnMouseMove from "@/hooks/useShowOnMouseMove"
 import Controls from "./Controls"
 import { OnProgressProps } from "react-player/base"
-import { source } from "@/lib/getSources"
+import { AnimeResources } from "@/lib/getAnimeResources"
 
 export enum MODES {
     FULLSCREEN = "fullscreen",
@@ -24,12 +24,13 @@ export interface VideoState {
     duration: number
     playbackRate: number
     volume: number
-    sources: source[][]
-    active_source: number
-    active_quality: number
+    resources: AnimeResources
+    subdub: "sub" | "dub"
+    srcIdx: number
+    qualityIdx: number
 }
 
-const VideoPlayer = ({ sources }: { sources: source[][] }) => {
+const VideoPlayer = ({ resources }: { resources: AnimeResources }) => {
     const hasWindow = useHasWindow()
     const { show, setShow, cleartimeout, onMouseMove } =
         useShowOnMouseMove<HTMLDivElement>()
@@ -43,14 +44,26 @@ const VideoPlayer = ({ sources }: { sources: source[][] }) => {
         duration: 0,
         playbackRate: 1.0,
         volume: 1,
-        sources: sources,
-        active_source: 0,
-        active_quality: sources[0].length - 1,
+        resources,
+        subdub: "sub",
+        srcIdx: -1,
+        qualityIdx: -1,
     })
 
     useEffect(() => {
-        setState(o => ({ ...o, sources }))
-    }, [sources])
+        let subdub: "sub" | "dub" = "sub"
+        let srcIdx: number = -1
+        let qualityIdx: number = -1
+
+        if (resources["sub"]) subdub = "sub"
+        else if (resources["dub"]) subdub = "dub"
+
+        srcIdx = (resources[subdub]?.source.length || 0) - 1
+        qualityIdx =
+            (resources[subdub]?.source[srcIdx]?.qualities.length || 0) - 1
+
+        setState(o => ({ ...o, subdub, srcIdx, qualityIdx, resources }))
+    }, [resources])
 
     const playerRef = useRef<ReactPlayer>(null)
 
@@ -83,7 +96,10 @@ const VideoPlayer = ({ sources }: { sources: source[][] }) => {
         >
             {hasWindow && (
                 <ReactPlayer
-                    url={sources[state.active_source][state.active_quality].url}
+                    url={
+                        state.resources[state.subdub]?.source[state.srcIdx]
+                            ?.qualities[state.qualityIdx]?.url
+                    }
                     playing={state.playing}
                     loop={false}
                     controls={false}

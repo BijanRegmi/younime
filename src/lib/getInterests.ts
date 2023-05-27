@@ -14,6 +14,8 @@ export async function getInteresedAnime({ take = 8 }: { take?: number }) {
         select: { anime: { select: { genres: { select: { name: true } } } } },
     })
 
+    if (interest.length == 0) return []
+
     const total = interest.reduce(
         (accum, value) => accum + value.anime.genres.length,
         0
@@ -37,8 +39,9 @@ export async function getInteresedAnime({ take = 8 }: { take?: number }) {
         )
         .join(" UNION ALL ")
 
-    const finalQuery = `SELECT id, title, score, type, thumbnail FROM anime WHERE id IN (${unionQuery});`
+    const finalQuery = `SELECT id, title, score, type, thumbnail FROM anime WHERE id IN (${unionQuery})`
 
+    console.log(finalQuery)
     const data = await prisma.$queryRawUnsafe<CardAnime[]>(finalQuery)
 
     return data
