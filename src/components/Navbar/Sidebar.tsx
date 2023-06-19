@@ -76,20 +76,6 @@ const Sidebar = () => {
                             </NavItem>
                         )
                     })}
-                    {hiddenLinks.map(([href, Item, Text], idx) => {
-                        return (
-                            <NavItem
-                                key={idx}
-                                href={href}
-                                text={Text}
-                                sidebarOpen={open}
-                            >
-                                <div className="w-sidebarNarrow aspect-square flex-shrink-0 flex justify-center items-center">
-                                    <Item className="fill-none w-2/3 text-white aspect-square" />
-                                </div>
-                            </NavItem>
-                        )
-                    })}
                 </>
             )}
         </div>

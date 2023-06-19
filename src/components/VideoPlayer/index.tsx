@@ -7,6 +7,7 @@ import useShowOnMouseMove from "@/hooks/useShowOnMouseMove"
 import Controls from "./Controls"
 import { OnProgressProps } from "react-player/base"
 import { AnimeResources } from "@/lib/getAnimeResources"
+import SkipOverlay from "./SkipOverlay"
 
 export enum MODES {
     FULLSCREEN = "fullscreen",
@@ -31,6 +32,11 @@ export interface VideoState {
     trackIdx: number
 }
 
+export interface SkipState {
+    state: "off" | "Intro" | "Outro"
+    end: number
+}
+
 const VideoPlayer = ({ resources }: { resources: AnimeResources }) => {
     const hasWindow = useHasWindow()
     const { show, setShow, display, cleartimeout, onMouseMove } =
@@ -50,6 +56,11 @@ const VideoPlayer = ({ resources }: { resources: AnimeResources }) => {
         srcIdx: -1,
         qualityIdx: -1,
         trackIdx: -1,
+    })
+
+    const [skipState, setSkipState] = useState<SkipState>({
+        state: "off",
+        end: -1,
     })
 
     useEffect(() => {
@@ -89,6 +100,21 @@ const VideoPlayer = ({ resources }: { resources: AnimeResources }) => {
 
     const onProgress = (val: OnProgressProps) => {
         setState(old => ({ ...old, played: val.played, loaded: val.loaded }))
+
+        const activeResource = state.resources[state.subdub]
+        if (!activeResource) return
+
+        const t = val.played * state.duration
+        if (activeResource.intro.start <= t && t <= activeResource.intro.end) {
+            setSkipState({ state: "Intro", end: activeResource.intro.end })
+        } else if (
+            activeResource.outro.start <= t &&
+            t <= activeResource.outro.end
+        ) {
+            setSkipState({ state: "Outro", end: activeResource.outro.end })
+        } else {
+            setSkipState({ state: "off", end: -1 })
+        }
     }
 
     const setDuration = (duration: number) => {
@@ -199,6 +225,8 @@ const VideoPlayer = ({ resources }: { resources: AnimeResources }) => {
             elem.removeEventListener("keydown", keyboardShortcutHandlers)
     }, [containerRef, keyboardShortcutHandlers])
 
+    const seek = playerRef.current?.seekTo
+
     return (
         <div
             ref={containerRef}
@@ -248,6 +276,13 @@ const VideoPlayer = ({ resources }: { resources: AnimeResources }) => {
                     onReady={onReady}
                     onProgress={onProgress}
                     onDuration={setDuration}
+                />
+            )}
+
+            {skipState.state != "off" && (
+                <SkipOverlay
+                    state={skipState}
+                    seek={playerRef.current?.seekTo}
                 />
             )}
 

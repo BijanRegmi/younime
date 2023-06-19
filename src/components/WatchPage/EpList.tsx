@@ -41,10 +41,12 @@ const EpList = ({ episodes }: { episodes: WatchAnime["episodes"] }) => {
                             className="h-12 bg-accent-150 m-1 p-1 flex items-center gap-4 cursor-pointer hover:bg-accent-250 shadow-[rgba(50,50,93,0.25)_0px_2px_5px_-1px,rgba(0,0,0,0.3)_0px_1px_3px_-1px] rounded-md"
                             ref={playing ? ref : undefined}
                             href={`/${animeId}/${ep.id}`}
+                            prefetch={false}
                         >
                             <Play
-                                className={`w-12 aspect-square text-white transition-opacity ease-linear ${playing ? "opacity-100" : "opacity-0"
-                                    }`}
+                                className={`w-12 aspect-square text-white transition-opacity ease-linear ${
+                                    playing ? "opacity-100" : "opacity-0"
+                                }`}
                             />
                             <span className="inline-block">{ep.order}:</span>
                             <span
