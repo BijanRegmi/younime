@@ -6,6 +6,7 @@ import Comment from "./Comment"
 import CommentInput from "./Input"
 import { trpc } from "../Context/TrpcContext"
 import { Fragment } from "react"
+import NoComments from "./NoComments"
 
 export default function Comments() {
     const observeRef = useOnIntersection<HTMLDivElement>({
@@ -44,6 +45,10 @@ export default function Comments() {
                         ))}
                     </Fragment>
                 ))}
+
+            {data?.pages.reduce((a, v) => a + v.comments.length, 0) == 0 && (
+                <NoComments />
+            )}
             <div
                 ref={observeRef}
                 style={{

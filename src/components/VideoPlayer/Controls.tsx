@@ -13,6 +13,7 @@ import {
 } from "react-icons/bs"
 import { MdOutlineLanguage, MdClosedCaptionOff } from "react-icons/md"
 import { AiOutlineVideoCamera } from "react-icons/ai"
+import { BiSkipNext, BiSkipPrevious } from "react-icons/bi"
 
 import { durationFormatter } from "@/lib/helpers"
 import { MODES, VideoState } from "./"
@@ -27,6 +28,7 @@ import {
 import ReactPlayer from "react-player"
 import { Settings } from "./Settings"
 import VolumeController from "./VolumeController"
+import Link from "next/link"
 
 const PLAYBACK_RATES = [
     "0.25",
@@ -214,10 +216,20 @@ const Controls = ({
                 </div>
             </div>
             <div className="flex gap-2 p-1 flex-row items-center bg-black bg-opacity-50 h-full">
+                {state.prev != "" && (
+                    <Link href={state.prev}>
+                        <BiSkipPrevious className="controlBtn" />
+                    </Link>
+                )}
                 {state.playing ? (
                     <Pause onClick={togglePlay} className="controlBtn" />
                 ) : (
                     <Play onClick={togglePlay} className="controlBtn" />
+                )}
+                {state.next != "" && (
+                    <Link href={state.next}>
+                        <BiSkipNext className="controlBtn" />
+                    </Link>
                 )}
                 <VolumeController state={state} setState={setState} />
 

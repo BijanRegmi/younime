@@ -30,6 +30,8 @@ export interface VideoState {
     srcIdx: number
     qualityIdx: number
     trackIdx: number
+    next: string
+    prev: string
 }
 
 export interface SkipState {
@@ -37,7 +39,15 @@ export interface SkipState {
     end: number
 }
 
-const VideoPlayer = ({ resources }: { resources: AnimeResources }) => {
+const VideoPlayer = ({
+    resources,
+    next,
+    prev,
+}: {
+    resources: AnimeResources
+    next: string
+    prev: string
+}) => {
     const hasWindow = useHasWindow()
     const { show, setShow, display, cleartimeout, onMouseMove } =
         useShowOnMouseMove<HTMLDivElement>()
@@ -56,6 +66,8 @@ const VideoPlayer = ({ resources }: { resources: AnimeResources }) => {
         srcIdx: -1,
         qualityIdx: -1,
         trackIdx: -1,
+        next,
+        prev,
     })
 
     const [skipState, setSkipState] = useState<SkipState>({
@@ -83,8 +95,10 @@ const VideoPlayer = ({ resources }: { resources: AnimeResources }) => {
             qualityIdx,
             trackIdx,
             resources,
+            next,
+            prev,
         }))
-    }, [resources])
+    }, [resources, next, prev])
 
     const playerRef = useRef<ReactPlayer>(null)
     const containerRef = useRef<HTMLDivElement>(null)
@@ -117,6 +131,10 @@ const VideoPlayer = ({ resources }: { resources: AnimeResources }) => {
         }
     }
 
+    const onEnded = () => {
+        setState(o => ({ ...o, playing: false }))
+    }
+
     const setDuration = (duration: number) => {
         console.info("Video loaded.", { duration })
         setState({ ...state, duration })
@@ -139,6 +157,7 @@ const VideoPlayer = ({ resources }: { resources: AnimeResources }) => {
 
             let c = playerRef.current.getCurrentTime()
             let d = playerRef.current.getDuration()
+            e.preventDefault()
 
             switch (key) {
                 case "k":
@@ -225,7 +244,12 @@ const VideoPlayer = ({ resources }: { resources: AnimeResources }) => {
             elem.removeEventListener("keydown", keyboardShortcutHandlers)
     }, [containerRef, keyboardShortcutHandlers])
 
-    const seek = playerRef.current?.seekTo
+    const togglePlay = () => setState(o => ({ ...o, playing: !o.playing }))
+    const toggleFullScreen = () => {
+        if (document.fullscreenElement == null)
+            document.getElementById("videoContainer")?.requestFullscreen()
+        else document.exitFullscreen()
+    }
 
     return (
         <div
@@ -275,7 +299,11 @@ const VideoPlayer = ({ resources }: { resources: AnimeResources }) => {
                     /* Callbacks */
                     onReady={onReady}
                     onProgress={onProgress}
+                    onEnded={onEnded}
                     onDuration={setDuration}
+                    /* EventHanlder */
+                    onClick={togglePlay}
+                    onDoubleClick={toggleFullScreen}
                 />
             )}
 
