@@ -8,6 +8,7 @@ import Controls from "./Controls"
 import { OnProgressProps } from "react-player/base"
 import { AnimeResources } from "@/lib/getAnimeResources"
 import SkipOverlay from "./SkipOverlay"
+import { useRouter } from "next/navigation"
 
 export enum MODES {
     FULLSCREEN = "fullscreen",
@@ -30,6 +31,7 @@ export interface VideoState {
     srcIdx: number
     qualityIdx: number
     trackIdx: number
+    autoPlay: number
     next: string
     prev: string
 }
@@ -48,13 +50,14 @@ const VideoPlayer = ({
     next: string
     prev: string
 }) => {
+    const router = useRouter()
     const hasWindow = useHasWindow()
     const { show, setShow, display, cleartimeout, onMouseMove } =
         useShowOnMouseMove<HTMLDivElement>()
 
     const [state, setState] = useState<VideoState>({
         mode: MODES.NORMAL,
-        playing: false,
+        playing: true,
         muted: false,
         played: 0,
         loaded: 0,
@@ -66,6 +69,7 @@ const VideoPlayer = ({
         srcIdx: -1,
         qualityIdx: -1,
         trackIdx: -1,
+        autoPlay: 1,
         next,
         prev,
     })
@@ -132,7 +136,11 @@ const VideoPlayer = ({
     }
 
     const onEnded = () => {
-        setState(o => ({ ...o, playing: false }))
+        if (state.autoPlay && next) {
+            router.push(next)
+        } else {
+            setState(o => ({ ...o, playing: false }))
+        }
     }
 
     const setDuration = (duration: number) => {

@@ -12,7 +12,7 @@ import {
     BsSpeedometer2 as PlayBackSpeed,
 } from "react-icons/bs"
 import { MdOutlineLanguage, MdClosedCaptionOff } from "react-icons/md"
-import { AiOutlineVideoCamera } from "react-icons/ai"
+import { AiOutlineVideoCamera, AiOutlinePlayCircle } from "react-icons/ai"
 import { BiSkipNext, BiSkipPrevious } from "react-icons/bi"
 
 import { durationFormatter } from "@/lib/helpers"
@@ -178,6 +178,10 @@ const Controls = ({
         }
     }
 
+    const autoPlaySetter = (idx: number) => {
+        setState(o => ({ ...o, autoPlay: idx }))
+    }
+
     const styles = {
         "--loaded-percent": `${state.loaded * 100}%`,
         "--played-percent": `${state.played * 100}%`,
@@ -290,6 +294,13 @@ const Controls = ({
                                 ) || [],
                             selected: state.trackIdx,
                             setter: trackSetter,
+                        },
+                        {
+                            title: "AutoPlay",
+                            Icon: AiOutlinePlayCircle,
+                            options: ["Off", "On"],
+                            selected: state.autoPlay,
+                            setter: autoPlaySetter,
                         },
                     ]}
                 />
