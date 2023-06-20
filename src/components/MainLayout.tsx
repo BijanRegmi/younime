@@ -7,7 +7,7 @@ export const MainLayout = ({ children }: { children: ReactNode }) => {
     const context = useContext(GlobalContext)
     return (
         <main
-            className={`h-full max-h-full flex-grow flex-shrink overflow-scroll max-w-[149rem] ${
+            className={`h-full max-h-full flex-grow flex-shrink overflow-scroll max-w-[149rem] px-2 ${
                 context.state.sidebar ? "w-mainNarrow" : "w-mainWide"
             }`}
         >

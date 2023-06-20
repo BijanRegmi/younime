@@ -62,8 +62,10 @@ model User {
     accounts      Account[]
 
     // User data
-    password String?
-    history  history_entry[]
+    password  String?
+    bio       String          @default("New here :)")
+    createdAt DateTime        @default(now())
+    history   history_entry[]
 
     // Comments stuffs
     comments             comment[]             @relation("commented")
@@ -124,9 +126,10 @@ model anime {
 }
 
 model comment {
-    id      Int     @id @default(autoincrement())
-    content String
-    spoiler Boolean @default(false)
+    id        Int      @id @default(autoincrement())
+    content   String
+    spoiler   Boolean  @default(false)
+    createdAt DateTime @default(now())
 
     // on which episode of which anime
     episodeId Int

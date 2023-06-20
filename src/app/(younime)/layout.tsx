@@ -28,7 +28,7 @@ export default async function RootLayout({
                         <ReactContext>
                             {/* @ts-expect-error Server Component */}
                             <Header session={session} />
-                            <div className="flex flex-row gap-2 h-[calc(100%-5rem)] w-full">
+                            <div className="flex flex-row h-[calc(100%-5rem)] w-full">
                                 <Sidebar />
                                 <MainLayout>{children}</MainLayout>
                             </div>
