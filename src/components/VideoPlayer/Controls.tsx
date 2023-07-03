@@ -117,6 +117,8 @@ const Controls = ({
         let qualityIdx =
             (state.resources[subdub]?.source[srcIdx]?.qualities.length || 0) - 1
 
+        localStorage.setItem("subdub", subdub[idx])
+
         setState(o => ({
             ...o,
             subdub,
@@ -164,6 +166,7 @@ const Controls = ({
         for (let i = 0; i < tracks?.length; i++) {
             tracks[i].mode = "disabled"
             if (i == idx - 1) {
+                localStorage.setItem("track", tracks[i].label.toLowerCase())
                 tracks[i].mode = "showing"
             }
         }
@@ -174,6 +177,7 @@ const Controls = ({
     }
 
     const autoPlaySetter = (idx: number) => {
+        localStorage.setItem("autoplay", idx.toString())
         setState(o => ({ ...o, autoPlay: idx }))
     }
 
@@ -238,8 +242,6 @@ const Controls = ({
                     </div>
                     /<div>{durationFormatter(state.duration || 0)}</div>
                 </div>
-
-                <button onClick={() => console.log(state)}>Print</button>
 
                 <Settings
                     state={showSettings}
