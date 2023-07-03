@@ -125,7 +125,7 @@ const VideoPlayer = ({
 
         for (let i = 0; i < tracks?.length; i++) {
             tracks[i].mode = "disabled"
-            if (i == state.trackIdx) tracks[i].mode = "showing"
+            if (i == state.trackIdx - 1) tracks[i].mode = "showing"
         }
     }
 

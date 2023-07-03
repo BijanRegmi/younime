@@ -117,7 +117,7 @@ const Controls = ({
         let qualityIdx =
             (state.resources[subdub]?.source[srcIdx]?.qualities.length || 0) - 1
 
-        localStorage.setItem("subdub", subdub[idx])
+        localStorage.setItem("subdub", subdub)
 
         setState(o => ({
             ...o,
