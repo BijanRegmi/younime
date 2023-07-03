@@ -159,23 +159,18 @@ const Controls = ({
     }
 
     const trackSetter = (idx: number) => {
-        let trackIdx = Math.min(
-            idx,
-            (state.resources[state.subdub]?.tracks.length || 0) - 1
-        )
-
         let tracks = playerRef.current?.getInternalPlayer().textTracks
 
         for (let i = 0; i < tracks?.length; i++) {
             tracks[i].mode = "disabled"
-            if (i == trackIdx) {
+            if (i == idx - 1) {
                 tracks[i].mode = "showing"
-                setState(o => ({
-                    ...o,
-                    trackIdx: trackIdx ?? -1,
-                }))
             }
         }
+        setState(o => ({
+            ...o,
+            trackIdx: idx,
+        }))
     }
 
     const autoPlaySetter = (idx: number) => {
@@ -244,6 +239,8 @@ const Controls = ({
                     /<div>{durationFormatter(state.duration || 0)}</div>
                 </div>
 
+                <button onClick={() => console.log(state)}>Print</button>
+
                 <Settings
                     state={showSettings}
                     toggle={toggleSettings}
@@ -288,10 +285,12 @@ const Controls = ({
                         {
                             title: "Captions",
                             Icon: MdClosedCaptionOff,
-                            options:
-                                state.resources[state.subdub]?.tracks.map(
+                            options: [
+                                "Off",
+                                ...(state.resources[state.subdub]?.tracks.map(
                                     t => t.label
-                                ) || [],
+                                ) || []),
+                            ],
                             selected: state.trackIdx,
                             setter: trackSetter,
                         },

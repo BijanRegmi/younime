@@ -68,7 +68,7 @@ const VideoPlayer = ({
         subdub: "sub",
         srcIdx: -1,
         qualityIdx: -1,
-        trackIdx: -1,
+        trackIdx: 0,
         autoPlay: 1,
         next,
         prev,
@@ -80,17 +80,29 @@ const VideoPlayer = ({
     })
 
     useEffect(() => {
-        let subdub: "sub" | "dub" = "sub"
+        let subdub: "sub" | "dub" =
+            (localStorage.getItem("subdub") as "sub" | "dub") || "sub"
+        if (subdub == "sub" && !resources["sub"]) subdub = "dub"
+        else if (subdub == "dub" && !resources["dub"]) subdub = "sub"
 
-        if (resources["sub"]) subdub = "sub"
-        else if (resources["dub"]) subdub = "dub"
+        const autoPlay = localStorage.getItem("autoplay") == "1" ? 1 : 0
 
         let srcIdx = (resources[subdub]?.source.length || 0) - 1
         let qualityIdx =
             (resources[subdub]?.source[srcIdx]?.qualities.length || 0) - 1
 
+        let trackLabel =
+            localStorage.getItem("track")?.toLowerCase() || "INVALID"
         let trackIdx =
-            resources[subdub]?.tracks?.findIndex(t => t.default == true) || -1
+            resources[subdub]?.tracks?.findIndex(t =>
+                t.label.toLowerCase().includes(trackLabel)
+            ) ?? -1
+        trackIdx =
+            trackIdx == -1
+                ? (resources[subdub]?.tracks.findIndex(
+                      t => t.default == true
+                  ) ?? -1) + 1
+                : trackIdx + 1
 
         setState(o => ({
             ...o,
@@ -99,6 +111,7 @@ const VideoPlayer = ({
             qualityIdx,
             trackIdx,
             resources,
+            autoPlay,
             next,
             prev,
         }))
