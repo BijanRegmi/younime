@@ -14,12 +14,7 @@ const nextConfig = {
         return config
     },
     images: {
-        domains: [
-            "avatars.githubusercontent.com",
-            "cdn.myanimelist.net",
-            "i.pravatar.cc",
-            "lh3.googleusercontent.com",
-        ],
+        remotePatterns: [{ protocol: "https", hostname: "**" }],
     },
     experimental: {
         appDir: true,

@@ -29,7 +29,10 @@ const CommentInput = () => {
         <div className="flex flex-row gap-5 p-1 mt-4" ref={ref}>
             <div className="w-12 h-12 relative">
                 <Image
-                    src={session.data?.user?.image as string}
+                    src={
+                        session.data?.user?.image ||
+                        "https://static.vecteezy.com/system/resources/thumbnails/009/292/244/small/default-avatar-icon-of-social-media-user-vector.jpg"
+                    }
                     fill={true}
                     alt={session.data?.user?.name as string}
                     style={{
@@ -52,8 +55,9 @@ const CommentInput = () => {
                     required={true}
                 />
                 <div
-                    className={`${content.length ? "flex" : "hidden"
-                        } flex-row-reverse gap-4 p-4`}
+                    className={`${
+                        content.length ? "flex" : "hidden"
+                    } flex-row-reverse gap-4 p-4`}
                 >
                     <button
                         type="submit"

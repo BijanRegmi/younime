@@ -12,7 +12,10 @@ const ProfileHead = ({ user }: { user: Session["user"] }) => {
     return (
         <div className="h-full aspect-square relative">
             <Image
-                src={user.image as string}
+                src={
+                    user.image ||
+                    "https://static.vecteezy.com/system/resources/thumbnails/009/292/244/small/default-avatar-icon-of-social-media-user-vector.jpg"
+                }
                 fill={true}
                 alt={user.name as string}
                 className="h-full w-full rounded-full object-contain cursor-pointer"
@@ -23,7 +26,10 @@ const ProfileHead = ({ user }: { user: Session["user"] }) => {
                     <div className="flex flex-row w-full px-4 gap-2 items-center">
                         <div className="relative w-16 aspect-square overflow-hidden">
                             <Image
-                                src={user.image as string}
+                                src={
+                                    user.image ||
+                                    "https://static.vecteezy.com/system/resources/thumbnails/009/292/244/small/default-avatar-icon-of-social-media-user-vector.jpg"
+                                }
                                 fill={true}
                                 alt={user.name as string}
                                 className="rounded-full"

@@ -135,7 +135,10 @@ const Comment = ({
         <div className="flex flex-row gap-5 p-1 mt-4 border-b border-solid border-accent-150">
             <div className="w-12 h-12 relative">
                 <Image
-                    src={comment.commenter.image as string}
+                    src={
+                        comment.commenter.image ||
+                        "https://static.vecteezy.com/system/resources/thumbnails/009/292/244/small/default-avatar-icon-of-social-media-user-vector.jpg"
+                    }
                     fill={true}
                     alt={comment.commenter.name as string}
                     style={{

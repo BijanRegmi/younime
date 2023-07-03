@@ -41,6 +41,7 @@ export const registerSchema = z.object({
             }
         }),
     password: z.string().trim().min(8).max(32),
+    name: z.string().max(32),
 })
 
 export const registerProc = async ({
@@ -50,11 +51,12 @@ export const registerProc = async ({
     input: TypeOf<typeof registerSchema>
     ctx: Context
 }) => {
-    const { email, password } = input
+    const { email, password, name } = input
     const { prisma } = ctx
 
     await prisma.user.create({
         data: {
+            name,
             email,
             password: hashSync(password),
         },

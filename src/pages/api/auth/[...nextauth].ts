@@ -34,7 +34,8 @@ export const authOptions: AuthOptions = {
             clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
         }),
         CredentialsProvider({
-            name: "Credentials",
+            id: "login",
+            name: "credentials",
             credentials: {
                 email: {
                     label: "Email",
@@ -90,7 +91,9 @@ export const authOptions: AuthOptions = {
     },
     theme: {
         colorScheme: "dark",
-        logo: "https://avatars.githubusercontent.com/u/55084653?v=4",
+    },
+    pages: {
+        signIn: "/auth",
     },
 }
 
