@@ -12,6 +12,9 @@ import { notFound, usePathname } from "next/navigation"
 import { AnimeStatus } from "@prisma/client"
 import { trpc } from "../Context/TrpcContext"
 import { WatchAnime } from "@/lib/getWatchAnime"
+import { MdErrorOutline } from "react-icons/md"
+import { Popup } from "../Popup"
+import { Report } from "../Report"
 
 const Actions = ({
     history,
@@ -42,6 +45,10 @@ const Actions = ({
             })
         }
     }, [ref, open])
+
+    const [reporting, setReporting] = useState(false)
+    const openPopup = () => setReporting(true)
+    const closePopup = () => setReporting(false)
 
     const paths = usePathname()?.split("/")
     if (!paths) return notFound()
@@ -121,7 +128,25 @@ const Actions = ({
                             </div>
                         )
                     })}
+                    <hr className="border-0 h-[1px] bg-accent-400 my-2" />
+                    <div
+                        className="h-10 flex flex-row justify-center items-center cursor-pointer rounded-md hover:bg-accent-150"
+                        onClick={openPopup}
+                    >
+                        <MdErrorOutline className="h-4/5 aspect-square text-white fill-white text-4xl" />
+                        <span className="flex-grow">REPORT</span>
+                    </div>
                 </div>
+            )}
+            {reporting && (
+                <Popup onClickOutside={closePopup}>
+                    <Report
+                        onSuccess={closePopup}
+                        onCancel={closePopup}
+                        kind="ANIME"
+                        refId={animeId.toString()}
+                    />
+                </Popup>
             )}
         </div>
     )

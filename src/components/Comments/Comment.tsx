@@ -15,6 +15,7 @@ import { useState } from "react"
 import { Report } from "@/components/Report"
 import { Popup } from "../Popup"
 import { DeleteComment } from "./Delete"
+import Link from "next/link"
 
 type Comment =
     inferRouterOutputs<AppRouter>["comment"]["get"]["comments"][number]
@@ -132,8 +133,11 @@ const Comment = ({
     if (comment.id == -1) return <></>
 
     return (
-        <div className="flex flex-row gap-5 p-1 mt-4 border-b border-solid border-accent-150">
-            <div className="w-12 h-12 relative">
+        <div className="flex flex-row gap-5 p-1 mt-4 border-b border-solid border-accent-150 group">
+            <Link
+                className="w-12 h-12 relative"
+                href={`/user/${comment.commenter.id}`}
+            >
                 <Image
                     src={
                         comment.commenter.image ||
@@ -147,9 +151,14 @@ const Comment = ({
                         aspectRatio: "1 / 1",
                     }}
                 />
-            </div>
+            </Link>
             <div className="text-accent-900 grow flex flex-col gap-1">
-                <div className="font-semibold">{comment.commenter.name}</div>
+                <Link
+                    href={`/user/${comment.commenter.id}`}
+                    className="font-semibold"
+                >
+                    {comment.commenter.name}
+                </Link>
                 <div className="">{comment.content}</div>
                 <div className="flex flex-row gap-1">
                     <LikeIcon
@@ -162,7 +171,7 @@ const Comment = ({
                         className="w-5 aspect-square fill-accent-900 cursor-pointer"
                     />
                     <span>{comment.dislikes}</span>
-                    <div className="flex grow justify-end px-4">
+                    <div className="hidden grow justify-end px-4 group-hover:flex">
                         {comment.own ? (
                             <DeleteSvg
                                 className="w-5 aspect-square cursor-pointer"

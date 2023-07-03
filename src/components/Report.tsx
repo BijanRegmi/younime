@@ -92,7 +92,7 @@ export const Report = ({
                             <span className="block font-medium text-gray-700 mb-2">
                                 Select a reason.
                             </span>
-                            <div className="mt-2 flex flex-col">
+                            <div className="mt-2 flex flex-col gap-2">
                                 {options[kind].map((opt, idx) => (
                                     <ReportOption
                                         key={idx}
@@ -122,14 +122,14 @@ export const Report = ({
                 <div className="px-4 py-3 flex justify-end items-end gap-4">
                     <button
                         type="submit"
-                        className="rounded-md shadow-sm px-4 py-2 bg-accent-150 font-medium text-accent-850 hover:bg-accent-200 focus:outline-none"
+                        className="rounded-sm shadow-sm px-2 py-1 bg-accent-150 font-medium text-accent-850 hover:bg-accent-200 focus:outline-none"
                     >
                         Report
                     </button>
 
                     <button
                         type="button"
-                        className="rounded-md shadow-sm px-4 py-2 bg-accent-150 font-medium text-accent-850 hover:bg-accent-200 focus:outline-none"
+                        className="rounded-sm shadow-sm px-2 py-1 bg-accent-150 font-medium text-accent-850 hover:bg-accent-200 focus:outline-none"
                         onClick={onCancel}
                     >
                         Cancel

@@ -2,6 +2,7 @@ import Image from "next/image"
 import Synopsis from "@/components/WatchPage/synopsis"
 import Actions from "@/components/WatchPage/Actions"
 import { WatchAnime } from "@/lib/getWatchAnime"
+import Link from "next/link"
 
 const DataRow = ({ datas }: { datas: { title: string; value: any }[] }) => {
     return (
@@ -65,12 +66,13 @@ const AnimeDesc = ({ anime }: { anime: WatchAnime }) => {
             </div>
             <div className="p-1 flex flex-row flex-wrap gap-[0.3rem]">
                 {anime.genres.map((g, idx) => (
-                    <div
+                    <Link
+                        href={`/genre/${g.name}`}
                         key={idx}
-                        className="border border-solid border-accent-300 bg-accent-150 px-2 py-1 cursor-default rounded-md hover:border-accent-600"
+                        className="border border-solid border-accent-300 bg-accent-150 px-2 py-1 cursor-pointer rounded-md hover:border-accent-600"
                     >
                         {g.name}
-                    </div>
+                    </Link>
                 ))}
             </div>
             <Synopsis synopsis={anime.synopsis} />
