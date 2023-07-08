@@ -3,6 +3,7 @@ import { getUser } from "@/lib/getUser"
 import { Session } from "next-auth"
 import { UserAccounts } from "./Accounts"
 import EditableInfo from "./EditableInfo"
+import { MalSync } from "./MalSync"
 import NonEditableInfo from "./NonEditableInfo"
 
 const UserCard = ({
@@ -24,10 +25,13 @@ const UserCard = ({
                 <NonEditableInfo data={data} />
             )}
             {self && (
-                <UserAccounts
-                    accounts={accounts}
-                    email={session?.user.email || ""}
-                />
+                <div className="h-full flex flex-col justify-around px-4">
+                    <UserAccounts
+                        accounts={accounts}
+                        email={session?.user.email || ""}
+                    />
+                    <MalSync />
+                </div>
             )}
         </div>
     )

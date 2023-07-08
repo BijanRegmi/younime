@@ -12,10 +12,11 @@ export const UserAccounts = ({
     email: string
 }) => {
     return (
-        <div className="h-full flex flex-col justify-around px-4">
+        <>
             <div
-                className={`bg-white rounded-md border border-solid border-gray-500 shadow-sm whitespace-nowrap px-4 py-2 flex gap-2 w-full items-center ${accounts.google ? "cursor-default" : "cursor-pointer"
-                    }`}
+                className={`bg-white rounded-md border border-solid border-gray-500 shadow-sm whitespace-nowrap px-4 py-2 flex gap-2 w-full items-center ${
+                    accounts.google ? "cursor-default" : "cursor-pointer"
+                }`}
                 title={accounts.google ? email : "Sign In with Google"}
                 onClick={() =>
                     !accounts.google &&
@@ -30,8 +31,9 @@ export const UserAccounts = ({
                 </span>
             </div>
             <div
-                className={`bg-white rounded-md border border-solid border-gray-500 shadow-sm whitespace-nowrap px-4 py-2 flex gap-2 w-full items-center ${accounts.github ? "cursor-default" : "cursor-pointer"
-                    }`}
+                className={`bg-white rounded-md border border-solid border-gray-500 shadow-sm whitespace-nowrap px-4 py-2 flex gap-2 w-full items-center ${
+                    accounts.github ? "cursor-default" : "cursor-pointer"
+                }`}
                 title={accounts.github ? email : "Sign In with Github"}
             >
                 <AiOutlineGithub className="w-6 h-6 text-black" />
@@ -39,6 +41,6 @@ export const UserAccounts = ({
                     {accounts.github ? "Connected" : "Connect"}
                 </span>
             </div>
-        </div>
+        </>
     )
 }
