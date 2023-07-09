@@ -23,7 +23,7 @@ const Header = async ({ session }: { session: Session | null }) => {
             {session?.user ? (
                 <ProfileHead user={session.user} />
             ) : (
-                <div className="h-4/5">
+                <div className="h-4/5 w-sidebarExtra">
                     <SignIn />
                 </div>
             )}

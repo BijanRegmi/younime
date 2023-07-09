@@ -9,7 +9,7 @@ export async function getOngoingAnime({
     take?: number
 }) {
     const result: CardAnime[] = await prisma.anime.findMany({
-        where: { status: "Ongoing" },
+        where: { status: "Currently Airing" },
         skip,
         take,
         select: {

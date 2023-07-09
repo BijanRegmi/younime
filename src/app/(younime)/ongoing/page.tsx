@@ -1,8 +1,8 @@
-import { getUpcomingAnime } from "@/lib/getUpcoming"
 import Section from "@/components/Sections"
+import { getOngoingAnime } from "@/lib/getOngoing"
 
 const OngoingPage = async () => {
-    const animes = await getUpcomingAnime()
+    const animes = await getOngoingAnime({ take: 32 })
 
     return <Section animes={animes} />
 }

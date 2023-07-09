@@ -1,9 +1,15 @@
 import prisma from "@/prisma"
 import { CardAnime } from "@/index"
 
-export async function getUpcomingAnime() {
+export async function getUpcomingAnime({
+    skip,
+    take,
+}: {
+    skip?: number
+    take?: number
+}) {
     const result: CardAnime[] = await prisma.anime.findMany({
-        where: { status: "Upcoming" },
+        where: { status: "Not yet aired" },
         select: {
             id: true,
             title: true,
@@ -12,7 +18,8 @@ export async function getUpcomingAnime() {
             thumbnail: true,
         },
         orderBy: { score: "desc" },
-        take: 32,
+        skip,
+        take,
     })
     return result
 }
