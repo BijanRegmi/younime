@@ -25,7 +25,7 @@ const EpList = ({ episodes }: { episodes: WatchAnime["episodes"] }) => {
     const total = episodes.length
 
     return (
-        <div className="flex flex-col gap-1 w-full overflow-hidden eplist border border-accent-250 border-solid rounded-lg p-4">
+        <div className="flex flex-col gap-1 w-full overflow-hidden bg-accent-50 eplist border border-accent-250 border-solid rounded-lg p-4">
             <div className="justify-self-center border-b border-accent-450 border-solid">
                 <span className="font-bold">Playing</span> {curr?.order} /{" "}
                 {total}

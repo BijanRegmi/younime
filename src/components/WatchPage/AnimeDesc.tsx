@@ -26,7 +26,7 @@ const DataRow = ({ datas }: { datas: { title: string; value: any }[] }) => {
 
 const AnimeDesc = ({ anime }: { anime: WatchAnime }) => {
     return (
-        <div className="flex flex-col gap-2">
+        <div className="flex flex-col gap-2 animedesc">
             <div className="px-1 py-2 flex flex-row gap-2">
                 <div className="relative h-full aspect-[3/4] rounded-lg overflow-hidden">
                     <Image

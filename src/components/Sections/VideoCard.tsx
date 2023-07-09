@@ -1,6 +1,6 @@
 import Image from "next/image"
 import Link from "next/link"
-import { CardAnime } from ".."
+import { CardAnime } from "../.."
 
 const VideoCard = ({ anime }: { anime: CardAnime }) => {
     return (

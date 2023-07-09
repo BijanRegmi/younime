@@ -1,5 +1,5 @@
 import { type CardAnime } from "@/index"
-import VideoCard from "../VideoCard"
+import VideoCard from "./VideoCard"
 
 const Section = (props: { animes: CardAnime[]; title?: String }) => {
     if (props.animes.length == 0) return <></>

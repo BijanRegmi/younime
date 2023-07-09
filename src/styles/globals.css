@@ -48,7 +48,6 @@
 }
 
 .eplist {
-    @apply bg-accent-50;
     grid-area: ep;
 }
 
