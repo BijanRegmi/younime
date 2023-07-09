@@ -19,7 +19,7 @@ type Track = {
 
 interface AnimeResource {
     source: VideoSource[]
-    backupSource: VideoSource[]
+    backupSource?: VideoSource[]
     tracks: Track[]
     intro: { start: number; end: number }
     outro: { start: number; end: number }

@@ -11,6 +11,7 @@ import VideoPlayer from "@/components/VideoPlayer"
 import Comments from "@/components/Comments"
 import AnimeDesc from "@/components/WatchPage/AnimeDesc"
 import EpList from "@/components/WatchPage/EpList"
+import { NoResourcePlayer } from "@/components/VideoPlayer/NoResourcePlayer"
 
 const Page = async ({
     params,
@@ -25,7 +26,6 @@ const Page = async ({
     if (!anime) return notFound()
 
     const resources = await getAnimeResources(epId)
-    if (!resources || (!resources.sub && !resources.dub)) return notFound()
 
     const session = await getServerSession(authOptions)
     if (session && session.user?.id) {
@@ -49,7 +49,11 @@ const Page = async ({
 
     return (
         <div className="w-full overflow-y-scroll grid gap-y-2 gap-x-4 h-full watchpage">
-            <VideoPlayer resources={resources} next={next} prev={prev} />
+            {!resources || (!resources.sub && !resources.dub) ? (
+                <NoResourcePlayer />
+            ) : (
+                <VideoPlayer resources={resources} next={next} prev={prev} />
+            )}
             <div className="comments">
                 <Comments />
             </div>
