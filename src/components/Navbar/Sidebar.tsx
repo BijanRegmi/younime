@@ -11,6 +11,7 @@ import SignIn from "./SignIn"
 import { useSession } from "next-auth/react"
 import { CiLogout } from "react-icons/ci"
 import { usePathname } from "next/navigation"
+import { Feedback } from "./Feedback"
 
 const Sidebar = () => {
     const context = useContext(GlobalContext)
@@ -61,20 +62,25 @@ const Sidebar = () => {
 
             {open && (
                 <>
-                    <div className="flex-grow" />
+                    <div className="grow" />
                     <hr className="bg-accent-400 border-0 h-[1px] w-full my-2" />
-                    <div className="h-14 py-2 px-8">
-                        {session.status == "authenticated" ? (
-                            <Link
-                                href="/api/auth/signout"
-                                className="flex-shrink-0 items-center border border-solid border-white rounded-[1.3rem] p-[0.1rem/0.8rem] cursor-pointer text-white decoration-solid no-underline hover:bg-[#333] h-full flex justify-center gap-2"
-                            >
-                                <CiLogout className="h-4/5 fill-white font-bold" />
-                                <span>SignOut</span>
-                            </Link>
-                        ) : (
-                            <SignIn />
-                        )}
+                    <div className="h-28 py-2 px-8 flex flex-col gap-4">
+                        <div className="grow">
+                            <Feedback />
+                        </div>
+                        <div className="grow">
+                            {session.status == "authenticated" ? (
+                                <Link
+                                    href="/api/auth/signout"
+                                    className="flex-shrink-0 items-center border border-solid border-white rounded-[1.3rem] p-[0.1rem/0.8rem] cursor-pointer text-white decoration-solid no-underline hover:bg-[#333] h-full flex justify-center gap-2"
+                                >
+                                    <CiLogout className="h-full text-2xl" />
+                                    <span>SignOut</span>
+                                </Link>
+                            ) : (
+                                <SignIn />
+                            )}
+                        </div>
                     </div>
                 </>
             )}

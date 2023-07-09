@@ -2,9 +2,10 @@
 
 import { getUser } from "@/lib/getUser"
 import Image from "next/image"
+import Link from "next/link"
 import { notFound } from "next/navigation"
 import { ChangeEvent, useEffect, useState } from "react"
-import { AiOutlineEdit, AiOutlineSave } from "react-icons/ai"
+import { AiOutlineEdit, AiOutlineEye, AiOutlineSave } from "react-icons/ai"
 import { BiUndo } from "react-icons/bi"
 import { trpc } from "../Context/TrpcContext"
 
@@ -68,10 +69,11 @@ const EditableInfo = ({
                     type="text"
                     name="name"
                     onChange={onChange}
-                    className={`text-2xl bg-transparent focus:outline-none font-bold w-min text-center border-b ${editing.active
+                    className={`text-2xl bg-transparent focus:outline-none font-bold w-min text-center border-b ${
+                        editing.active
                             ? "border-accent-400"
                             : "border-transparent"
-                        }`}
+                    }`}
                     disabled={!editing.active}
                     value={editing.active ? editing.name : actual.name || ""}
                 />
@@ -79,10 +81,11 @@ const EditableInfo = ({
                     type="text"
                     name="bio"
                     onChange={onChange}
-                    className={`bg-transparent focus:outline-none w-min text-center border-b ${editing.active
+                    className={`bg-transparent focus:outline-none w-min text-center border-b ${
+                        editing.active
                             ? "border-accent-400"
                             : "border-transparent"
-                        }`}
+                    }`}
                     disabled={!editing.active}
                     value={editing.active ? editing.bio : actual.bio}
                 />
@@ -105,24 +108,33 @@ const EditableInfo = ({
                         </div>
                     ))}
                 </div>
+            </form>
+
+            <div className="h-full flex flex-col justify-start gap-4">
+                <Link href={`/user/${user.id}`} title="View as public">
+                    <AiOutlineEye className="w-6 h-6 cursor-pointer" />
+                </Link>
                 {editing.active ? (
                     <>
-                        <AiOutlineSave
-                            className="w-6 h-6 absolute top-0 right-0 opacity-0 cursor-pointer group-hover:opacity-100"
-                            onClick={onSave}
-                        />
                         <BiUndo
-                            className="w-6 h-6 absolute top-8 right-0 opacity-0 cursor-pointer group-hover:opacity-100"
+                            className="w-6 h-6 cursor-pointer"
                             onClick={stopEdit}
+                            title="Discard"
+                        />
+                        <AiOutlineSave
+                            className="w-6 h-6 cursor-pointer"
+                            onClick={onSave}
+                            title="Save"
                         />
                     </>
                 ) : (
                     <AiOutlineEdit
-                        className="w-6 h-6 absolute top-0 right-0 opacity-0 cursor-pointer group-hover:opacity-100"
+                        className="w-6 h-6 cursor-pointer"
                         onClick={startEdit}
+                        title="Edit"
                     />
                 )}
-            </form>
+            </div>
         </>
     )
 }

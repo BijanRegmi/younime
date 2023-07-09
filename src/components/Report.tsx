@@ -87,10 +87,12 @@ export const Report = ({
                     <div className="sm:flex sm:items-start">
                         <div className="w-full mt-3 text-center sm:mt-0 sm:text-left">
                             <span className="text-lg leading-6 text-gray-900 font-bold">
-                                Reporting {kind.toLowerCase()}
+                                {kind == "NONE"
+                                    ? "Sending Feedback"
+                                    : `Reporting ${kind.toLowerCase()}`}
                             </span>
                             <span className="block font-medium text-gray-700 mb-2">
-                                Select a reason.
+                                Select any that applies.
                             </span>
                             <div className="mt-2 flex flex-col gap-2">
                                 {options[kind].map((opt, idx) => (
@@ -124,7 +126,7 @@ export const Report = ({
                         type="submit"
                         className="rounded-sm shadow-sm px-2 py-1 bg-accent-150 font-medium text-accent-850 hover:bg-accent-200 focus:outline-none"
                     >
-                        Report
+                        Send
                     </button>
 
                     <button
