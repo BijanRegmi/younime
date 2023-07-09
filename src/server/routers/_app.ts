@@ -1,11 +1,11 @@
 import { router } from "../trpc"
-import { authRouter } from "./auth"
+import { userRouter } from "./user"
 import { commentRouter } from "./comment"
 import { playlistRouter } from "./playlist"
 import { reportRouter } from "./reporting"
 
 export const appRouter = router({
-    auth: authRouter,
+    user: userRouter,
     comment: commentRouter,
     playlist: playlistRouter,
     reporting: reportRouter,

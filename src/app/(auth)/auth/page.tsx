@@ -19,7 +19,7 @@ const LoginPage = () => {
 
     const router = useRouter()
 
-    const { mutate } = trpc.auth.register.useMutation({
+    const { mutate } = trpc.user.register.useMutation({
         onSuccess: () => {
             router.push("/")
         },

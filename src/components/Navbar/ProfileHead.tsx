@@ -18,7 +18,7 @@ const ProfileHead = ({ user }: { user: Session["user"] }) => {
                 }
                 fill={true}
                 alt={user.name as string}
-                className="h-full w-full rounded-full object-contain cursor-pointer"
+                className="h-full w-full rounded-full object-cover cursor-pointer"
                 onClick={() => setShow(old => !old)}
             />
             {show ? (
@@ -32,7 +32,7 @@ const ProfileHead = ({ user }: { user: Session["user"] }) => {
                                 }
                                 fill={true}
                                 alt={user.name as string}
-                                className="rounded-full"
+                                className="object-cover rounded-full"
                             />
                         </div>
                         <div className="break-words">

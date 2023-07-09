@@ -12,10 +12,10 @@ const UserCard = ({
     session,
 }: {
     data: Awaited<ReturnType<typeof getUser>>
-    accounts: Awaited<ReturnType<typeof getConnectedAccount>>
-    session: Session | null
+    accounts?: Awaited<ReturnType<typeof getConnectedAccount>>
+    session?: Session
 }) => {
-    const self = session?.user.id == data.user?.id
+    const self = session && accounts
 
     return (
         <div className="border border-accent-300 rounded-md p-4 flex w-full items-center justify-center">
@@ -28,7 +28,7 @@ const UserCard = ({
                 <div className="h-full flex flex-col justify-around px-4">
                     <UserAccounts
                         accounts={accounts}
-                        email={session?.user.email || ""}
+                        email={session.user.email || "No email"}
                     />
                     <MalSync />
                 </div>

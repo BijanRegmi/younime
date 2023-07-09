@@ -6,6 +6,7 @@ import { notFound } from "next/navigation"
 import { ChangeEvent, useEffect, useState } from "react"
 import { AiOutlineEdit, AiOutlineSave } from "react-icons/ai"
 import { BiUndo } from "react-icons/bi"
+import { trpc } from "../Context/TrpcContext"
 
 const EditableInfo = ({
     data,
@@ -13,6 +14,7 @@ const EditableInfo = ({
     data: Awaited<ReturnType<typeof getUser>>
 }) => {
     const { user, hist } = data
+    const [actual, setActual] = useState({ name: "", bio: "" })
     const [editing, setEditing] = useState({
         name: "",
         bio: "",
@@ -20,15 +22,31 @@ const EditableInfo = ({
     })
 
     useEffect(() => {
-        if (user)
-            setEditing({ name: "Edit name", bio: user.bio, active: false })
+        if (user) {
+            setEditing({ name: user.name || "", bio: user.bio, active: false })
+            setActual({ name: user.name || "", bio: user.bio })
+        }
     }, [user])
 
     if (!user) return notFound()
 
-    const toggleEdit = () => setEditing(o => ({ ...o, active: !o.active }))
+    const startEdit = () =>
+        setEditing({ name: actual.name, bio: actual.bio, active: true })
+    const stopEdit = () => setEditing({ name: "", bio: "", active: false })
+
     const onChange = (e: ChangeEvent<HTMLInputElement>) =>
         setEditing(o => ({ ...o, [e.target.name]: e.target.value }))
+
+    const { mutate } = trpc.user.edit.useMutation({
+        onSuccess: () => {
+            setActual({ name: editing.name, bio: editing.bio })
+            stopEdit()
+        },
+    })
+
+    const onSave = () => {
+        mutate({ name: editing.name, bio: editing.bio })
+    }
 
     const hist_keys = Object.keys(data.hist) as Array<keyof typeof hist>
 
@@ -41,6 +59,7 @@ const EditableInfo = ({
                         "https://static.vecteezy.com/system/resources/thumbnails/009/292/244/small/default-avatar-icon-of-social-media-user-vector.jpg"
                     }
                     alt={"Image"}
+                    className="object-cover"
                     fill
                 />
             </div>
@@ -49,25 +68,23 @@ const EditableInfo = ({
                     type="text"
                     name="name"
                     onChange={onChange}
-                    className={`text-2xl bg-transparent focus:outline-none font-bold w-min text-center border-b ${
-                        editing.active
-                            ? "border-accent-700"
+                    className={`text-2xl bg-transparent focus:outline-none font-bold w-min text-center border-b ${editing.active
+                            ? "border-accent-400"
                             : "border-transparent"
-                    }`}
+                        }`}
                     disabled={!editing.active}
-                    value={editing.active ? editing.name : user.name || ""}
+                    value={editing.active ? editing.name : actual.name || ""}
                 />
                 <input
                     type="text"
                     name="bio"
                     onChange={onChange}
-                    className={`bg-transparent focus:outline-none w-min text-center border-b ${
-                        editing.active
-                            ? "border-accent-700"
+                    className={`bg-transparent focus:outline-none w-min text-center border-b ${editing.active
+                            ? "border-accent-400"
                             : "border-transparent"
-                    }`}
+                        }`}
                     disabled={!editing.active}
-                    value={editing.active ? editing.bio : user.bio}
+                    value={editing.active ? editing.bio : actual.bio}
                 />
                 <h3 className="mx-auto w-fit text-accent-800">
                     Joined:{" "}
@@ -92,17 +109,17 @@ const EditableInfo = ({
                     <>
                         <AiOutlineSave
                             className="w-6 h-6 absolute top-0 right-0 opacity-0 cursor-pointer group-hover:opacity-100"
-                            onClick={toggleEdit}
+                            onClick={onSave}
                         />
                         <BiUndo
                             className="w-6 h-6 absolute top-8 right-0 opacity-0 cursor-pointer group-hover:opacity-100"
-                            onClick={toggleEdit}
+                            onClick={stopEdit}
                         />
                     </>
                 ) : (
                     <AiOutlineEdit
                         className="w-6 h-6 absolute top-0 right-0 opacity-0 cursor-pointer group-hover:opacity-100"
-                        onClick={toggleEdit}
+                        onClick={startEdit}
                     />
                 )}
             </form>
