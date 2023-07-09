@@ -1,7 +1,13 @@
 import prisma from "@/prisma"
 import { CardAnime } from "@/index"
 
-export async function getTopAnime() {
+export async function getTopAnime({
+    skip,
+    take = 32,
+}: {
+    skip?: number
+    take?: number
+}) {
     const result: CardAnime[] = await prisma.anime.findMany({
         where: { title: { not: { contains: "Dub" } } },
         select: {
@@ -12,7 +18,8 @@ export async function getTopAnime() {
             thumbnail: true,
         },
         orderBy: { score: "desc" },
-        take: 32,
+        skip,
+        take,
     })
     return result
 }

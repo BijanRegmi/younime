@@ -9,7 +9,7 @@ const GenreLayout = async ({ children }: { children: ReactNode }) => {
 
     return (
         <>
-            <div className="overflow-scroll flex flex-row gap-2 border-b border-solid border-accent-150 py-2">
+            <div className="overflow-scroll flex flex-row flex-wrap gap-2 border-b border-solid border-accent-150 py-2">
                 {genres.map((genre, idx) => {
                     return (
                         <Link

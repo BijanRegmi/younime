@@ -1,4 +1,4 @@
-const VideoCardSkeleton = () => (
+export const VideoCardSkeleton = () => (
     <div className="w-96 h-80 flex flex-col rounded-xl bg-accent-150 animate-pulse duration-100" />
 )
 
