@@ -7,8 +7,9 @@ generator client {
 }
 
 datasource db {
-    provider = "postgresql"
-    url      = env("DATABASE_URL")
+    provider     = "mysql"
+    url          = env("DATABASE_URL")
+    relationMode = "prisma"
 }
 
 model Account {
@@ -109,15 +110,15 @@ model comment_interaction {
 
 model anime {
     id         Int     @id
-    title      String
-    alttitle   String?
+    title      String  @db.Text
+    alttitle   String? @db.Text
     score      Float   @default(0.0)
     age_rating String  @default("Not Rated")
     studio     String  @default("Unknown")
     season     String  @default("Unknown")
     type       String  @default("Unknown")
     thumbnail  String
-    synopsis   String  @default("")
+    synopsis   String  @db.Text
     status     String
 
     genres   genre[]
@@ -127,7 +128,7 @@ model anime {
 
 model comment {
     id        Int      @id @default(autoincrement())
-    content   String
+    content   String   @db.Text
     spoiler   Boolean  @default(false)
     createdAt DateTime @default(now())
 
@@ -144,7 +145,7 @@ model comment {
 
 model episode {
     id     Int     @id
-    name   String
+    name   String  @db.Text
     order  Int
     filler Boolean
 

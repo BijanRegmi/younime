@@ -45,6 +45,7 @@
         "tailwindcss": "^3.2.6"
     },
     "prisma": {
-        "schema": "src/server/prisma/schema.prisma"
+        "schema": "src/server/prisma/schema.prisma",
+        "seed": "node ./src/server/prisma/seed.js"
     }
 }
