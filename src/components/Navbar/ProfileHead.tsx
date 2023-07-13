@@ -22,7 +22,7 @@ const ProfileHead = ({ user }: { user: Session["user"] }) => {
                 onClick={() => setShow(old => !old)}
             />
             {show ? (
-                <div className="absolute top-full right-[10%] min-w-[250px] bg-accent-200 rounded-lg flex flex-col gap-2 z-10 py-4">
+                <div className="absolute top-full right-[10%] min-w-[250px] bg-accent-200 rounded-lg flex flex-col gap-2 z-20 py-4">
                     <div className="flex flex-row w-full px-4 gap-2 items-center">
                         <div className="relative w-16 aspect-square overflow-hidden">
                             <Image

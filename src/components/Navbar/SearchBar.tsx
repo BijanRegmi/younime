@@ -50,7 +50,10 @@ const SearchBar = ({ animeList }: { animeList: SearchableAnime[] }) => {
             ref={formRef}
             className="h-5/6 w-full flex-grow flex justify-center"
         >
-            <form className="relative w-1/2 h-full flex flex-row justify-center items-center">
+            <form
+                className="relative w-1/2 h-full flex flex-row justify-center items-center"
+                onSubmit={e => e.preventDefault()}
+            >
                 <SearchBtn
                     className={
                         "h-full w-10 p-2 flex-shrink-0 border border-solid border-accent-300 border-r-0 rounded-tl-2xl fill-accent-650 bg-accent-100 " +
@@ -68,6 +71,7 @@ const SearchBar = ({ animeList }: { animeList: SearchableAnime[] }) => {
                     placeholder="Search"
                     onChange={filterList}
                     onFocus={() => setShowSuggestion(true)}
+                    autoComplete="off"
                     className={
                         "outline-none bg-accent-100 text-accent-800 h-full p-2 flex-grow border border-solid border-accent-300 border-r-0 " +
                         (showSuggestion
@@ -93,7 +97,7 @@ const SearchBar = ({ animeList }: { animeList: SearchableAnime[] }) => {
                 />
 
                 {showSuggestion && filteredList.length > 0 && (
-                    <div className="absolute z-10 bg-accent-100 top-full w-full max-h-[70vh] overflow-y-scroll overflow-x-hidden border border-solid border-accent-300 flex-shrink-0 rounded-bl-2xl rounded-br-2xl">
+                    <div className="absolute z-20 bg-accent-100 top-full w-full max-h-[70vh] overflow-y-scroll overflow-x-hidden border border-solid border-accent-300 flex-shrink-0 rounded-bl-2xl rounded-br-2xl">
                         {filteredList.map(item => (
                             <div
                                 key={item.id}

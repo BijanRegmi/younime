@@ -8,7 +8,7 @@ export const Popup = ({
     children: ReactNode
 }) => {
     return (
-        <div className="fixed inset-0 z-10">
+        <div className="fixed inset-0 z-50">
             <div
                 className="fixed inset-0 w-full h-full bg-black opacity-40"
                 onClick={onClickOutside}
