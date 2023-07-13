@@ -11,6 +11,7 @@ import { usePathname } from "next/navigation"
 import { Feedback } from "./Feedback"
 import { useRecoilState } from "recoil"
 import { sidebarAtom } from "../Context/state"
+import { Links } from "./Links"
 
 const Sidebar = () => {
     const [open] = useRecoilState(sidebarAtom)
@@ -80,6 +81,7 @@ const Sidebar = () => {
                             )}
                         </div>
                     </div>
+                    <Links />
                 </>
             )}
         </div>

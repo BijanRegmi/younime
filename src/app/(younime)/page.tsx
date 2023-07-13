@@ -13,7 +13,7 @@ export default async function Home() {
     return (
         <>
             <Section animes={watching} title="Continue Watching" />
-            <Section animes={interested} title="Based on your history" />
+            <Section animes={interested} title="You may be interesed in" />
             <Section animes={ongoing} title="Ongoing" />
             <Section animes={homeAnimes} title="Random" />
         </>
