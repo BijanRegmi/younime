@@ -2,9 +2,11 @@
 
 import { trpc } from "@/components/Context/TrpcContext"
 import { signIn } from "next-auth/react"
-import { ChangeEvent, FormEvent, useState } from "react"
+import { ChangeEvent, FormEvent, useEffect, useState } from "react"
 import { AiOutlineGithub, AiOutlineGoogle } from "react-icons/ai"
 import { useRouter, useSearchParams } from "next/navigation"
+import { useRecoilState } from "recoil"
+import { alertAtom, AlertStatus } from "@/components/Context/state"
 
 const initialState = {
     email: "",
@@ -16,6 +18,7 @@ const initialState = {
 const LoginPage = () => {
     const [isLogin, setIsLogin] = useState(true)
     const [values, setValues] = useState(initialState)
+    const [_alert, setAlert] = useRecoilState(alertAtom)
 
     const router = useRouter()
 
@@ -57,6 +60,17 @@ const LoginPage = () => {
     }
 
     const x = useSearchParams()
+
+    useEffect(() => {
+        const error = x?.get("error")
+        if (error) {
+            const timer = 4000
+            setAlert({ title: error, timer, status: AlertStatus.ERROR })
+            setTimeout(() => {
+                setAlert({ title: "", timer: -1, status: AlertStatus.HIDDEN })
+            }, timer)
+        }
+    }, [x, setAlert])
 
     return (
         <div className="w-full h-full flex justify-center items-center">

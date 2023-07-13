@@ -16,6 +16,8 @@ import { Report } from "@/components/Report"
 import { Popup } from "../Popup"
 import { DeleteComment } from "./Delete"
 import Link from "next/link"
+import { useRecoilState } from "recoil"
+import { alertAtom, AlertStatus } from "../Context/state"
 
 type Comment =
     inferRouterOutputs<AppRouter>["comment"]["get"]["comments"][number]
@@ -32,6 +34,7 @@ const Comment = ({
     const utils = trpc.useContext()
     const [reporting, setReporting] = useState(false)
     const [deleting, setDeleting] = useState(false)
+    const [_alert, setAlert] = useRecoilState(alertAtom)
 
     const openReportPopup = () => setReporting(true)
     const closeReportPopup = () => setReporting(false)
@@ -130,6 +133,18 @@ const Comment = ({
     const LikeIcon = comment.status === "LIKED" ? LikedSvg : LikeSvg
     const DislikeIcon = comment.status == "DISLIKED" ? DislikedSvg : DislikeSvg
 
+    const onReportSuccess = () => {
+        setReporting(false)
+        const timer = 4000
+        setAlert({
+            title: "Comment reported",
+            timer,
+            status: AlertStatus.SUCCESS,
+        })
+        setTimeout(() => {
+            setAlert({ title: "", timer: -1, status: AlertStatus.HIDDEN })
+        }, timer)
+    }
     if (comment.id == -1) return <></>
 
     return (
@@ -189,7 +204,7 @@ const Comment = ({
             {reporting && (
                 <Popup onClickOutside={closeReportPopup}>
                     <Report
-                        onSuccess={closeReportPopup}
+                        onSuccess={onReportSuccess}
                         onCancel={closeReportPopup}
                         kind="COMMENT"
                         refId={comment.id.toString()}

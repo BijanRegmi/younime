@@ -12,7 +12,7 @@ const Section = (props: {
         <>
             <div className="grid grid-cols-[repeat(auto-fill,24rem)] gap-x-4 gap-y-8 justify-center py-3 w-full border-b border-accent-300 overflow-scroll">
                 {props.title && (
-                    <span className="col-span-full text-center">{props.title}</span>
+                    <span className="col-span-full text-center border px-4 py-[2px] rounded-t-xl rounded-b-sm border-t-accent-300 border-x-accent-300 border-b-accent-600 w-fit place-self-center">{props.title}</span>
                 )}
                 {props.animes.map(anime => (
                     <VideoCard key={anime.id} anime={anime} />

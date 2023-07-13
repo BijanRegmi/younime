@@ -7,6 +7,8 @@ import { notFound } from "next/navigation"
 import { ChangeEvent, useEffect, useState } from "react"
 import { AiOutlineEdit, AiOutlineEye, AiOutlineSave } from "react-icons/ai"
 import { BiUndo } from "react-icons/bi"
+import { useRecoilState } from "recoil"
+import { alertAtom, AlertStatus } from "../Context/state"
 import { trpc } from "../Context/TrpcContext"
 
 const EditableInfo = ({
@@ -21,6 +23,7 @@ const EditableInfo = ({
         bio: "",
         active: false,
     })
+    const [_alert, setAlert] = useRecoilState(alertAtom)
 
     useEffect(() => {
         if (user) {
@@ -42,6 +45,16 @@ const EditableInfo = ({
         onSuccess: () => {
             setActual({ name: editing.name, bio: editing.bio })
             stopEdit()
+
+            const timer = 2000
+            setAlert({
+                title: "User info updated",
+                timer,
+                status: AlertStatus.SUCCESS,
+            })
+            setTimeout(() => {
+                setAlert({ title: "", timer: -1, status: AlertStatus.HIDDEN })
+            }, timer)
         },
     })
 

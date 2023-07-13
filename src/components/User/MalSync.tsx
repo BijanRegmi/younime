@@ -8,6 +8,8 @@ import {
 } from "react-icons/ai"
 import { BsFiletypeXml } from "react-icons/bs"
 import { CiImport } from "react-icons/ci"
+import { useRecoilState } from "recoil"
+import { alertAtom, AlertStatus } from "../Context/state"
 import { trpc } from "../Context/TrpcContext"
 import { Popup } from "../Popup"
 
@@ -19,6 +21,7 @@ export const MalSync = () => {
 
     const [xmlData, setXmlData] = useState("")
     const [file, setFile] = useState("")
+    const [_alert, setAlert] = useRecoilState(alertAtom)
 
     const fileChanged = (e: ChangeEvent<HTMLInputElement>) => {
         if (!e.target.files) return
@@ -35,7 +38,20 @@ export const MalSync = () => {
     }
 
     const { mutate, isLoading } = trpc.playlist.sync.useMutation({
-        onSuccess: () => setXmlData("success"),
+        onSuccess: () => {
+            setXmlData("success")
+            setPopup(false)
+
+            const timer = 2000
+            setAlert({
+                title: "Imported history successfully",
+                timer,
+                status: AlertStatus.SUCCESS,
+            })
+            setTimeout(() => {
+                setAlert({ title: "", timer: -1, status: AlertStatus.HIDDEN })
+            }, timer)
+        },
     })
     const submit = () => mutate({ data: xmlData })
 

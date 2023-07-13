@@ -1,21 +1,13 @@
 "use client"
 
-import { useContext, useEffect } from "react"
-import { GlobalContext } from "@/components/Context/ReactContext"
-
 import Ham from "@/assets/misc/hamburger.svg"
+import { useRecoilState } from "recoil"
+import { sidebarAtom } from "../Context/state"
 
 const Hamburger = () => {
-    const context = useContext(GlobalContext)
+    const [_sidebar, setSidebar] = useRecoilState(sidebarAtom)
 
-    const toggle = () => {
-        context.setState(oldState => {
-            return {
-                ...oldState,
-                sidebar: !oldState.sidebar,
-            }
-        })
-    }
+    const toggle = () => setSidebar(o => !o)
 
     return (
         <div className="flex-shrink-0 w-sidebarNarrow aspect-square cursor-pointer flex justify-center items-center">

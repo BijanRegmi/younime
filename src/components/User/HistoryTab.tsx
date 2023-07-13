@@ -26,10 +26,11 @@ const HistoryTab = ({
                 {hist_keys.map((k, idx) => (
                     <li
                         key={idx}
-                        className={`grow text-center py-2 cursor-pointer ${k == activeTab
+                        className={`grow text-center py-2 cursor-pointer ${
+                            k == activeTab
                                 ? "border-b border-white text-accent-900"
                                 : "text-accent-700"
-                            }`}
+                        }`}
                         onClick={() => setActiveTab(k)}
                     >
                         {k.toUpperCase()}
@@ -43,7 +44,7 @@ const HistoryTab = ({
             ) : (
                 <div className="w-full flex flex-col py-10 gap-4 items-center justify-center">
                     <TbMoodEmpty className="text-6xl" />
-                    <span>It{"'"}s all void in here</span>
+                    <span>Nothing here</span>
                 </div>
             )}
         </div>

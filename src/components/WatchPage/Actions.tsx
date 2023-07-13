@@ -15,6 +15,8 @@ import { WatchAnime } from "@/lib/getWatchAnime"
 import { MdErrorOutline } from "react-icons/md"
 import { Popup } from "../Popup"
 import { Report } from "../Report"
+import { alertAtom, AlertStatus } from "../Context/state"
+import { useRecoilState } from "recoil"
 
 const Actions = ({
     history,
@@ -50,6 +52,8 @@ const Actions = ({
     const openPopup = () => setReporting(true)
     const closePopup = () => setReporting(false)
 
+    const [_alert, setAlert] = useRecoilState(alertAtom)
+
     const paths = usePathname()?.split("/")
     if (!paths) return notFound()
     const animeId = Number(paths[1])
@@ -63,8 +67,32 @@ const Actions = ({
         DROPPED: Dropped,
     }
 
-    const { mutate: addMutate } = trpc.playlist.add.useMutation()
-    const { mutate: removeMutate } = trpc.playlist.remove.useMutation()
+    const { mutate: addMutate } = trpc.playlist.add.useMutation({
+        onSuccess: (_response, input) => {
+            const timer = 4000
+            setAlert({
+                title: `Added to ${input.status.toLowerCase()} list`,
+                timer,
+                status: AlertStatus.SUCCESS,
+            })
+            setTimeout(() => {
+                setAlert({ title: "", timer: -1, status: AlertStatus.HIDDEN })
+            }, timer)
+        },
+    })
+    const { mutate: removeMutate } = trpc.playlist.remove.useMutation({
+        onSuccess: () => {
+            const timer = 4000
+            setAlert({
+                title: "Removed from history",
+                timer,
+                status: AlertStatus.SUCCESS,
+            })
+            setTimeout(() => {
+                setAlert({ title: "", timer: -1, status: AlertStatus.HIDDEN })
+            }, timer)
+        },
+    })
 
     const mutateStatus = (stat: AnimeStatus) => {
         if (stat !== status)
@@ -85,6 +113,19 @@ const Actions = ({
                     },
                 }
             )
+    }
+
+    const onReportSuccess = () => {
+        setReporting(false)
+        const timer = 4000
+        setAlert({
+            title: "Report recorded",
+            timer,
+            status: AlertStatus.SUCCESS,
+        })
+        setTimeout(() => {
+            setAlert({ title: "", timer: -1, status: AlertStatus.HIDDEN })
+        }, timer)
     }
 
     return (
@@ -141,7 +182,7 @@ const Actions = ({
             {reporting && (
                 <Popup onClickOutside={closePopup}>
                     <Report
-                        onSuccess={closePopup}
+                        onSuccess={onReportSuccess}
                         onCancel={closePopup}
                         kind="ANIME"
                         refId={animeId.toString()}

@@ -76,6 +76,15 @@
     }
 }
 
+@keyframes progressBar {
+    from {
+        right: 0%;
+    }
+    to {
+        right: 100%;
+    }
+}
+
 html,
 body,
 #__next {

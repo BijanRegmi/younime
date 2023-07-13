@@ -1,6 +1,8 @@
 "use client"
 import { useState } from "react"
 import { MdOutlineFeedback } from "react-icons/md"
+import { useRecoilState } from "recoil"
+import { alertAtom, AlertStatus } from "../Context/state"
 import { Popup } from "../Popup"
 import { Report } from "../Report"
 
@@ -8,6 +10,22 @@ export const Feedback = () => {
     const [open, setOpen] = useState(false)
     const openPopup = () => setOpen(true)
     const closePopup = () => setOpen(false)
+
+    const [_alert, setAlert] = useRecoilState(alertAtom)
+
+    const onSuccess = () => {
+        setOpen(false)
+        const timer = 4000
+        setAlert({
+            title: "Thank you for your feedback",
+            timer,
+            status: AlertStatus.SUCCESS,
+        })
+        setTimeout(() => {
+            setAlert({ title: "", timer: -1, status: AlertStatus.HIDDEN })
+        }, timer)
+    }
+
     return (
         <>
             <div
@@ -21,7 +39,7 @@ export const Feedback = () => {
                 <Popup onClickOutside={closePopup}>
                     <Report
                         kind="NONE"
-                        onSuccess={closePopup}
+                        onSuccess={onSuccess}
                         onCancel={closePopup}
                         refId="0"
                     />

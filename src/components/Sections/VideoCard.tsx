@@ -7,7 +7,7 @@ const VideoCard = ({ anime }: { anime: CardAnime }) => {
     return (
         <div className="w-96 h-80 flex flex-col rounded-xl border-accent-250 border">
             <Link href={`/${anime.id}`} className="h-2/3">
-                <div className="w-full h-full relative cursor-pointer transition-transform border-b border-accent-350 after:inset-0 after:flex after:items-center after:justify-center after:content-['Play'] after:absolute after:text-accent-900 after:bg-black after:rounded-md after:opacity-0 after:transition-opacity hover:after:opacity-80">
+                <div className="w-full h-full relative cursor-pointer transition-transform border-b border-accent-350 after:inset-0 after:flex after:items-center after:justify-center after:content-['Play'] after:absolute after:text-accent-900 after:bg-black after:rounded-t-xl after:opacity-0 after:transition-opacity hover:after:opacity-80">
                     <Image
                         src={anime.thumbnail || ""}
                         className="h-full w-full rounded-t-xl object-contain bg-accent-150"

@@ -1,14 +1,15 @@
 "use client"
 
-import { ReactNode, useContext } from "react"
-import { GlobalContext } from "./Context/ReactContext"
+import { ReactNode } from "react"
+import { useRecoilState } from "recoil"
+import { sidebarAtom } from "./Context/state"
 
 export const MainLayout = ({ children }: { children: ReactNode }) => {
-    const context = useContext(GlobalContext)
+    const [sidebar] = useRecoilState(sidebarAtom)
     return (
         <main
             className={`h-full max-h-full flex-grow flex-shrink overflow-scroll max-w-[149rem] px-2 ${
-                context.state.sidebar ? "w-mainNarrow" : "w-mainWide"
+                sidebar ? "w-mainNarrow" : "w-mainWide"
             }`}
         >
             {children}

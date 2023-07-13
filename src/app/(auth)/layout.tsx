@@ -1,3 +1,5 @@
+import Alert from "@/components/Alert"
+import { RecoilContext } from "@/components/Context/RecoilContext"
 import { TrpcProvider } from "@/components/Context/TrpcContext"
 import "@/styles/globals.css"
 
@@ -9,7 +11,10 @@ export default function RootLayout({
     return (
         <html lang="en">
             <body>
-                <TrpcProvider>{children}</TrpcProvider>
+                <RecoilContext>
+                    <TrpcProvider>{children}</TrpcProvider>
+                    <Alert />
+                </RecoilContext>
             </body>
         </html>
     )

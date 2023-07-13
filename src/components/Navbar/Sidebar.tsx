@@ -1,9 +1,6 @@
 "use client"
 import Link from "next/link"
 
-import { useContext } from "react"
-import { GlobalContext } from "@/components/Context/ReactContext"
-
 import { TbHexagonLetterG, TbArrowBigUp } from "react-icons/tb"
 import { AiOutlineHome, AiOutlineReload, AiOutlineStock } from "react-icons/ai"
 import { IconType } from "react-icons"
@@ -12,10 +9,11 @@ import { useSession } from "next-auth/react"
 import { CiLogout } from "react-icons/ci"
 import { usePathname } from "next/navigation"
 import { Feedback } from "./Feedback"
+import { useRecoilState } from "recoil"
+import { sidebarAtom } from "../Context/state"
 
 const Sidebar = () => {
-    const context = useContext(GlobalContext)
-    const open = context.state.sidebar
+    const [open] = useRecoilState(sidebarAtom)
 
     const session = useSession()
 

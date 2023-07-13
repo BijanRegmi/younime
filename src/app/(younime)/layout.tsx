@@ -8,9 +8,10 @@ import { TrpcProvider } from "@/components/Context/TrpcContext"
 
 import Header from "@/components/Navbar"
 import Sidebar from "@/components/Navbar/Sidebar"
-import ReactContext from "@/components/Context/ReactContext"
+import { RecoilContext } from "@/components/Context/RecoilContext"
 import { ReactNode } from "react"
 import { MainLayout } from "@/components/MainLayout"
+import Alert from "@/components/Alert"
 
 export default async function RootLayout({
     children,
@@ -25,14 +26,15 @@ export default async function RootLayout({
             <body>
                 <SessionContext session={session}>
                     <TrpcProvider>
-                        <ReactContext>
+                        <RecoilContext>
                             {/* @ts-expect-error Server Component */}
                             <Header session={session} />
                             <div className="flex flex-row h-[calc(100%-5rem)] w-full">
                                 <Sidebar />
                                 <MainLayout>{children}</MainLayout>
                             </div>
-                        </ReactContext>
+                            <Alert />
+                        </RecoilContext>
                     </TrpcProvider>
                 </SessionContext>
             </body>
