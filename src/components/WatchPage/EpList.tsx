@@ -3,7 +3,6 @@
 import Play from "@/assets/videoplayer/play.svg"
 import { notFound, usePathname } from "next/navigation"
 import { useEffect, useRef } from "react"
-import Link from "next/link"
 import { WatchAnime } from "@/lib/getWatchAnime"
 
 const EpList = ({ episodes }: { episodes: WatchAnime["episodes"] }) => {
@@ -36,16 +35,16 @@ const EpList = ({ episodes }: { episodes: WatchAnime["episodes"] }) => {
                 {episodes.map(ep => {
                     const playing = epId == ep.id
                     return (
-                        <Link
+                        <a
                             key={ep.id}
                             className="h-12 bg-accent-150 m-1 p-1 flex items-center gap-4 cursor-pointer hover:bg-accent-250 shadow-[rgba(50,50,93,0.25)_0px_2px_5px_-1px,rgba(0,0,0,0.3)_0px_1px_3px_-1px] rounded-md"
                             ref={playing ? ref : undefined}
                             href={`/${animeId}/${ep.id}`}
-                            prefetch={false}
                         >
                             <Play
-                                className={`w-12 aspect-square text-white transition-opacity ease-linear ${playing ? "opacity-100" : "opacity-0"
-                                    }`}
+                                className={`w-12 aspect-square text-white transition-opacity ease-linear ${
+                                    playing ? "opacity-100" : "opacity-0"
+                                }`}
                             />
                             <span className="inline-block">{ep.order}:</span>
                             <span
@@ -54,7 +53,7 @@ const EpList = ({ episodes }: { episodes: WatchAnime["episodes"] }) => {
                             >
                                 {ep.name}
                             </span>
-                        </Link>
+                        </a>
                     )
                 })}
             </div>
