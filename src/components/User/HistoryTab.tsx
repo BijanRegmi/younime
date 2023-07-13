@@ -15,10 +15,17 @@ const HistoryTab = ({
     const hist_keys = Object.keys(hist) as Array<keyof typeof hist>
     const [activeTab, setActiveTab] = useState(hist_keys[0])
 
-    const { data } = trpc.playlist.get.useQuery({
-        status: activeTab,
-        userId: userId,
-    })
+    const { data } = trpc.playlist.get.useQuery(
+        {
+            status: activeTab,
+            userId: userId,
+        },
+        {
+            refetchOnReconnect: false,
+            refetchOnMount: false,
+            refetchOnWindowFocus: false,
+        }
+    )
 
     return (
         <div className="flex flex-col border border-accent-300 rounded-lg overflow-scroll">
@@ -26,11 +33,10 @@ const HistoryTab = ({
                 {hist_keys.map((k, idx) => (
                     <li
                         key={idx}
-                        className={`grow text-center py-2 cursor-pointer ${
-                            k == activeTab
+                        className={`grow text-center py-2 cursor-pointer ${k == activeTab
                                 ? "border-b border-white text-accent-900"
                                 : "text-accent-700"
-                        }`}
+                            }`}
                         onClick={() => setActiveTab(k)}
                     >
                         {k.toUpperCase()}

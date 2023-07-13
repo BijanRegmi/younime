@@ -26,6 +26,9 @@ const EndlessTop = ({ prefetched }: { prefetched: number }) => {
         {
             getNextPageParam: lastPage => lastPage.nextCursor,
             enabled: false,
+            refetchOnReconnect: false,
+            refetchOnMount: false,
+            refetchOnWindowFocus: false,
         }
     )
 

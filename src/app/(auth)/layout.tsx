@@ -10,6 +10,9 @@ export default function RootLayout({
 }) {
     return (
         <html lang="en">
+            <head>
+                <title>Auth</title>
+            </head>
             <body>
                 <RecoilContext>
                     <TrpcProvider>{children}</TrpcProvider>

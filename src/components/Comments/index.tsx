@@ -26,6 +26,9 @@ export default function Comments() {
             { episodeId },
             {
                 getNextPageParam: lastPage => lastPage.nextCursor,
+                refetchOnReconnect: false,
+                refetchOnMount: false,
+                refetchOnWindowFocus: false,
             }
         )
 

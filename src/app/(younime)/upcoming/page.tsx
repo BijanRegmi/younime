@@ -1,6 +1,9 @@
 import EndlessUpcoming from "@/components/Endless/Upcoming"
 import Section from "@/components/Sections"
 import { getUpcomingAnime } from "@/lib/getUpcoming"
+import { Metadata } from "next"
+
+export const metadata: Metadata = { title: "Upcoming" }
 
 const UpcomingPage = async () => {
     const animes = await getUpcomingAnime({ take: 32 })

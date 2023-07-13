@@ -1,6 +1,9 @@
 import UserCard from "@/components/User/Card"
 import HistoryTab from "@/components/User/HistoryTab"
 import { getUser } from "@/lib/getUser"
+import { Metadata } from "next"
+
+export const metadata: Metadata = { title: "User Profile" }
 
 const Page = async ({ params }: { params: { "user-id": string } }) => {
     const userId = params["user-id"]

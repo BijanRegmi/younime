@@ -3,6 +3,9 @@ import HistoryTab from "@/components/User/HistoryTab"
 import { getUser } from "@/lib/getUser"
 import db from "@/server/prisma"
 import { notFound } from "next/navigation"
+import { Metadata } from "next"
+
+export const metadata: Metadata = { title: "Dev Profile" }
 
 const Page = async () => {
     const userId = await db.user.findUnique({

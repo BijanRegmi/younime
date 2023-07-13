@@ -12,6 +12,19 @@ import { RecoilContext } from "@/components/Context/RecoilContext"
 import { ReactNode } from "react"
 import { MainLayout } from "@/components/MainLayout"
 import Alert from "@/components/Alert"
+import { Metadata } from "next"
+
+export const metadata: Metadata = {
+    title: {
+        default: "Younime",
+        template: "%s | Younime",
+    },
+    description: "Youtube themed anime website",
+    keywords: ["Anime", "Youtube"],
+    creator: "Bijan Regmi",
+    icons: { icon: "/favicon.ico" },
+    themeColor: "black",
+}
 
 export default async function RootLayout({
     children,

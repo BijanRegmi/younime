@@ -1,7 +1,18 @@
 import { EndlessGenre } from "@/components/Endless/Genre"
 import Section from "@/components/Sections"
 import prisma from "@/prisma"
+import { Metadata, ResolvingMetadata } from "next"
 import { notFound } from "next/navigation"
+
+export async function generateMetadata({
+    params,
+}: {
+    params: { genre: string }
+}): Promise<Metadata> {
+    return {
+        title: `${params.genre}`,
+    }
+}
 
 const Page = async ({ params }: { params: { genre: string } }) => {
     const genre = decodeURIComponent(params.genre)

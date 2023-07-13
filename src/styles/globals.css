@@ -3,6 +3,36 @@
 @tailwind utilities;
 @import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,500;0,700;1,400&display=swap");
 
+:root {
+    --scroll-bar-color: #0e0e0e;
+    --scroll-bar-bg-color: #00000000;
+}
+
+* {
+    scrollbar-width: 2px;
+    scrollbar-color: var(--scroll-bar-color) var(--scroll-bar-bg-color);
+}
+
+::-webkit-scrollbar-corner {
+    background: rgba(0, 0, 0, 0);
+}
+
+/* Works on Chrome, Edge, and Safari */
+*::-webkit-scrollbar {
+    width: 2px;
+    height: 2px;
+}
+
+*::-webkit-scrollbar-track {
+    background: var(--scroll-bar-bg-color);
+}
+
+*::-webkit-scrollbar-thumb {
+    background-color: var(--scroll-bar-color);
+    border-radius: 2px;
+    border: 3px solid var(--scroll-bar-bg-color);
+}
+
 .controlBtn {
     @apply h-8 w-8 text-lg opacity-70 cursor-pointer hover:opacity-100;
 }

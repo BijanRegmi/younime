@@ -44,9 +44,8 @@ const EpList = ({ episodes }: { episodes: WatchAnime["episodes"] }) => {
                             prefetch={false}
                         >
                             <Play
-                                className={`w-12 aspect-square text-white transition-opacity ease-linear ${
-                                    playing ? "opacity-100" : "opacity-0"
-                                }`}
+                                className={`w-12 aspect-square text-white transition-opacity ease-linear ${playing ? "opacity-100" : "opacity-0"
+                                    }`}
                             />
                             <span className="inline-block">{ep.order}:</span>
                             <span

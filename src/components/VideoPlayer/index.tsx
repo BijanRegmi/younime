@@ -1,6 +1,6 @@
 "use client"
 
-import { useCallback, useEffect, useRef, useState } from "react"
+import { KeyboardEvent, useCallback, useEffect, useRef, useState } from "react"
 import ReactPlayer from "react-player"
 import useHasWindow from "@/hooks/useHasWindow"
 import useShowOnMouseMove from "@/hooks/useShowOnMouseMove"
@@ -100,8 +100,8 @@ const VideoPlayer = ({
         trackIdx =
             trackIdx == -1
                 ? (resources[subdub]?.tracks.findIndex(
-                      t => t.default == true
-                  ) ?? -1) + 1
+                    t => t.default == true
+                ) ?? -1) + 1
                 : trackIdx + 1
 
         setState(o => ({
@@ -170,7 +170,8 @@ const VideoPlayer = ({
     }
 
     const keyboardShortcutHandlers = useCallback(
-        (e: KeyboardEvent) => {
+        (e: KeyboardEvent<HTMLDivElement>) => {
+            console.log("Called key handler")
             const key = e.key
             if (!playerRef.current) return
 
@@ -264,17 +265,6 @@ const VideoPlayer = ({
         [state.mode, display]
     )
 
-    useEffect(() => {
-        if (!containerRef.current) return
-
-        let elem = containerRef.current
-
-        elem.addEventListener("keydown", keyboardShortcutHandlers)
-
-        return () =>
-            elem.removeEventListener("keydown", keyboardShortcutHandlers)
-    }, [containerRef, keyboardShortcutHandlers])
-
     const togglePlay = () => setState(o => ({ ...o, playing: !o.playing }))
     const toggleFullScreen = () => {
         if (document.fullscreenElement == null)
@@ -288,6 +278,8 @@ const VideoPlayer = ({
             id="videoContainer"
             onMouseMove={onMouseMove}
             onMouseLeave={onMouseLeave}
+            onKeyDown={keyboardShortcutHandlers}
+            tabIndex={0}
             style={{ cursor: show || !state.playing ? "default" : "none" }}
             className={`relative bg-black self-center justify-self-center w-full max-w-[1200px] aspect-[16/9] videoplayer ${state.mode
                 .toString()
