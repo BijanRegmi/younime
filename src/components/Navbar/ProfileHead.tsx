@@ -17,7 +17,7 @@ const ProfileHead = ({ user }: { user: Session["user"] }) => {
                     "https://static.vecteezy.com/system/resources/thumbnails/009/292/244/small/default-avatar-icon-of-social-media-user-vector.jpg"
                 }
                 fill={true}
-                alt={user.name as string}
+                alt={user.name || "User pfp"}
                 className="h-full w-full rounded-full object-cover cursor-pointer"
                 onClick={() => setShow(old => !old)}
             />
@@ -31,7 +31,7 @@ const ProfileHead = ({ user }: { user: Session["user"] }) => {
                                     "https://static.vecteezy.com/system/resources/thumbnails/009/292/244/small/default-avatar-icon-of-social-media-user-vector.jpg"
                                 }
                                 fill={true}
-                                alt={user.name as string}
+                                alt={user.name || "User pfp"}
                                 className="object-cover rounded-full"
                             />
                         </div>

@@ -144,7 +144,7 @@ const Comment = ({
                         "https://static.vecteezy.com/system/resources/thumbnails/009/292/244/small/default-avatar-icon-of-social-media-user-vector.jpg"
                     }
                     fill={true}
-                    alt={comment.commenter.name as string}
+                    alt={comment.commenter.name || "User pfp"}
                     style={{
                         objectFit: "cover",
                         borderRadius: "50%",

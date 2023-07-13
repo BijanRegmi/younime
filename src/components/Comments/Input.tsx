@@ -34,7 +34,7 @@ const CommentInput = () => {
                         "https://static.vecteezy.com/system/resources/thumbnails/009/292/244/small/default-avatar-icon-of-social-media-user-vector.jpg"
                     }
                     fill={true}
-                    alt={session.data?.user?.name as string}
+                    alt={session.data?.user?.name || "User pfp"}
                     style={{
                         objectFit: "cover",
                         borderRadius: "50%",

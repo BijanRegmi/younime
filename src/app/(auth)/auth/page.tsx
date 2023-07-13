@@ -4,7 +4,7 @@ import { trpc } from "@/components/Context/TrpcContext"
 import { signIn } from "next-auth/react"
 import { ChangeEvent, FormEvent, useState } from "react"
 import { AiOutlineGithub, AiOutlineGoogle } from "react-icons/ai"
-import { useRouter } from "next/navigation"
+import { useRouter, useSearchParams } from "next/navigation"
 
 const initialState = {
     email: "",
@@ -45,7 +45,7 @@ const LoginPage = () => {
                 email: values.email,
                 password: values.password,
                 redirect: true,
-                callbackUrl: "/",
+                callbackUrl: x?.get("callbackUrl") || "/",
             })
         } else {
             mutate({
@@ -55,6 +55,8 @@ const LoginPage = () => {
             })
         }
     }
+
+    const x = useSearchParams()
 
     return (
         <div className="w-full h-full flex justify-center items-center">
@@ -134,12 +136,20 @@ const LoginPage = () => {
                     <AiOutlineGoogle
                         className="text-4xl cursor-pointer"
                         title="Google Sign in"
-                        onClick={() => signIn("google")}
+                        onClick={() =>
+                            signIn("google", {
+                                callbackUrl: x?.get("callbackUrl") || "/",
+                            })
+                        }
                     />
                     <AiOutlineGithub
                         className="text-4xl cursor-pointer"
                         title="Github Sign in"
-                        onClick={() => signIn("github")}
+                        onClick={() =>
+                            signIn("github", {
+                                callbackUrl: x?.get("callbackUrl") || "/",
+                            })
+                        }
                     />
                 </div>
                 <div>

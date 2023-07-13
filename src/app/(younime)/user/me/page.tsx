@@ -8,7 +8,7 @@ import { redirect } from "next/navigation"
 
 const Page = async () => {
     const session = await getServerSession(authOptions)
-    if (!session || !session.user.id) redirect("/api/auth/signin")
+    if (!session || !session.user.id) redirect("/auth")
 
     const data = await getUser({
         userId: session.user.id,
