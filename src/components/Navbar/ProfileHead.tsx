@@ -5,13 +5,17 @@ import Link from "next/link"
 import { Session } from "next-auth"
 import { AiOutlineSetting, AiOutlineUser } from "react-icons/ai"
 import { CiLogout } from "react-icons/ci"
+import useOnClickOutside from "@/hooks/useOnClickOutside"
 
 const ProfileHead = ({ user }: { user: Session["user"] }) => {
     const [show, setShow] = useState(false)
+    const close = () => setShow(false)
+    const ref = useOnClickOutside<HTMLImageElement>({ handler: close })
 
     return (
         <div className="h-full aspect-square relative">
             <Image
+                ref={ref}
                 src={
                     user.image ||
                     "https://static.vecteezy.com/system/resources/thumbnails/009/292/244/small/default-avatar-icon-of-social-media-user-vector.jpg"

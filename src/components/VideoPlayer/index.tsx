@@ -178,20 +178,22 @@ const VideoPlayer = ({
 
             let c = playerRef.current.getCurrentTime()
             let d = playerRef.current.getDuration()
-            e.preventDefault()
 
             switch (key) {
                 case "k":
                 case " ":
+                    e.preventDefault()
                     setState(o => ({ ...o, playing: !o.playing }))
                     break
                 case "<":
+                    e.preventDefault()
                     setState(o => ({
                         ...o,
                         playbackRate: Math.max(0, o.playbackRate - 0.25),
                     }))
                     break
                 case ">":
+                    e.preventDefault()
                     setState(o => ({
                         ...o,
                         playbackRate: Math.min(2, o.playbackRate + 0.25),
@@ -199,28 +201,34 @@ const VideoPlayer = ({
                     break
                 case "ArrowLeft":
                 case "j":
+                    e.preventDefault()
                     playerRef.current?.seekTo(Math.max(0, (c - 10) / d))
                     break
                 case "ArrowRight":
                 case "l":
+                    e.preventDefault()
                     playerRef.current?.seekTo(Math.min(1, (c + 10) / d))
                     break
                 case "m":
+                    e.preventDefault()
                     setState(o => ({ ...o, muted: !o.muted }))
                     break
                 case "ArrowDown":
+                    e.preventDefault()
                     setState(o => ({
                         ...o,
                         volume: Math.max(0, o.volume - 0.1),
                     }))
                     break
                 case "ArrowUp":
+                    e.preventDefault()
                     setState(o => ({
                         ...o,
                         volume: Math.min(1, o.volume + 0.1),
                     }))
                     break
                 case "f":
+                    e.preventDefault()
                     if (document.fullscreenElement == null)
                         document
                             .getElementById("videoContainer")
@@ -228,11 +236,13 @@ const VideoPlayer = ({
                     else document.exitFullscreen()
                     break
                 case "t":
+                    e.preventDefault()
                     if (state.mode != MODES.THEATRE)
                         setState(old => ({ ...old, mode: MODES.THEATRE }))
                     else setState(old => ({ ...old, mode: MODES.NORMAL }))
                     break
                 case "i":
+                    e.preventDefault()
                     if (state.mode == MODES.MINI)
                         try {
                             setState(old => ({ ...old, mode: MODES.NORMAL }))

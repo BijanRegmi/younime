@@ -1,15 +1,16 @@
 import Image from "next/image"
 import Link from "next/link"
 import { CardAnime } from "../.."
+import { formatString } from "@/lib/helpers"
 
 const VideoCard = ({ anime }: { anime: CardAnime }) => {
     return (
-        <div className="w-96 h-80 flex flex-col rounded-xl">
+        <div className="w-96 h-80 flex flex-col rounded-xl border-accent-250 border">
             <Link href={`/${anime.id}`} className="h-2/3">
-                <div className="w-full h-full relative cursor-pointer transition-transform after:inset-0 after:flex after:items-center after:justify-center after:content-['Play'] after:absolute after:text-accent-900 after:bg-black after:rounded-md after:opacity-0 after:transition-opacity hover:after:opacity-80">
+                <div className="w-full h-full relative cursor-pointer transition-transform border-b border-accent-350 after:inset-0 after:flex after:items-center after:justify-center after:content-['Play'] after:absolute after:text-accent-900 after:bg-black after:rounded-md after:opacity-0 after:transition-opacity hover:after:opacity-80">
                     <Image
                         src={anime.thumbnail || ""}
-                        className="h-full w-full rounded-md object-contain bg-[radial-gradient(circle,#eaeaea_0%,#8b8b8b_100%)]"
+                        className="h-full w-full rounded-t-xl object-contain bg-accent-150"
                         alt="Thumbnail"
                         fill={true}
                     />
@@ -28,13 +29,14 @@ const VideoCard = ({ anime }: { anime: CardAnime }) => {
                 >
                     {anime.title}
                 </h1>
-                <div className="flex justify-start h-1/3 items-center gap-4 my-1">
-                    <div className="py-1 px-3 bg-accent-100 border border-solid border-accent-600 text-accent-850 rounded-md cursor-pointer">
-                        {anime.score} / 10
-                    </div>
-                    <div className="py-1 px-3 bg-accent-100 border border-solid border-accent-600 text-accent-850 rounded-md cursor-pointer">
-                        {anime.type}
-                    </div>
+                <div className="flex justify-start h-1/3 items-center gap-4">
+                    <span className="text-accent-850 flex flex-row items-center gap-1">
+                        {anime.score} <span className="text-sm">☆</span>
+                    </span>
+                    <span>|</span>
+                    <span className="text-accent-850">
+                        {formatString(anime.type || "Unknown")}
+                    </span>
                 </div>
             </div>
         </div>

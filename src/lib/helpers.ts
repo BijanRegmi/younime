@@ -14,5 +14,8 @@ export const durationFormatter = (time: number) => {
     }
 }
 
+export const formatString = (str: string) =>
+    str.charAt(0).toUpperCase() + str.slice(1).toLowerCase()
+
 export const delay = (ms: number) =>
     new Promise(resolve => setTimeout(resolve, ms))
