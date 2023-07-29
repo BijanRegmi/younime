@@ -11,9 +11,9 @@ interface VideoSource {
 
 type Track = {
     src: string
-    label: string
+    label?: string
     kind: string
-    srcLang: string
+    srcLang?: string
     default?: boolean
 }
 

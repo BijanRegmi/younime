@@ -94,14 +94,14 @@ const VideoPlayer = ({
         let trackLabel =
             localStorage.getItem("track")?.toLowerCase() || "INVALID"
         let trackIdx =
-            resources[subdub]?.tracks?.findIndex(t =>
-                t.label.toLowerCase().includes(trackLabel)
+            resources[subdub]?.tracks?.findIndex(
+                t => t.label?.toLowerCase().includes(trackLabel)
             ) ?? -1
         trackIdx =
             trackIdx == -1
                 ? (resources[subdub]?.tracks.findIndex(
-                    t => t.default == true
-                ) ?? -1) + 1
+                      t => t.default == true
+                  ) ?? -1) + 1
                 : trackIdx + 1
 
         setState(o => ({
@@ -298,7 +298,10 @@ const VideoPlayer = ({
                             },
                             tracks: state.resources[state.subdub]?.tracks.map(
                                 t => ({
-                                    ...t,
+                                    src: t.src,
+                                    srcLang: t.srcLang || "undefined",
+                                    kind: t.kind,
+                                    label: t.label || "undefined",
                                     default: false,
                                 })
                             ),

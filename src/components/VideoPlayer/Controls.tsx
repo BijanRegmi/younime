@@ -290,7 +290,7 @@ const Controls = ({
                             options: [
                                 "Off",
                                 ...(state.resources[state.subdub]?.tracks.map(
-                                    t => t.label
+                                    t => t.label || "undefined"
                                 ) || []),
                             ],
                             selected: state.trackIdx,
